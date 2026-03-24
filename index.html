@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tolerancia 0'1 — Equipo de Deportes y Esports</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink:#E040A0;--pink-light:#F472C0;--pink-dark:#9A1868;
+    --dark:#090909;--dark2:#101010;--dark3:#181818;--dark4:#242424;
+    --gray:#777;--gray-mid:#999;--gray-light:#bbb;--white:#f0f0f0;
+    --green:#00d250;
+    --font-display:'Bebas Neue',sans-serif;
+    --font-ui:'Rajdhani',sans-serif;
+    --font-body:'Inter',sans-serif;
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--dark);color:var(--white);font-family:var(--font-ui);overflow-x:hidden}
+  body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(224,64,160,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(224,64,160,0.03) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:200;height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 44px;background:rgba(9,9,9,0.94);border-bottom:1px solid rgba(224,64,160,0.25);backdrop-filter:blur(16px)}
+  .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+  .nav-logo svg{width:32px;height:32px;flex-shrink:0}
+  .nav-logo-text{font-family:var(--font-display);font-size:21px;letter-spacing:3px;color:var(--white);line-height:1}
+  .nav-logo-text span{color:var(--pink)}
+  .nav-links{display:flex;gap:28px;list-style:none}
+  .nav-links a{font-family:var(--font-ui);font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-light);text-decoration:none;transition:color .2s}
+  .nav-links a:hover,.nav-links a.active{color:var(--pink)}
+  .nav-cta{background:var(--pink)!important;color:var(--white)!important;padding:7px 18px;border-radius:2px;font-weight:700!important}
+  .nav-cta:hover{background:var(--pink-dark)!important;color:var(--white)!important}
+  .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+  .hamburger span{display:block;width:22px;height:2px;background:var(--white)}
+  .nav-admin-btn{font-family:var(--font-ui);font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray);background:none;border:1px solid var(--dark4);padding:5px 12px;border-radius:2px;cursor:pointer;transition:color .2s,border-color .2s;margin-left:8px}
+  .nav-admin-btn:hover{color:var(--pink);border-color:var(--pink)}
+
+  /* HERO */
+  #inicio{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:110px 40px 70px;overflow:hidden}
+  .hero-glow{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 60% 55% at 50% 55%,rgba(224,64,160,0.13) 0%,transparent 70%),radial-gradient(ellipse 28% 22% at 50% 34%,rgba(224,64,160,0.09) 0%,transparent 65%)}
+  .hero-content{position:relative;z-index:1;max-width:860px}
+  .hero-badge{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-body);font-size:11px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--pink-light);border:1px solid rgba(224,64,160,0.35);padding:7px 20px;border-radius:2px;margin-bottom:28px;animation:fadeUp .7s ease both}
+  .hero-shield{width:90px;height:90px;margin:0 auto 18px;animation:fadeUp .7s .05s ease both;filter:drop-shadow(0 0 20px rgba(224,64,160,0.45))}
+  .hero-title{font-family:var(--font-display);font-size:clamp(68px,13vw,148px);line-height:.88;letter-spacing:4px;color:var(--white);animation:fadeUp .7s .1s ease both}
+  .hero-title .accent{color:var(--pink);display:block}
+  .hero-sub{font-family:var(--font-ui);font-size:15px;font-weight:400;letter-spacing:4px;text-transform:uppercase;color:var(--gray);margin-top:20px;animation:fadeUp .7s .18s ease both}
+  .hero-rule{width:56px;height:2px;background:linear-gradient(90deg,var(--pink),var(--pink-dark));margin:26px auto;animation:fadeUp .7s .24s ease both}
+  .hero-desc{font-family:var(--font-body);font-size:15px;color:var(--gray-mid);line-height:1.75;max-width:460px;margin:0 auto 38px;animation:fadeUp .7s .3s ease both}
+  .hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fadeUp .7s .36s ease both}
+  .btn-p{font-family:var(--font-ui);font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--white);background:var(--pink);border:none;padding:13px 34px;border-radius:2px;cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s,transform .2s}
+  .btn-p:hover{background:var(--pink-dark);transform:translateY(-2px)}
+  .btn-s{font-family:var(--font-ui);font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--white);background:transparent;border:1px solid rgba(255,255,255,0.18);padding:13px 34px;border-radius:2px;cursor:pointer;text-decoration:none;display:inline-block;transition:border-color .2s,color .2s,transform .2s}
+  .btn-s:hover{border-color:var(--pink);color:var(--pink);transform:translateY(-2px)}
+  .hero-stats{display:flex;gap:52px;justify-content:center;margin-top:70px;flex-wrap:wrap;animation:fadeUp .7s .44s ease both}
+  .stat-num{font-family:var(--font-display);font-size:50px;color:var(--white);letter-spacing:2px;line-height:1}
+  .stat-num em{color:var(--pink);font-style:normal}
+  .stat-lbl{font-family:var(--font-body);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gray);margin-top:5px}
+  .scroll-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;animation:fadeUp 1s 1.2s ease both}
+  .scroll-hint span{font-family:var(--font-body);font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gray)}
+  .scroll-bar{width:1px;height:34px;background:linear-gradient(180deg,var(--pink),transparent);animation:sbpulse 2s ease-in-out infinite}
+  @keyframes sbpulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+  /* SHARED */
+  section{position:relative;z-index:1}
+  .wrap{max-width:1180px;margin:0 auto;padding:96px 40px}
+  .s-tag{display:block;font-family:var(--font-body);font-size:10px;font-weight:500;letter-spacing:5px;text-transform:uppercase;color:var(--pink);margin-bottom:14px}
+  .s-title{font-family:var(--font-display);font-size:clamp(46px,7vw,78px);letter-spacing:2px;line-height:.9;color:var(--white);margin-bottom:48px}
+  .divider{display:flex;align-items:center;gap:14px;margin-bottom:52px}
+  .divider-line{flex:1;height:1px;background:var(--dark4)}
+  .divider-diamond{width:10px;height:10px;background:var(--pink);transform:rotate(45deg)}
+
+  /* ABOUT */
+  #sobre{background:var(--dark2);border-top:1px solid var(--dark4);border-bottom:1px solid var(--dark4)}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+  .about-text p{font-family:var(--font-body);font-size:15px;color:var(--gray-mid);line-height:1.85;margin-bottom:18px}
+  .about-photo{position:relative}
+  .about-photo img{width:100%;border-radius:4px;border:1px solid var(--dark4);display:block}
+  .photo-frame{position:absolute;inset:-7px;border:1px solid rgba(224,64,160,0.28);border-radius:6px;pointer-events:none}
+  .photo-corner{position:absolute;width:18px;height:18px;border-color:var(--pink);border-style:solid}
+  .photo-corner.tl{top:-8px;left:-8px;border-width:2px 0 0 2px}
+  .photo-corner.tr{top:-8px;right:-8px;border-width:2px 2px 0 0}
+  .photo-corner.bl{bottom:-8px;left:-8px;border-width:0 0 2px 2px}
+  .photo-corner.br{bottom:-8px;right:-8px;border-width:0 2px 2px 0}
+  .feat-list{display:flex;flex-direction:column;gap:14px;margin-top:28px}
+  .feat{display:flex;gap:18px;align-items:flex-start;padding:18px 20px;background:var(--dark3);border-left:3px solid var(--pink);border-radius:0 4px 4px 0}
+  .feat-icon{font-size:20px;flex-shrink:0}
+  .feat-title{font-family:var(--font-ui);font-size:15px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--white);margin-bottom:3px}
+  .feat-desc{font-family:var(--font-body);font-size:13px;color:var(--gray);line-height:1.5}
+
+  /* TEAM */
+  #equipo{background:var(--dark)}
+  .team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+  .player-card{background:var(--dark3);border:1px solid var(--dark4);border-radius:4px;overflow:hidden;transition:transform .25s,border-color .25s}
+  .player-card:hover{transform:translateY(-5px);border-color:rgba(224,64,160,0.5)}
+  .player-avatar{width:100%;aspect-ratio:1;background:var(--dark4);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+  .player-avatar-num{font-family:var(--font-display);font-size:96px;color:rgba(224,64,160,0.07);position:absolute;bottom:-8px;right:8px;line-height:1;z-index:0}
+  .player-avatar-ini{font-family:var(--font-display);font-size:58px;color:rgba(224,64,160,0.22);position:relative;z-index:1;letter-spacing:2px}
+  .player-stripe{height:3px;background:linear-gradient(90deg,var(--pink),var(--pink-dark));transform:scaleX(0);transform-origin:left;transition:transform .3s}
+  .player-card:hover .player-stripe{transform:scaleX(1)}
+  .player-info{padding:18px 20px}
+  .player-role{font-family:var(--font-body);font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--pink);margin-bottom:5px}
+  .player-name{font-family:var(--font-display);font-size:26px;letter-spacing:1px;color:var(--white);line-height:1;margin-bottom:2px}
+  .player-nick{font-family:var(--font-body);font-size:12px;color:var(--gray);margin-bottom:14px}
+  .sport-tags{display:flex;gap:6px;flex-wrap:wrap}
+  .sport-tag{font-family:var(--font-body);font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:2px;border:1px solid rgba(224,64,160,0.35);color:var(--pink-light);background:rgba(224,64,160,0.07)}
+
+  /* RESULTS */
+  #resultados{background:var(--dark2);border-top:1px solid var(--dark4);border-bottom:1px solid var(--dark4)}
+  .tabs{display:flex;border-bottom:1px solid var(--dark4);margin-bottom:34px}
+  .tab{font-family:var(--font-ui);font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray);background:none;border:none;border-bottom:2px solid transparent;padding:12px 24px;cursor:pointer;margin-bottom:-1px;transition:color .2s,border-color .2s}
+  .tab.active{color:var(--white);border-bottom-color:var(--pink)}
+  .tab:hover:not(.active){color:var(--gray-light)}
+  .tab-pane{display:none}
+  .tab-pane.active{display:block}
+  .match{display:flex;align-items:center;gap:18px;padding:18px 22px;background:var(--dark3);border:1px solid var(--dark4);border-radius:4px;margin-bottom:10px;transition:border-color .2s;position:relative}
+  .match:hover{border-color:rgba(224,64,160,0.3)}
+  .match-date{font-family:var(--font-body);font-size:11px;color:var(--gray);min-width:68px;text-align:center}
+  .match-date strong{display:block;font-family:var(--font-display);font-size:22px;color:var(--white);letter-spacing:1px;line-height:1}
+  .match-teams{flex:1;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .match-team{font-family:var(--font-ui);font-size:14px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--gray-light)}
+  .match-team.us{color:var(--pink-light)}
+  .match-score{font-family:var(--font-display);font-size:25px;color:var(--white);letter-spacing:4px;padding:0 12px}
+  .badge{font-family:var(--font-body);font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:2px;min-width:34px;text-align:center}
+  .badge-w{background:rgba(0,210,80,.1);color:#00d250;border:1px solid rgba(0,210,80,.3)}
+  .badge-l{background:rgba(224,64,160,.1);color:var(--pink-light);border:1px solid rgba(224,64,160,.3)}
+  .badge-d{background:rgba(255,255,255,.05);color:var(--gray);border:1px solid rgba(255,255,255,.1)}
+  .match-comp{font-family:var(--font-body);font-size:11px;color:var(--gray);min-width:100px;text-align:right}
+  .delete-btn{background:none;border:none;color:var(--gray);cursor:pointer;font-size:14px;transition:color .2s;display:none;padding:4px 8px;border-radius:2px}
+  .delete-btn:hover{color:var(--pink)}
+
+  /* NEWS */
+  #noticias{background:var(--dark)}
+  .news-grid{display:grid;grid-template-columns:3fr 2fr;gap:20px}
+  .news-featured{background:var(--dark3);border:1px solid var(--dark4);border-radius:4px;overflow:hidden;transition:border-color .2s;position:relative}
+  .news-featured:hover{border-color:rgba(224,64,160,.4)}
+  .news-img{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#1a0a10,#0e0e1a);display:flex;align-items:center;justify-content:center;font-size:52px;position:relative;overflow:hidden}
+  .news-img::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,var(--dark3),transparent 55%)}
+  .news-body{padding:24px 26px}
+  .news-tag{display:block;font-family:var(--font-body);font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--pink);margin-bottom:10px}
+  .news-h{font-family:var(--font-display);font-size:27px;letter-spacing:1px;line-height:1.05;color:var(--white);margin-bottom:10px}
+  .news-p{font-family:var(--font-body);font-size:13px;color:var(--gray);line-height:1.7;margin-bottom:16px}
+  .news-meta{font-family:var(--font-body);font-size:11px;color:var(--gray);letter-spacing:1px}
+  .news-list{display:flex;flex-direction:column;gap:12px}
+  .news-item{background:var(--dark3);border:1px solid var(--dark4);border-radius:4px;padding:18px 20px;transition:border-color .2s,transform .2s;position:relative}
+  .news-item:hover{border-color:rgba(224,64,160,.4);transform:translateX(4px)}
+  .news-item .news-h{font-size:17px;margin-bottom:7px}
+
+  /* CONTACT */
+  #contacto{background:var(--dark2);border-top:1px solid var(--dark4)}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:68px;align-items:start}
+  .cform{display:flex;flex-direction:column;gap:14px}
+  .fg{display:flex;flex-direction:column;gap:7px}
+  .fg label{font-family:var(--font-body);font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--gray)}
+  .fg input,.fg textarea{background:var(--dark3);border:1px solid var(--dark4);border-radius:2px;padding:11px 15px;color:var(--white);font-family:var(--font-body);font-size:14px;outline:none;transition:border-color .2s;resize:vertical}
+  .fg input:focus,.fg textarea:focus{border-color:var(--pink)}
+  .fg textarea{min-height:110px}
+  .cinfo{display:flex;flex-direction:column;gap:28px}
+  .cinfo-desc{font-family:var(--font-body);font-size:14px;color:var(--gray-mid);line-height:1.85}
+  .socials{display:flex;gap:10px;flex-wrap:wrap}
+  .social{display:flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid var(--dark4);border-radius:2px;text-decoration:none;font-family:var(--font-ui);font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--gray-light);transition:border-color .2s,color .2s}
+  .social:hover{border-color:var(--pink);color:var(--pink)}
+  .id-card{padding:18px 20px;border:1px solid var(--dark4);border-left:3px solid var(--pink);border-radius:0 4px 4px 0}
+  .id-name{font-family:var(--font-display);font-size:21px;letter-spacing:2px;color:var(--white);margin-bottom:4px}
+  .id-sub{font-family:var(--font-body);font-size:11px;color:var(--gray);letter-spacing:1px}
+
+  /* FOOTER */
+  footer{background:var(--dark);border-top:1px solid var(--dark4);padding:44px;text-align:center}
+  .foot-logo{font-family:var(--font-display);font-size:33px;letter-spacing:4px;color:var(--white);margin-bottom:13px}
+  .foot-logo span{color:var(--pink)}
+  .foot-rule{width:36px;height:2px;background:var(--pink);margin:14px auto}
+  .foot-text{font-family:var(--font-body);font-size:11px;color:var(--gray);letter-spacing:2px}
+
+  /* LOADING SKELETON */
+  .skeleton{background:var(--dark4);border-radius:3px;animation:shimmer 1.5s infinite}
+  @keyframes shimmer{0%,100%{opacity:.4}50%{opacity:.8}}
+  .skeleton-match{height:72px;margin-bottom:10px}
+  .skeleton-news{height:200px;margin-bottom:12px}
+
+  /* EMPTY STATE */
+  .empty-state{font-family:var(--font-body);font-size:14px;color:var(--gray);padding:32px 0;text-align:center}
+
+  /* ANIMATION */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  /* ════════════════════════════
+     ADMIN PANEL
+  ════════════════════════════ */
+  #admin-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:1000;backdrop-filter:blur(10px);overflow-y:auto;padding:40px 20px}
+  #admin-overlay.open{display:flex;align-items:flex-start;justify-content:center}
+  .admin-panel{background:var(--dark2);border:1px solid rgba(224,64,160,0.35);border-radius:6px;width:100%;max-width:740px;overflow:hidden;margin:auto}
+  .admin-header{display:flex;align-items:center;justify-content:space-between;padding:20px 28px;border-bottom:1px solid var(--dark4);background:var(--dark3)}
+  .admin-title{font-family:var(--font-display);font-size:28px;letter-spacing:3px;color:var(--white)}
+  .admin-title span{color:var(--pink)}
+  .admin-close{background:none;border:none;color:var(--gray-light);font-size:22px;cursor:pointer;transition:color .2s;line-height:1}
+  .admin-close:hover{color:var(--pink)}
+  .admin-login{padding:48px 36px;text-align:center}
+  .admin-login h3{font-family:var(--font-display);font-size:24px;letter-spacing:2px;color:var(--white);margin-bottom:8px}
+  .admin-login p{font-family:var(--font-body);font-size:13px;color:var(--gray);margin-bottom:28px}
+  .admin-login input{width:100%;background:var(--dark3);border:1px solid var(--dark4);border-radius:2px;padding:12px 16px;color:var(--white);font-family:var(--font-body);font-size:14px;outline:none;transition:border-color .2s;margin-bottom:14px}
+  .admin-login input:focus{border-color:var(--pink)}
+  .login-error{font-family:var(--font-body);font-size:12px;color:var(--pink-light);margin-bottom:12px;display:none}
+  .admin-tabs{display:flex;border-bottom:1px solid var(--dark4);background:var(--dark3)}
+  .admin-tab{font-family:var(--font-ui);font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray);background:none;border:none;border-bottom:2px solid transparent;padding:14px 22px;cursor:pointer;margin-bottom:-1px;transition:color .2s,border-color .2s}
+  .admin-tab.active{color:var(--white);border-bottom-color:var(--pink)}
+  .admin-tab:hover:not(.active){color:var(--gray-light)}
+  .admin-content{padding:28px}
+  .admin-pane{display:none}
+  .admin-pane.active{display:block}
+  .aform{display:flex;flex-direction:column;gap:14px}
+  .afg{display:flex;flex-direction:column;gap:6px}
+  .afg label{font-family:var(--font-body);font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--gray)}
+  .afg input,.afg textarea,.afg select{background:var(--dark3);border:1px solid var(--dark4);border-radius:2px;padding:10px 14px;color:var(--white);font-family:var(--font-body);font-size:14px;outline:none;transition:border-color .2s;resize:vertical}
+  .afg select option{background:var(--dark2)}
+  .afg input:focus,.afg textarea:focus,.afg select:focus{border-color:var(--pink)}
+  .afg textarea{min-height:80px}
+  .aform-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .admin-section-title{font-family:var(--font-ui);font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gray-light);margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--dark4)}
+  .admin-success{font-family:var(--font-body);font-size:12px;color:var(--green);margin-top:8px;display:none}
+  .admin-error-msg{font-family:var(--font-body);font-size:12px;color:var(--pink-light);margin-top:8px;display:none}
+  .admin-list{margin-top:24px}
+  .admin-list-title{font-family:var(--font-ui);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-bottom:12px}
+  .admin-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background:var(--dark3);border:1px solid var(--dark4);border-radius:3px;margin-bottom:8px}
+  .admin-item-text{font-family:var(--font-body);font-size:13px;color:var(--gray-light);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .admin-item-del{background:none;border:none;color:var(--gray);cursor:pointer;font-size:16px;transition:color .2s;flex-shrink:0;padding:2px 8px}
+  .admin-item-del:hover{color:var(--pink)}
+  .admin-footer{padding:16px 28px;border-top:1px solid var(--dark4);display:flex;justify-content:flex-end}
+  .logout-btn{font-family:var(--font-body);font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--gray);background:none;border:1px solid var(--dark4);padding:6px 14px;border-radius:2px;cursor:pointer;transition:color .2s,border-color .2s}
+  .logout-btn:hover{color:var(--pink-light);border-color:var(--pink)}
+  .spinning{display:inline-block;animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* MOBILE */
+  @media(max-width:760px){
+    nav{padding:0 20px}
+    .nav-links{display:none}
+    .hamburger{display:flex}
+    .nav-links.open{display:flex;flex-direction:column;position:fixed;top:62px;left:0;right:0;background:rgba(9,9,9,.97);padding:22px;gap:18px;border-bottom:1px solid var(--dark4)}
+    .wrap{padding:64px 22px}
+    .about-grid,.contact-grid{grid-template-columns:1fr;gap:44px}
+    .news-grid{grid-template-columns:1fr}
+    .hero-stats{gap:28px}
+    .match{flex-wrap:wrap}
+    .match-comp{display:none}
+    .aform-row{grid-template-columns:1fr}
+    footer{padding:32px 22px}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#inicio" class="nav-logo">
+    <svg viewBox="0 0 60 60" fill="none"><rect x="15" y="15" width="30" height="30" transform="rotate(45 30 30)" fill="none" stroke="#E040A0" stroke-width="2.5"/><rect x="21" y="21" width="18" height="18" transform="rotate(45 30 30)" fill="none" stroke="#E040A0" stroke-width="1" opacity=".4"/><rect x="7" y="7" width="8" height="8" transform="rotate(45 11 11)" fill="none" stroke="#E040A0" stroke-width="1.5"/><rect x="45" y="7" width="8" height="8" transform="rotate(45 49 11)" fill="none" stroke="#E040A0" stroke-width="1.5"/><rect x="7" y="45" width="8" height="8" transform="rotate(45 11 49)" fill="none" stroke="#E040A0" stroke-width="1.5"/><rect x="45" y="45" width="8" height="8" transform="rotate(45 49 49)" fill="none" stroke="#E040A0" stroke-width="1.5"/></svg>
+    <span class="nav-logo-text">TOLERANCIA <span>0'1</span></span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#equipo">Equipo</a></li>
+    <li><a href="#resultados">Resultados</a></li>
+    <li><a href="#noticias">Noticias</a></li>
+    <li><a href="#contacto" class="nav-cta">Contacto</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:8px">
+    <button class="nav-admin-btn" onclick="openAdmin()">⚙ Admin</button>
+    <button class="hamburger" id="hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="inicio">
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <span class="hero-badge">⚽ Fútbol &nbsp;·&nbsp; 🎮 Esports &nbsp;·&nbsp; Madrid</span>
+    <svg class="hero-shield" viewBox="0 0 100 100" fill="none"><rect x="18" y="18" width="64" height="64" transform="rotate(45 50 50)" fill="none" stroke="#E040A0" stroke-width="3"/><rect x="26" y="26" width="48" height="48" transform="rotate(45 50 50)" fill="none" stroke="#E040A0" stroke-width="1" opacity=".35"/><rect x="3" y="3" width="14" height="14" transform="rotate(45 10 10)" fill="none" stroke="#E040A0" stroke-width="2"/><rect x="83" y="3" width="14" height="14" transform="rotate(45 90 10)" fill="none" stroke="#E040A0" stroke-width="2"/><rect x="3" y="83" width="14" height="14" transform="rotate(45 10 90)" fill="none" stroke="#E040A0" stroke-width="2"/><rect x="83" y="83" width="14" height="14" transform="rotate(45 90 90)" fill="none" stroke="#E040A0" stroke-width="2"/><rect x="43" y="31" width="4" height="24" rx="2" fill="#E040A0" opacity=".75"/><rect x="49" y="27" width="4" height="28" rx="2" fill="#E040A0" opacity=".75"/><rect x="55" y="29" width="4" height="26" rx="2" fill="#E040A0" opacity=".75"/><rect x="61" y="33" width="4" height="22" rx="2" fill="#E040A0" opacity=".75"/><rect x="43" y="55" width="22" height="13" rx="3" fill="#E040A0" opacity=".75"/><rect x="37" y="51" width="8" height="17" rx="3" fill="#E040A0" opacity=".5"/></svg>
+    <h1 class="hero-title">TOLERANCIA<span class="accent">0'1</span></h1>
+    <p class="hero-sub">Sin margen de error · Jugar para ganar</p>
+    <div class="hero-rule"></div>
+    <p class="hero-desc">Equipo de fútbol y esports. Aquí la mediocridad no tiene cabida — cada partido, cada ronda, cada punto cuenta.</p>
+    <div class="hero-btns">
+      <a href="#equipo" class="btn-p">Conoce al equipo</a>
+      <a href="#resultados" class="btn-s">Ver resultados</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-num">3<em>+</em></div><div class="stat-lbl">Jugadores</div></div>
+      <div class="stat-item"><div class="stat-num" id="stat-torneos">—</div><div class="stat-lbl">Torneos</div></div>
+      <div class="stat-item"><div class="stat-num">2</div><div class="stat-lbl">Modalidades</div></div>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>Scroll</span><div class="scroll-bar"></div></div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-photo reveal">
+        <img src="equipo.jpg" alt="Tolerancia 0'1 con la equipación rosa">
+        <div class="photo-frame"></div>
+        <div class="photo-corner tl"></div><div class="photo-corner tr"></div>
+        <div class="photo-corner bl"></div><div class="photo-corner br"></div>
+      </div>
+      <div class="about-text reveal">
+        <span class="s-tag">Quiénes somos</span>
+        <h2 class="s-title">EL EQUIPO</h2>
+        <p>Tolerancia 0'1 nació con una idea clara: competir sin excusas. Un nombre que lo dice todo — el margen es casi cero, la exigencia es máxima.</p>
+        <p>Nos movemos tanto en el verde como en la pantalla. Fútbol e Esports son nuestras disciplinas, y en ambas buscamos lo mismo: mejorar cada día y ganar con cabeza.</p>
+        <div class="feat-list">
+          <div class="feat"><div class="feat-icon">⚽</div><div><div class="feat-title">Fútbol</div><div class="feat-desc">Ligas y torneos locales. Técnica, táctica y actitud definen nuestro juego.</div></div></div>
+          <div class="feat"><div class="feat-icon">🎮</div><div><div class="feat-title">Esports</div><div class="feat-desc">LoL, Valorant, CS y más. Mente fría y ejecución precisa.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EQUIPO -->
+<section id="equipo">
+  <div class="wrap">
+    <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+    <span class="s-tag">Los jugadores</span>
+    <h2 class="s-title reveal">PLANTILLA</h2>
+    <div class="team-grid" id="teamGrid"></div>
+  </div>
+</section>
+
+<!-- RESULTADOS -->
+<section id="resultados">
+  <div class="wrap">
+    <span class="s-tag">Historial</span>
+    <h2 class="s-title reveal">RESULTADOS</h2>
+    <div class="tabs">
+      <button class="tab active" data-tab="ftb">⚽ Fútbol</button>
+      <button class="tab" data-tab="esp">🎮 Esports</button>
+    </div>
+    <div class="tab-pane active" id="tab-ftb"><div id="matches-ftb"></div></div>
+    <div class="tab-pane" id="tab-esp"><div id="matches-esp"></div></div>
+  </div>
+</section>
+
+<!-- NOTICIAS -->
+<section id="noticias">
+  <div class="wrap">
+    <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+    <span class="s-tag">Lo último</span>
+    <h2 class="s-title reveal">NOTICIAS</h2>
+    <div class="news-grid">
+      <div id="news-featured-wrap"></div>
+      <div class="news-list" id="news-list-wrap"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="wrap">
+    <span class="s-tag">Únete o escríbenos</span>
+    <h2 class="s-title reveal">CONTACTO</h2>
+    <div class="contact-grid">
+      <form class="cform reveal" onsubmit="handleContactForm(event)">
+        <div class="fg"><label>Tu nombre</label><input type="text" placeholder="Nombre o nick" required></div>
+        <div class="fg"><label>Email</label><input type="email" placeholder="tu@email.com" required></div>
+        <div class="fg"><label>Mensaje</label><textarea placeholder="¿Quieres unirte? ¿Tienes alguna propuesta?"></textarea></div>
+        <button type="submit" class="btn-p">Enviar mensaje →</button>
+        <p id="contactMsg" style="font-family:var(--font-body);font-size:13px;color:var(--green);margin-top:8px;display:none">✓ ¡Mensaje enviado!</p>
+      </form>
+      <div class="cinfo reveal">
+        <div>
+          <h3 style="font-family:var(--font-display);font-size:26px;letter-spacing:2px;margin-bottom:12px">¿QUIERES UNIRTE?</h3>
+          <p class="cinfo-desc">Si quieres jugar con nosotros — en el campo o delante de una pantalla — escríbenos. Buscamos jugadores con ganas de competir y buen rollo.</p>
+        </div>
+        <div>
+          <p style="font-family:var(--font-body);font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gray);margin-bottom:12px">Síguenos</p>
+          <div class="socials">
+            <a href="#" class="social">📷 Instagram</a>
+            <a href="#" class="social">💬 Discord</a>
+            <a href="#" class="social">🐦 Twitter / X</a>
+          </div>
+        </div>
+        <div class="id-card"><div class="id-name">TOLERANCIA 0'1</div><div class="id-sub">Sin margen de error · Madrid, España</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-logo">TOLERANCIA <span>0'1</span></div>
+  <div class="foot-rule"></div>
+  <p class="foot-text">© 2025 Tolerancia 0'1 · Todos los derechos reservados</p>
+</footer>
+
+<!-- ADMIN PANEL -->
+<div id="admin-overlay">
+  <div class="admin-panel">
+    <div class="admin-header">
+      <div class="admin-title">PANEL <span>ADMIN</span></div>
+      <button class="admin-close" onclick="closeAdmin()">✕</button>
+    </div>
+
+    <!-- LOGIN -->
+    <div class="admin-login" id="adminLogin">
+      <h3>ACCESO RESTRINGIDO</h3>
+      <p>Introduce la contraseña del equipo para gestionar la web.</p>
+      <p class="login-error" id="loginError">❌ Contraseña incorrecta</p>
+      <input type="password" id="adminPass" placeholder="Contraseña" onkeydown="if(event.key==='Enter')doLogin()">
+      <button class="btn-p" style="width:100%" onclick="doLogin()">Entrar →</button>
+    </div>
+
+    <!-- CONTENT -->
+    <div id="adminContent" style="display:none">
+      <div class="admin-tabs">
+        <button class="admin-tab active" data-atab="resultados">⚽🎮 Resultados</button>
+        <button class="admin-tab" data-atab="noticias">📰 Noticias</button>
+      </div>
+      <div class="admin-content">
+
+        <!-- RESULTADOS -->
+        <div class="admin-pane active" id="apane-resultados">
+          <div class="admin-section-title">Añadir nuevo resultado</div>
+          <div class="aform">
+            <div class="aform-row">
+              <div class="afg"><label>Modalidad</label>
+                <select id="r-tipo"><option value="ftb">⚽ Fútbol</option><option value="esp">🎮 Esports</option></select>
+              </div>
+              <div class="afg"><label>Resultado</label>
+                <select id="r-result"><option value="w">Victoria (W)</option><option value="d">Empate (E)</option><option value="l">Derrota (L)</option></select>
+              </div>
+            </div>
+            <div class="aform-row">
+              <div class="afg"><label>Nuestro equipo</label><input id="r-us" type="text" value="Tolerancia 0'1"></div>
+              <div class="afg"><label>Rival</label><input id="r-rival" type="text" placeholder="Nombre del rival"></div>
+            </div>
+            <div class="aform-row">
+              <div class="afg"><label>Goles / puntos nuestros</label><input id="r-g1" type="text" placeholder="3"></div>
+              <div class="afg"><label>Goles / puntos rival</label><input id="r-g2" type="text" placeholder="1"></div>
+            </div>
+            <div class="aform-row">
+              <div class="afg"><label>Fecha</label><input id="r-fecha" type="date"></div>
+              <div class="afg"><label>Competición</label><input id="r-comp" type="text" placeholder="Liga Local"></div>
+            </div>
+            <div class="afg"><label>¿Somos locales? (nuestro marcador va primero)</label>
+              <select id="r-local"><option value="yes">Sí, somos locales</option><option value="no">No, somos visitantes</option></select>
+            </div>
+            <button class="btn-p" id="r-submit" onclick="addResult()">Añadir resultado</button>
+            <p class="admin-success" id="r-ok">✓ Resultado guardado en la base de datos</p>
+            <p class="admin-error-msg" id="r-err">❌ Error al guardar. Inténtalo de nuevo.</p>
+          </div>
+          <div class="admin-list">
+            <div class="admin-list-title">Resultados en la base de datos</div>
+            <div id="admin-results-list"><div class="skeleton skeleton-match"></div><div class="skeleton skeleton-match"></div></div>
+          </div>
+        </div>
+
+        <!-- NOTICIAS -->
+        <div class="admin-pane" id="apane-noticias">
+          <div class="admin-section-title">Publicar nueva noticia</div>
+          <div class="aform">
+            <div class="afg"><label>Categoría</label>
+              <select id="n-tag"><option value="Fútbol">⚽ Fútbol</option><option value="Esports">🎮 Esports</option><option value="Equipo">👥 Equipo</option><option value="Entrenamiento">💪 Entrenamiento</option><option value="Torneo">🏆 Torneo</option></select>
+            </div>
+            <div class="afg"><label>Titular</label><input id="n-titulo" type="text" placeholder="VICTORIA HISTÓRICA EN EL TORNEO..."></div>
+            <div class="afg"><label>Texto</label><textarea id="n-texto" placeholder="Descripción de la noticia..."></textarea></div>
+            <button class="btn-p" id="n-submit" onclick="addNews()">Publicar noticia</button>
+            <p class="admin-success" id="n-ok">✓ Noticia publicada en la base de datos</p>
+            <p class="admin-error-msg" id="n-err">❌ Error al publicar. Inténtalo de nuevo.</p>
+          </div>
+          <div class="admin-list">
+            <div class="admin-list-title">Noticias publicadas</div>
+            <div id="admin-news-list"><div class="skeleton skeleton-match"></div><div class="skeleton skeleton-match"></div></div>
+          </div>
+        </div>
+
+      </div>
+      <div class="admin-footer">
+        <button class="logout-btn" onclick="doLogout()">Cerrar sesión</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════
+// CONFIGURACIÓN
+// ══════════════════════════════════════════════════
+const SUPABASE_URL = 'https://nrgsgdhuabsgyqqrjzfp.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_BeGHC7EEH1TwYLxIgkJzdA_2i61LJ1w';
+const ADMIN_PASSWORD = 'tol01admin'; // ← cámbiala cuando quieras
+
+// ── PLAYERS (edita aquí directamente) ──
+const players = [
+  { name:'JUGADOR 1', nick:'"Nick1"', role:'Capitán',   sports:['Fútbol','Valorant'], ini:'J1', num:'01' },
+  { name:'JUGADOR 2', nick:'"Nick2"', role:'Delantero',  sports:['Fútbol'],            ini:'J2', num:'02' },
+  { name:'JUGADOR 3', nick:'"Nick3"', role:'Carry LoL',  sports:['LoL','CS'],          ini:'J3', num:'03' },
+];
+
+// ══════════════════════════════════════════════════
+// SUPABASE FETCH HELPER
+// ══════════════════════════════════════════════════
+async function sbFetch(path, opts = {}) {
+  const url = SUPABASE_URL + '/rest/v1/' + path;
+  const headers = {
+    'apikey': SUPABASE_KEY,
+    'Authorization': 'Bearer ' + SUPABASE_KEY,
+    'Content-Type': 'application/json',
+    'Prefer': opts.prefer || 'return=representation',
+    ...opts.headers
+  };
+  const res = await fetch(url, { method: opts.method || 'GET', headers, body: opts.body });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(err);
+  }
+  if (res.status === 204) return [];
+  return res.json();
+}
+
+// ══════════════════════════════════════════════════
+// SETUP — crea las tablas si no existen
+// (usa la SQL Editor de Supabase la primera vez)
+// ══════════════════════════════════════════════════
+
+// ══════════════════════════════════════════════════
+// FORMAT DATE
+// ══════════════════════════════════════════════════
+function fmtDate(str) {
+  if (!str) return { day:'?', mon:'?' };
+  const d = new Date(str + 'T12:00:00');
+  const M = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  return { day: d.getDate(), mon: M[d.getMonth()] + " '" + String(d.getFullYear()).slice(2) };
+}
+
+// ══════════════════════════════════════════════════
+// RENDER MATCHES
+// ══════════════════════════════════════════════════
+async function loadMatches() {
+  ['ftb','esp'].forEach(t => {
+    document.getElementById('matches-' + t).innerHTML =
+      '<div class="skeleton skeleton-match"></div>'.repeat(3);
+  });
+  try {
+    const data = await sbFetch('resultados?order=fecha.desc&select=*');
+    const adminMode = sessionStorage.getItem('tol_admin') === '1';
+    ['ftb','esp'].forEach(tipo => {
+      const wrap = document.getElementById('matches-' + tipo);
+      const list = data.filter(r => r.tipo === tipo);
+      if (!list.length) { wrap.innerHTML = '<p class="empty-state">Aún no hay resultados aquí.</p>'; return; }
+      wrap.innerHTML = list.map(r => {
+        const dt = fmtDate(r.fecha);
+        const local = r.local === 'yes';
+        const tA = local ? `<span class="match-team us">${r.us}</span>` : `<span class="match-team">${r.rival}</span>`;
+        const tB = local ? `<span class="match-team">${r.rival}</span>` : `<span class="match-team us">${r.us}</span>`;
+        const sA = local ? r.g1 : r.g2, sB = local ? r.g2 : r.g1;
+        const bc = r.result==='w'?'badge-w':r.result==='l'?'badge-l':'badge-d';
+        const bt = r.result==='w'?'W':r.result==='l'?'L':'E';
+        const del = adminMode ? `<button class="delete-btn" style="display:block" onclick="deleteResult(${r.id})">✕</button>` : '';
+        return `<div class="match reveal">${del}
+          <div class="match-date"><strong>${dt.day}</strong>${dt.mon}</div>
+          <div class="match-teams">${tA}<span class="match-score">${sA} — ${sB}</span>${tB}</div>
+          <span class="badge ${bc}">${bt}</span>
+          <span class="match-comp">${r.comp||''}</span>
+        </div>`;
+      }).join('');
+      observeReveals();
+    });
+    // update stat
+    const comps = new Set(data.map(r => r.comp).filter(Boolean));
+    document.getElementById('stat-torneos').innerHTML = comps.size + '<em>+</em>';
+  } catch(e) {
+    ['ftb','esp'].forEach(t => {
+      document.getElementById('matches-' + t).innerHTML =
+        '<p class="empty-state">Error cargando resultados. Comprueba la conexión.</p>';
+    });
+  }
+}
+
+// ══════════════════════════════════════════════════
+// RENDER NEWS
+// ══════════════════════════════════════════════════
+async function loadNews() {
+  document.getElementById('news-featured-wrap').innerHTML = '<div class="skeleton skeleton-news"></div>';
+  document.getElementById('news-list-wrap').innerHTML = '<div class="skeleton skeleton-match"></div>'.repeat(3);
+  try {
+    const data = await sbFetch('noticias?order=created_at.desc&select=*');
+    const adminMode = sessionStorage.getItem('tol_admin') === '1';
+    const featured = data[0], rest = data.slice(1);
+
+    const fw = document.getElementById('news-featured-wrap');
+    if (featured) {
+      const icon = featured.tag==='Fútbol'?'⚽':featured.tag==='Esports'?'🎮':'📰';
+      const del = adminMode ? `<button class="delete-btn" style="display:block;position:absolute;top:10px;right:10px;z-index:10" onclick="deleteNews(${featured.id})">✕</button>` : '';
+      fw.innerHTML = `<div class="news-featured reveal" style="position:relative">${del}
+        <div class="news-img">${icon}</div>
+        <div class="news-body">
+          <span class="news-tag">${featured.tag} · Destacado</span>
+          <h3 class="news-h">${featured.titulo}</h3>
+          <p class="news-p">${featured.texto}</p>
+          <span class="news-meta">${(featured.created_at||'').slice(0,10)}</span>
+        </div></div>`;
+    } else {
+      fw.innerHTML = '<p class="empty-state">Aún no hay noticias publicadas.</p>';
+    }
+
+    const lw = document.getElementById('news-list-wrap');
+    lw.innerHTML = rest.map(n => {
+      const del = adminMode ? `<button class="delete-btn" style="display:block;position:absolute;top:8px;right:8px" onclick="deleteNews(${n.id})">✕</button>` : '';
+      return `<div class="news-item reveal" style="position:relative">${del}
+        <span class="news-tag">${n.tag}</span>
+        <h3 class="news-h">${n.titulo}</h3>
+        <p class="news-p">${n.texto}</p>
+        <span class="news-meta">${(n.created_at||'').slice(0,10)}</span>
+      </div>`;
+    }).join('') || '';
+    observeReveals();
+  } catch(e) {
+    document.getElementById('news-featured-wrap').innerHTML = '<p class="empty-state">Error cargando noticias.</p>';
+    document.getElementById('news-list-wrap').innerHTML = '';
+  }
+}
+
+// ══════════════════════════════════════════════════
+// ADD / DELETE RESULTS
+// ══════════════════════════════════════════════════
+async function addResult() {
+  const rival = document.getElementById('r-rival').value.trim();
+  const g1    = document.getElementById('r-g1').value.trim();
+  const g2    = document.getElementById('r-g2').value.trim();
+  const fecha = document.getElementById('r-fecha').value;
+  if (!rival || !g1 || !g2 || !fecha) { alert('Rellena todos los campos.'); return; }
+
+  const btn = document.getElementById('r-submit');
+  btn.innerHTML = '<span class="spinning">⏳</span> Guardando...';
+  btn.disabled = true;
+
+  try {
+    await sbFetch('resultados', {
+      method: 'POST',
+      body: JSON.stringify({
+        tipo:   document.getElementById('r-tipo').value,
+        us:     document.getElementById('r-us').value.trim(),
+        rival, g1, g2,
+        result: document.getElementById('r-result').value,
+        fecha,
+        comp:   document.getElementById('r-comp').value.trim(),
+        local:  document.getElementById('r-local').value,
+      })
+    });
+    ['r-rival','r-g1','r-g2','r-comp'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('r-fecha').value = '';
+    showMsg('r-ok'); loadMatches(); renderAdminLists();
+  } catch(e) {
+    showMsg('r-err');
+  }
+  btn.innerHTML = 'Añadir resultado'; btn.disabled = false;
+}
+
+async function deleteResult(id) {
+  if (!confirm('¿Eliminar este resultado?')) return;
+  try {
+    await sbFetch('resultados?id=eq.' + id, { method: 'DELETE', prefer: 'return=minimal' });
+    loadMatches(); renderAdminLists();
+  } catch(e) { alert('Error al eliminar.'); }
+}
+
+// ══════════════════════════════════════════════════
+// ADD / DELETE NEWS
+// ══════════════════════════════════════════════════
+async function addNews() {
+  const titulo = document.getElementById('n-titulo').value.trim();
+  const texto  = document.getElementById('n-texto').value.trim();
+  if (!titulo || !texto) { alert('Rellena el titular y el texto.'); return; }
+
+  const btn = document.getElementById('n-submit');
+  btn.innerHTML = '<span class="spinning">⏳</span> Publicando...';
+  btn.disabled = true;
+
+  try {
+    await sbFetch('noticias', {
+      method: 'POST',
+      body: JSON.stringify({ tag: document.getElementById('n-tag').value, titulo, texto })
+    });
+    document.getElementById('n-titulo').value = '';
+    document.getElementById('n-texto').value = '';
+    showMsg('n-ok'); loadNews(); renderAdminLists();
+  } catch(e) {
+    showMsg('n-err');
+  }
+  btn.innerHTML = 'Publicar noticia'; btn.disabled = false;
+}
+
+async function deleteNews(id) {
+  if (!confirm('¿Eliminar esta noticia?')) return;
+  try {
+    await sbFetch('noticias?id=eq.' + id, { method: 'DELETE', prefer: 'return=minimal' });
+    loadNews(); renderAdminLists();
+  } catch(e) { alert('Error al eliminar.'); }
+}
+
+// ══════════════════════════════════════════════════
+// ADMIN LISTS
+// ══════════════════════════════════════════════════
+async function renderAdminLists() {
+  try {
+    const [results, newsList] = await Promise.all([
+      sbFetch('resultados?order=fecha.desc&select=*'),
+      sbFetch('noticias?order=created_at.desc&select=*')
+    ]);
+    document.getElementById('admin-results-list').innerHTML =
+      results.map(r => `<div class="admin-item">
+        <span class="admin-item-text">${r.fecha} · ${r.us} ${r.g1}–${r.g2} ${r.rival} (${r.tipo==='ftb'?'⚽':'🎮'})</span>
+        <button class="admin-item-del" onclick="deleteResult(${r.id})">✕</button>
+      </div>`).join('') || '<p class="empty-state" style="padding:12px 0">Sin resultados.</p>';
+
+    document.getElementById('admin-news-list').innerHTML =
+      newsList.map(n => `<div class="admin-item">
+        <span class="admin-item-text">[${n.tag}] ${n.titulo}</span>
+        <button class="admin-item-del" onclick="deleteNews(${n.id})">✕</button>
+      </div>`).join('') || '<p class="empty-state" style="padding:12px 0">Sin noticias.</p>';
+  } catch(e) {}
+}
+
+function showMsg(id) {
+  const el = document.getElementById(id);
+  el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 3500);
+}
+
+// ══════════════════════════════════════════════════
+// ADMIN OPEN/CLOSE/LOGIN
+// ══════════════════════════════════════════════════
+function openAdmin() {
+  document.getElementById('admin-overlay').classList.add('open');
+  if (sessionStorage.getItem('tol_admin') === '1') showAdminContent();
+  else showAdminLogin();
+}
+function closeAdmin() { document.getElementById('admin-overlay').classList.remove('open'); }
+function showAdminLogin() {
+  document.getElementById('adminLogin').style.display = 'block';
+  document.getElementById('adminContent').style.display = 'none';
+  document.getElementById('loginError').style.display = 'none';
+  document.getElementById('adminPass').value = '';
+}
+function showAdminContent() {
+  document.getElementById('adminLogin').style.display = 'none';
+  document.getElementById('adminContent').style.display = 'block';
+  renderAdminLists();
+}
+function doLogin() {
+  if (document.getElementById('adminPass').value === ADMIN_PASSWORD) {
+    sessionStorage.setItem('tol_admin', '1');
+    showAdminContent();
+    loadMatches(); loadNews();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+    document.getElementById('adminPass').value = '';
+  }
+}
+function doLogout() {
+  sessionStorage.removeItem('tol_admin');
+  closeAdmin(); loadMatches(); loadNews();
+}
+document.getElementById('adminPass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+document.querySelectorAll('.admin-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.admin-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('apane-' + btn.dataset.atab).classList.add('active');
+  });
+});
+document.getElementById('admin-overlay').addEventListener('click', e => { if(e.target===e.currentTarget) closeAdmin(); });
+
+// ══════════════════════════════════════════════════
+// TEAM
+// ══════════════════════════════════════════════════
+function renderTeam() {
+  document.getElementById('teamGrid').innerHTML = players.map((p,i) => `
+    <div class="player-card reveal">
+      <div class="player-avatar">
+        <div class="player-avatar-num">${p.num}</div>
+        <div class="player-avatar-ini">${p.ini}</div>
+      </div>
+      <div class="player-stripe"></div>
+      <div class="player-info">
+        <div class="player-role">${p.role}</div>
+        <div class="player-name">${p.name}</div>
+        <div class="player-nick">${p.nick}</div>
+        <div class="sport-tags">${p.sports.map(s=>`<span class="sport-tag">${s}</span>`).join('')}</div>
+      </div>
+    </div>`).join('');
+}
+
+// ══════════════════════════════════════════════════
+// TABS, REVEAL, NAV, CONTACT
+// ══════════════════════════════════════════════════
+document.querySelectorAll('.tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    observeReveals();
+  });
+});
+
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+function observeReveals() {
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el => revealObs.observe(el));
+}
+
+const secs = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY + 80;
+  secs.forEach(s => {
+    const a = document.querySelector(`.nav-links a[href="#${s.id}"]`);
+    if(a) a.classList.toggle('active', y >= s.offsetTop && y < s.offsetTop + s.offsetHeight);
+  });
+}, { passive: true });
+
+const ham = document.getElementById('hamburger');
+const nl  = document.getElementById('navLinks');
+ham.addEventListener('click', () => nl.classList.toggle('open'));
+nl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nl.classList.remove('open')));
+
+function handleContactForm(e) {
+  e.preventDefault();
+  const msg = document.getElementById('contactMsg');
+  msg.style.display = 'block'; e.target.reset();
+  setTimeout(() => msg.style.display = 'none', 4000);
+}
+
+// ══════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════
+renderTeam();
+loadMatches();
+loadNews();
+observeReveals();
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+</script>
+</body>
+</html>

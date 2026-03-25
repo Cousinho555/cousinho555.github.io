@@ -135,7 +135,10 @@
   .news-featured{background:var(--dark3);border:1px solid var(--dark4);border-radius:4px;overflow:hidden;transition:border-color .2s;position:relative}
   .news-featured:hover{border-color:rgba(224,64,160,.4)}
   .news-img{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#1a0a10,#0e0e1a);display:flex;align-items:center;justify-content:center;font-size:52px;position:relative;overflow:hidden}
-  .news-img::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,var(--dark3),transparent 55%)}
+  .news-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  .news-img iframe{position:absolute;inset:0;width:100%;height:100%;border:none;z-index:0}
+  .news-img-icon{position:relative;z-index:1;font-size:52px}
+  .news-img::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,var(--dark3),transparent 55%);z-index:2;pointer-events:none}
   .news-body{padding:24px 26px}
   .news-tag{display:block;font-family:var(--font-body);font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--pink);margin-bottom:10px}
   .news-h{font-family:var(--font-display);font-size:27px;letter-spacing:1px;line-height:1.05;color:var(--white);margin-bottom:10px}
@@ -171,6 +174,40 @@
   .foot-rule{width:36px;height:2px;background:var(--pink);margin:14px auto}
   .foot-text{font-family:var(--font-body);font-size:11px;color:var(--gray);letter-spacing:2px}
 
+  /* VER MÁS / PÁGINA COMPLETA */
+  .ver-mas-btn{display:flex;align-items:center;gap:10px;margin:20px auto 0;font-family:var(--font-ui);font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--pink-light);background:none;border:1px solid rgba(224,64,160,0.3);padding:12px 28px;border-radius:2px;cursor:pointer;transition:all .2s}
+  .ver-mas-btn:hover{background:rgba(224,64,160,0.08);border-color:var(--pink);color:var(--pink);transform:translateY(-1px)}
+  .ver-mas-btn span{font-size:16px;transition:transform .2s}
+  .ver-mas-btn:hover span{transform:translateX(4px)}
+
+  /* FULL PAGE OVERLAY */
+  #fullpage{display:none;position:fixed;inset:0;z-index:300;background:var(--dark);overflow-y:auto}
+  #fullpage.open{display:block;animation:fpIn .35s ease both}
+  @keyframes fpIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+  .fp-nav{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:20px;padding:0 44px;height:62px;background:rgba(9,9,9,0.96);border-bottom:1px solid rgba(224,64,160,0.25);backdrop-filter:blur(16px)}
+  .fp-back{display:flex;align-items:center;gap:8px;font-family:var(--font-ui);font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-light);background:none;border:none;cursor:pointer;transition:color .2s;padding:0}
+  .fp-back:hover{color:var(--pink)}
+  .fp-back-arrow{font-size:18px;transition:transform .2s}
+  .fp-back:hover .fp-back-arrow{transform:translateX(-3px)}
+  .fp-title{font-family:var(--font-display);font-size:22px;letter-spacing:3px;color:var(--white)}
+  .fp-title span{color:var(--pink)}
+  .fp-inner{max-width:900px;margin:0 auto;padding:60px 40px}
+  .fp-section-title{font-family:var(--font-display);font-size:clamp(36px,6vw,64px);letter-spacing:2px;color:var(--white);margin-bottom:40px;line-height:1}
+  .fp-section-title span{color:var(--pink)}
+  .fp-tabs{display:flex;border-bottom:1px solid var(--dark4);margin-bottom:32px}
+  .fp-tab{font-family:var(--font-ui);font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray);background:none;border:none;border-bottom:2px solid transparent;padding:12px 24px;cursor:pointer;margin-bottom:-1px;transition:color .2s,border-color .2s}
+  .fp-tab.active{color:var(--white);border-bottom-color:var(--pink)}
+  .fp-tab:hover:not(.active){color:var(--gray-light)}
+  .fp-pane{display:none}
+  .fp-pane.active{display:block}
+  .fp-news-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:760px){
+    .fp-nav{padding:0 20px}
+    .fp-inner{padding:40px 20px}
+    .fp-news-grid{grid-template-columns:1fr}
+    .ver-mas-btn{width:100%}
+  }
+
   /* LOADING SKELETON */
   .skeleton{background:var(--dark4);border-radius:3px;animation:shimmer 1.5s infinite}
   @keyframes shimmer{0%,100%{opacity:.4}50%{opacity:.8}}
@@ -184,6 +221,87 @@
   @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
   .reveal{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease}
   .reveal.visible{opacity:1;transform:translateY(0)}
+
+  /* ════════════════════════════
+     RPG PLAYER PROFILE
+  ════════════════════════════ */
+  #rpg-overlay{display:none;position:fixed;inset:0;z-index:400;overflow-y:auto;background:#04010a}
+  #rpg-overlay.open{display:block;animation:fpIn .4s ease both}
+
+  .rpg-wrap{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative}
+
+  /* scanline effect */
+  .rpg-wrap::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.07) 2px,rgba(0,0,0,0.07) 4px);pointer-events:none;z-index:10}
+
+  /* LEFT — photo panel */
+  .rpg-photo-panel{position:relative;min-height:100vh;overflow:hidden}
+  .rpg-photo-panel img{width:100%;height:100%;object-fit:cover;object-position:top;filter:saturate(1.1) contrast(1.05)}
+  .rpg-photo-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#1a0a14,#08050f);font-family:var(--font-display);font-size:140px;color:rgba(224,64,160,0.15);letter-spacing:4px}
+  .rpg-photo-overlay{position:absolute;inset:0;background:linear-gradient(90deg,transparent 40%,#04010a 100%),linear-gradient(0deg,#04010a 0%,transparent 30%)}
+  .rpg-photo-num{position:absolute;bottom:32px;left:32px;font-family:var(--font-display);font-size:160px;line-height:1;color:rgba(224,64,160,0.06);letter-spacing:-4px;pointer-events:none}
+
+  /* back button */
+  .rpg-back{position:fixed;top:20px;left:20px;z-index:50;display:flex;align-items:center;gap:8px;font-family:var(--font-ui);font-size:12px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.6);background:rgba(4,1,10,0.7);border:1px solid rgba(224,64,160,0.25);backdrop-filter:blur(8px);padding:9px 16px;border-radius:2px;cursor:pointer;transition:all .2s}
+  .rpg-back:hover{color:var(--pink);border-color:var(--pink)}
+  .rpg-back-arrow{transition:transform .2s}
+  .rpg-back:hover .rpg-back-arrow{transform:translateX(-3px)}
+
+  /* RIGHT — stats panel */
+  .rpg-stats-panel{padding:60px 48px 60px 40px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1}
+
+  .rpg-team-tag{font-family:var(--font-body);font-size:10px;font-weight:500;letter-spacing:5px;text-transform:uppercase;color:var(--pink);margin-bottom:12px}
+
+  .rpg-nick{font-family:var(--font-display);font-size:clamp(52px,7vw,90px);line-height:.88;letter-spacing:2px;color:var(--white);margin-bottom:6px}
+
+  .rpg-fullname{font-family:var(--font-body);font-size:13px;color:var(--gray-mid);letter-spacing:2px;text-transform:uppercase;margin-bottom:24px}
+
+  /* class + level badges */
+  .rpg-badges{display:flex;align-items:center;gap:12px;margin-bottom:32px;flex-wrap:wrap}
+  .rpg-badge-clase{font-family:var(--font-ui);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:6px 16px;border:1px solid rgba(224,64,160,0.4);color:var(--pink-light);background:rgba(224,64,160,0.08);border-radius:2px}
+  .rpg-badge-nivel{font-family:var(--font-display);font-size:18px;letter-spacing:2px;padding:4px 14px;background:var(--pink);color:var(--white);border-radius:2px}
+  .rpg-badge-nivel span{font-family:var(--font-body);font-size:10px;font-weight:500;letter-spacing:2px;margin-right:4px;opacity:.8}
+
+  /* lema */
+  .rpg-lema-wrap{position:relative;padding:18px 22px;margin-bottom:36px;border-left:3px solid var(--pink);background:rgba(224,64,160,0.05)}
+  .rpg-lema-icon{position:absolute;top:-10px;left:16px;font-size:20px;line-height:1}
+  .rpg-lema{font-family:var(--font-body);font-size:14px;font-style:italic;color:var(--gray-light);line-height:1.6}
+
+  /* stats bars */
+  .rpg-stats-title{font-family:var(--font-ui);font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gray);margin-bottom:18px}
+  .rpg-stat-row{margin-bottom:14px}
+  .rpg-stat-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+  .rpg-stat-name{font-family:var(--font-ui);font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-light)}
+  .rpg-stat-val{font-family:var(--font-display);font-size:18px;letter-spacing:1px;color:var(--white)}
+  .rpg-bar-track{height:4px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden}
+  .rpg-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--pink-dark),var(--pink),var(--pink-light));width:0%;transition:width 1s cubic-bezier(.4,0,.2,1)}
+
+  /* abilities */
+  .rpg-abilities-title{font-family:var(--font-ui);font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gray);margin:28px 0 14px}
+  .rpg-abilities{display:flex;gap:8px;flex-wrap:wrap}
+  .rpg-ability{font-family:var(--font-body);font-size:11px;font-weight:500;letter-spacing:1px;padding:6px 14px;border:1px solid rgba(224,64,160,0.3);color:var(--pink-light);background:rgba(224,64,160,0.06);border-radius:2px;position:relative}
+  .rpg-ability::before{content:'✦';margin-right:6px;font-size:8px;opacity:.6}
+
+  /* corner decorations */
+  .rpg-corner{position:absolute;width:24px;height:24px;border-color:var(--pink);border-style:solid;opacity:.5}
+  .rpg-corner.tl{top:16px;left:16px;border-width:2px 0 0 2px}
+  .rpg-corner.br{bottom:16px;right:16px;border-width:0 2px 2px 0}
+
+  /* mobile */
+  @media(max-width:760px){
+    .rpg-wrap{grid-template-columns:1fr;grid-template-rows:50vh auto}
+    .rpg-photo-panel{min-height:50vh}
+    .rpg-photo-overlay{background:linear-gradient(0deg,#04010a 0%,transparent 50%)}
+    .rpg-stats-panel{padding:32px 22px}
+    .rpg-nick{font-size:clamp(44px,12vw,72px)}
+    .rpg-back{top:12px;left:12px}
+  }
+
+  /* ════════════════════════════
+     PLAYER CARD — clickable hint
+  ════════════════════════════ */
+  .player-card{cursor:pointer}
+  .player-card-hint{font-family:var(--font-body);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-top:12px;opacity:0;transition:opacity .2s}
+  .player-card:hover .player-card-hint{opacity:1}
 
   /* ════════════════════════════
      ADMIN PANEL
@@ -392,6 +510,25 @@
   <p class="foot-text">© 2025 Tolerancia 0'1 · Todos los derechos reservados</p>
 </footer>
 
+<!-- RPG PLAYER PROFILE -->
+<div id="rpg-overlay">
+  <button class="rpg-back" onclick="closeRPG()">
+    <span class="rpg-back-arrow">←</span> Volver
+  </button>
+  <div class="rpg-wrap" id="rpg-wrap"></div>
+</div>
+
+<!-- FULL PAGE: TODOS LOS RESULTADOS -->
+<div id="fullpage">
+  <div class="fp-nav">
+    <button class="fp-back" onclick="closeFP()">
+      <span class="fp-back-arrow">←</span> Volver
+    </button>
+    <div class="fp-title" id="fp-title">TODOS LOS <span>RESULTADOS</span></div>
+  </div>
+  <div class="fp-inner" id="fp-inner"></div>
+</div>
+
 <!-- ADMIN PANEL -->
 <div id="admin-overlay">
   <div class="admin-panel">
@@ -463,6 +600,39 @@
             </div>
             <div class="afg"><label>Titular</label><input id="n-titulo" type="text" placeholder="VICTORIA HISTÓRICA EN EL TORNEO..."></div>
             <div class="afg"><label>Texto</label><textarea id="n-texto" placeholder="Descripción de la noticia..."></textarea></div>
+
+            <div style="border-top:1px solid var(--dark4);padding-top:16px;margin-top:4px">
+              <div style="font-family:var(--font-body);font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gray);margin-bottom:14px">
+                Foto o vídeo (opcional)
+              </div>
+              <div class="afg" style="margin-bottom:10px">
+                <label>Tipo de media</label>
+                <select id="n-media-tipo" onchange="toggleMediaInput()">
+                  <option value="">Sin imagen ni vídeo</option>
+                  <option value="imagen">🖼 Imagen (subir archivo)</option>
+                  <option value="youtube">▶️ Vídeo de YouTube</option>
+                </select>
+              </div>
+              <!-- IMAGEN: input file con subida a Supabase Storage -->
+              <div id="n-media-imagen" style="display:none">
+                <div class="afg">
+                  <label>Selecciona una imagen</label>
+                  <input type="file" id="n-img-file" accept="image/*" style="cursor:pointer"
+                    onchange="previewImg(this)">
+                </div>
+                <div id="n-img-preview" style="display:none;margin-top:10px">
+                  <img id="n-img-prev-el" style="width:100%;max-height:180px;object-fit:cover;border-radius:3px;border:1px solid var(--dark4)">
+                </div>
+              </div>
+              <!-- YOUTUBE: pegar URL -->
+              <div id="n-media-youtube" style="display:none">
+                <div class="afg">
+                  <label>URL del vídeo de YouTube</label>
+                  <input type="url" id="n-yt-url" placeholder="https://www.youtube.com/watch?v=...">
+                </div>
+              </div>
+            </div>
+
             <button class="btn-p" id="n-submit" onclick="addNews()">Publicar noticia</button>
             <p class="admin-success" id="n-ok">✓ Noticia publicada en la base de datos</p>
             <p class="admin-error-msg" id="n-err">❌ Error al publicar. Inténtalo de nuevo.</p>
@@ -489,11 +659,75 @@ const SUPABASE_URL = 'https://nrgsgdhuabsgyqqrjzfp.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_BeGHC7EEH1TwYLxIgkJzdA_2i61LJ1w';
 const ADMIN_PASSWORD = 'tol01admin'; // ← cámbiala cuando quieras
 
-// ── PLAYERS (edita aquí directamente) ──
+// ╔══════════════════════════════════════════════════╗
+// ║  JUGADORES — EDITA AQUÍ CUANDO QUIERAS          ║
+// ║  Para añadir/quitar deportes: edita el array    ║
+// ║  sports:['Deporte1','Deporte2',...]             ║
+// ║  Para cambiar foto: pon el nombre del archivo   ║
+// ║  en photo:'jugadorX.jpg' (sube la foto a        ║
+// ║  GitHub en la misma carpeta que index.html)     ║
+// ╚══════════════════════════════════════════════════╝
 const players = [
-  { name:'JUGADOR 1', nick:'"Nick1"', role:'Capitán',   sports:['Fútbol','Valorant'], ini:'J1', num:'01' },
-  { name:'JUGADOR 2', nick:'"Nick2"', role:'Delantero',  sports:['Fútbol'],            ini:'J2', num:'02' },
-  { name:'JUGADOR 3', nick:'"Nick3"', role:'Carry LoL',  sports:['LoL','CS'],          ini:'J3', num:'03' },
+  {
+    name:   'PABLO COUSO',
+    nick:   '"Cousinho"',
+    role:   'Farmer',
+    clase:  'Bardo del Campo',
+    nivel:  42,
+    lema:   'Hagas lo que hagas, te crearé una canción.',
+    sports: ['Fútbol', 'Rocket League', 'CS:GO', 'Crimson Desert'],
+    photo:  'jugador1.jpg',
+    ini:    'PC',
+    num:    '01',
+    stats: [
+      { name: 'Creatividad',  val: 97 },
+      { name: 'Velocidad',    val: 74 },
+      { name: 'Resistencia',  val: 68 },
+      { name: 'Carisma',      val: 95 },
+      { name: 'Puntería',     val: 61 },
+      { name: 'Farming',      val: 99 },
+    ]
+  },
+  {
+    name:   'LORENZO GARCIA',
+    nick:   '"La Oruga"',
+    role:   'Barbacoa',
+    clase:  'Maestro de las Brasas',
+    nivel:  35,
+    lema:   'Hoy toca torneo.',
+    sports: ['Pádel', 'Rocket League', 'Crimson Desert'],
+    photo:  'jugador2.jpg',
+    ini:    'LG',
+    num:    '02',
+    stats: [
+      { name: 'Fuerza',       val: 88 },
+      { name: 'Paciencia',    val: 55 },
+      { name: 'Resistencia',  val: 91 },
+      { name: 'Carisma',      val: 80 },
+      { name: 'Reflejos',     val: 72 },
+      { name: 'Barbacoa',     val: 100 },
+    ]
+  },
+  {
+    name:   'IGNACIO PUENTE',
+    nick:   '"GatoPija"',
+    role:   'Pícaro',
+    clase:  'Superviviente Universitario',
+    nivel:  69,
+    lema:   'Si la UCA no pudo conmigo, nada podrá.',
+    sports: ['Fútbol', 'Rocket League', 'CS:GO', 'Crimson Desert'],
+    photo:  'jugador3.jpg',
+    ini:    'IP',
+    num:    '03',
+    stats: [
+      { name: 'Agilidad',     val: 93 },
+      { name: 'Velocidad',    val: 88 },
+      { name: 'Astucia',      val: 96 },
+      { name: 'Resistencia',  val: 99 },
+      { name: 'Puntería',     val: 85 },
+      { name: 'Supervivencia',val: 100 },
+    ]
+  },
 ];
 
 // ══════════════════════════════════════════════════
@@ -547,25 +781,13 @@ async function loadMatches() {
       const wrap = document.getElementById('matches-' + tipo);
       const list = data.filter(r => r.tipo === tipo);
       if (!list.length) { wrap.innerHTML = '<p class="empty-state">Aún no hay resultados aquí.</p>'; return; }
-      wrap.innerHTML = list.map(r => {
-        const dt = fmtDate(r.fecha);
-        const local = r.local === 'yes';
-        const tA = local ? `<span class="match-team us">${r.us}</span>` : `<span class="match-team">${r.rival}</span>`;
-        const tB = local ? `<span class="match-team">${r.rival}</span>` : `<span class="match-team us">${r.us}</span>`;
-        const sA = local ? r.g1 : r.g2, sB = local ? r.g2 : r.g1;
-        const bc = r.result==='w'?'badge-w':r.result==='l'?'badge-l':'badge-d';
-        const bt = r.result==='w'?'W':r.result==='l'?'L':'E';
-        const del = adminMode ? `<button class="delete-btn" style="display:block" onclick="deleteResult(${r.id})">✕</button>` : '';
-        return `<div class="match reveal">${del}
-          <div class="match-date"><strong>${dt.day}</strong>${dt.mon}</div>
-          <div class="match-teams">${tA}<span class="match-score">${sA} — ${sB}</span>${tB}</div>
-          <span class="badge ${bc}">${bt}</span>
-          <span class="match-comp">${r.comp||''}</span>
-        </div>`;
-      }).join('');
+      const visible = list.slice(0, 5);
+      const verMas = list.length > 5
+        ? `<div style="text-align:center"><button class="ver-mas-btn" onclick="openFP('resultados')">Ver todos los resultados (${list.length}) <span>→</span></button></div>`
+        : '';
+      wrap.innerHTML = visible.map(r => buildMatchHTML(r, adminMode)).join('') + verMas;
       observeReveals();
     });
-    // update stat
     const comps = new Set(data.map(r => r.comp).filter(Boolean));
     document.getElementById('stat-torneos').innerHTML = comps.size + '<em>+</em>';
   } catch(e) {
@@ -577,6 +799,67 @@ async function loadMatches() {
 }
 
 // ══════════════════════════════════════════════════
+// BUILD MATCH HTML (shared helper)
+// ══════════════════════════════════════════════════
+function buildMatchHTML(r, adminMode) {
+  const dt = fmtDate(r.fecha);
+  const local = r.local === 'yes';
+  const tA = local ? `<span class="match-team us">${r.us}</span>` : `<span class="match-team">${r.rival}</span>`;
+  const tB = local ? `<span class="match-team">${r.rival}</span>` : `<span class="match-team us">${r.us}</span>`;
+  const sA = local ? r.g1 : r.g2, sB = local ? r.g2 : r.g1;
+  const bc = r.result==='w'?'badge-w':r.result==='l'?'badge-l':'badge-d';
+  const bt = r.result==='w'?'W':r.result==='l'?'L':'E';
+  const del = adminMode ? `<button class="delete-btn" style="display:block" onclick="deleteResult(${r.id});closeFP();loadMatches()">✕</button>` : '';
+  return `<div class="match reveal">${del}
+    <div class="match-date"><strong>${dt.day}</strong>${dt.mon}</div>
+    <div class="match-teams">${tA}<span class="match-score">${sA} — ${sB}</span>${tB}</div>
+    <span class="badge ${bc}">${bt}</span>
+    <span class="match-comp">${r.comp||''}</span>
+  </div>`;
+}
+
+function buildNewsHTML(n, adminMode, big = false) {
+  const icon = n.tag==='Fútbol'?'⚽':n.tag==='Esports'?'🎮':n.tag==='Torneo'?'🏆':'📰';
+  const del = adminMode ? `<button class="delete-btn" style="display:block;position:absolute;top:8px;right:8px;z-index:10" onclick="deleteNews(${n.id});closeFP();loadNews()">✕</button>` : '';
+  const date = (n.created_at||'').slice(0,10);
+
+  // Build media block
+  let mediaHTML = `<span class="news-img-icon">${icon}</span>`;
+  if (n.media_url && n.media_tipo === 'imagen') {
+    mediaHTML = `<img src="${n.media_url}" alt="${n.titulo}" onerror="this.style.display='none'">`;
+  } else if (n.media_url && n.media_tipo === 'youtube') {
+    const ytId = extractYTId(n.media_url);
+    if (ytId) mediaHTML = `<iframe src="https://www.youtube.com/embed/${ytId}" allowfullscreen loading="lazy"></iframe>`;
+  }
+
+  if (big) {
+    return `<div class="news-featured reveal" style="position:relative">${del}
+      <div class="news-img">${mediaHTML}</div>
+      <div class="news-body">
+        <span class="news-tag">${n.tag} · Destacado</span>
+        <h3 class="news-h">${n.titulo}</h3>
+        <p class="news-p">${n.texto}</p>
+        <span class="news-meta">${date}</span>
+      </div></div>`;
+  }
+  // Small card — show image if available, otherwise just icon in colored strip
+  const smallMedia = (n.media_url && n.media_tipo === 'imagen')
+    ? `<div style="width:100%;aspect-ratio:16/9;overflow:hidden;position:relative;margin-bottom:0">
+         <img src="${n.media_url}" alt="${n.titulo}" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.style.display='none'">
+       </div>`
+    : '';
+  return `<div class="news-item reveal" style="position:relative;padding:0;overflow:hidden">${del}
+    ${smallMedia}
+    <div style="padding:18px 20px">
+      <span class="news-tag">${n.tag}</span>
+      <h3 class="news-h">${n.titulo}</h3>
+      <p class="news-p">${n.texto}</p>
+      <span class="news-meta">${date}</span>
+    </div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════
 // RENDER NEWS
 // ══════════════════════════════════════════════════
 async function loadNews() {
@@ -585,34 +868,25 @@ async function loadNews() {
   try {
     const data = await sbFetch('noticias?order=created_at.desc&select=*');
     const adminMode = sessionStorage.getItem('tol_admin') === '1';
-    const featured = data[0], rest = data.slice(1);
 
     const fw = document.getElementById('news-featured-wrap');
-    if (featured) {
-      const icon = featured.tag==='Fútbol'?'⚽':featured.tag==='Esports'?'🎮':'📰';
-      const del = adminMode ? `<button class="delete-btn" style="display:block;position:absolute;top:10px;right:10px;z-index:10" onclick="deleteNews(${featured.id})">✕</button>` : '';
-      fw.innerHTML = `<div class="news-featured reveal" style="position:relative">${del}
-        <div class="news-img">${icon}</div>
-        <div class="news-body">
-          <span class="news-tag">${featured.tag} · Destacado</span>
-          <h3 class="news-h">${featured.titulo}</h3>
-          <p class="news-p">${featured.texto}</p>
-          <span class="news-meta">${(featured.created_at||'').slice(0,10)}</span>
-        </div></div>`;
-    } else {
+    if (!data.length) {
       fw.innerHTML = '<p class="empty-state">Aún no hay noticias publicadas.</p>';
+      document.getElementById('news-list-wrap').innerHTML = '';
+      return;
     }
+    // Featured = most recent
+    fw.innerHTML = buildNewsHTML(data[0], adminMode, true);
 
+    // Side list: up to 3 more (items 1-3)
+    const sideItems = data.slice(1, 4);
     const lw = document.getElementById('news-list-wrap');
-    lw.innerHTML = rest.map(n => {
-      const del = adminMode ? `<button class="delete-btn" style="display:block;position:absolute;top:8px;right:8px" onclick="deleteNews(${n.id})">✕</button>` : '';
-      return `<div class="news-item reveal" style="position:relative">${del}
-        <span class="news-tag">${n.tag}</span>
-        <h3 class="news-h">${n.titulo}</h3>
-        <p class="news-p">${n.texto}</p>
-        <span class="news-meta">${(n.created_at||'').slice(0,10)}</span>
-      </div>`;
-    }).join('') || '';
+    lw.innerHTML = sideItems.map(n => buildNewsHTML(n, adminMode, false)).join('');
+
+    // Ver más if there are more than 4 total
+    if (data.length > 4) {
+      lw.innerHTML += `<div style="text-align:center;margin-top:8px"><button class="ver-mas-btn" onclick="openFP('noticias')">Ver todas las noticias (${data.length}) <span>→</span></button></div>`;
+    }
     observeReveals();
   } catch(e) {
     document.getElementById('news-featured-wrap').innerHTML = '<p class="empty-state">Error cargando noticias.</p>';
@@ -664,6 +938,41 @@ async function deleteResult(id) {
   } catch(e) { alert('Error al eliminar.'); }
 }
 
+// ── MEDIA HELPERS ──
+function toggleMediaInput() {
+  const tipo = document.getElementById('n-media-tipo').value;
+  document.getElementById('n-media-imagen').style.display  = tipo === 'imagen'  ? 'block' : 'none';
+  document.getElementById('n-media-youtube').style.display = tipo === 'youtube' ? 'block' : 'none';
+}
+
+function previewImg(input) {
+  const prev = document.getElementById('n-img-preview');
+  const img  = document.getElementById('n-img-prev-el');
+  if (input.files && input.files[0]) {
+    img.src = URL.createObjectURL(input.files[0]);
+    prev.style.display = 'block';
+  }
+}
+
+function extractYTId(url) {
+  if (!url) return null;
+  const m = url.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
+  return m ? m[1] : null;
+}
+
+async function uploadImage(file) {
+  // Upload to Supabase Storage bucket "noticias-media"
+  const ext  = file.name.split('.').pop();
+  const path = `news/${Date.now()}.${ext}`;
+  const res  = await fetch(`${SUPABASE_URL}/storage/v1/object/noticias-media/${path}`, {
+    method:  'POST',
+    headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': file.type },
+    body: file
+  });
+  if (!res.ok) throw new Error('Upload failed');
+  return `${SUPABASE_URL}/storage/v1/object/public/noticias-media/${path}`;
+}
+
 // ══════════════════════════════════════════════════
 // ADD / DELETE NEWS
 // ══════════════════════════════════════════════════
@@ -677,12 +986,41 @@ async function addNews() {
   btn.disabled = true;
 
   try {
+    const mediaTipo = document.getElementById('n-media-tipo').value;
+    let media_url  = null;
+    let media_tipo = null;
+
+    if (mediaTipo === 'imagen') {
+      const file = document.getElementById('n-img-file').files[0];
+      if (file) {
+        btn.innerHTML = '<span class="spinning">⏳</span> Subiendo imagen...';
+        media_url  = await uploadImage(file);
+        media_tipo = 'imagen';
+      }
+    } else if (mediaTipo === 'youtube') {
+      const ytUrl = document.getElementById('n-yt-url').value.trim();
+      if (ytUrl && extractYTId(ytUrl)) {
+        media_url  = ytUrl;
+        media_tipo = 'youtube';
+      }
+    }
+
     await sbFetch('noticias', {
       method: 'POST',
-      body: JSON.stringify({ tag: document.getElementById('n-tag').value, titulo, texto })
+      body: JSON.stringify({
+        tag:    document.getElementById('n-tag').value,
+        titulo, texto, media_url, media_tipo
+      })
     });
+
+    // Reset form
     document.getElementById('n-titulo').value = '';
-    document.getElementById('n-texto').value = '';
+    document.getElementById('n-texto').value  = '';
+    document.getElementById('n-media-tipo').value = '';
+    document.getElementById('n-yt-url').value  = '';
+    document.getElementById('n-img-file').value = '';
+    document.getElementById('n-img-preview').style.display = 'none';
+    toggleMediaInput();
     showMsg('n-ok'); loadNews(); renderAdminLists();
   } catch(e) {
     showMsg('n-err');
@@ -777,21 +1115,105 @@ document.getElementById('admin-overlay').addEventListener('click', e => { if(e.t
 // TEAM
 // ══════════════════════════════════════════════════
 function renderTeam() {
-  document.getElementById('teamGrid').innerHTML = players.map((p,i) => `
-    <div class="player-card reveal">
+  document.getElementById('teamGrid').innerHTML = players.map((p) => {
+    const avatar = p.photo
+      ? `<img src="${p.photo}" alt="${p.name}"
+             style="width:100%;height:100%;object-fit:cover;object-position:top;position:absolute;inset:0;z-index:1"
+             onerror="this.style.display='none';document.getElementById('ini-${p.num}').style.display='flex'">
+         <div id="ini-${p.num}" style="display:none;position:absolute;inset:0;z-index:0;align-items:center;justify-content:center">
+           <div class="player-avatar-ini">${p.ini}</div>
+         </div>`
+      : `<div class="player-avatar-ini">${p.ini}</div>`;
+    return `<div class="player-card reveal" onclick="openRPG(${p.num - 1})">
       <div class="player-avatar">
         <div class="player-avatar-num">${p.num}</div>
-        <div class="player-avatar-ini">${p.ini}</div>
+        ${avatar}
       </div>
       <div class="player-stripe"></div>
       <div class="player-info">
         <div class="player-role">${p.role}</div>
         <div class="player-name">${p.name}</div>
         <div class="player-nick">${p.nick}</div>
-        <div class="sport-tags">${p.sports.map(s=>`<span class="sport-tag">${s}</span>`).join('')}</div>
+        <div class="sport-tags">${p.sports.map(s => `<span class="sport-tag">${s}</span>`).join('')}</div>
+        <div class="player-card-hint">⚔ Ver perfil completo</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════════
+// RPG PROFILE
+// ══════════════════════════════════════════════════
+function openRPG(idx) {
+  const p = players[idx];
+  const overlay = document.getElementById('rpg-overlay');
+  const wrap = document.getElementById('rpg-wrap');
+
+  const photoHTML = p.photo
+    ? `<img src="${p.photo}" alt="${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+       <div class="rpg-photo-fallback" style="display:none;position:absolute;inset:0">${p.ini}</div>`
+    : `<div class="rpg-photo-fallback">${p.ini}</div>`;
+
+  const statsHTML = (p.stats || []).map((s, i) => `
+    <div class="rpg-stat-row">
+      <div class="rpg-stat-header">
+        <span class="rpg-stat-name">${s.name}</span>
+        <span class="rpg-stat-val">${s.val}</span>
+      </div>
+      <div class="rpg-bar-track">
+        <div class="rpg-bar-fill" data-val="${s.val}" style="transition-delay:${i * 0.08}s"></div>
       </div>
     </div>`).join('');
+
+  const abilitiesHTML = p.sports.map(s => `<span class="rpg-ability">${s}</span>`).join('');
+
+  wrap.innerHTML = `
+    <div class="rpg-photo-panel">
+      ${photoHTML}
+      <div class="rpg-photo-overlay"></div>
+      <div class="rpg-photo-num">${p.num}</div>
+    </div>
+    <div class="rpg-stats-panel">
+      <div class="rpg-corner tl"></div>
+      <div class="rpg-corner br"></div>
+      <div class="rpg-team-tag">Tolerancia 0'1 · Ficha de Personaje</div>
+      <div class="rpg-nick">${p.nick.replace(/"/g,'')}</div>
+      <div class="rpg-fullname">${p.name}</div>
+      <div class="rpg-badges">
+        <span class="rpg-badge-clase">${p.clase || p.role}</span>
+        <span class="rpg-badge-nivel"><span>LVL</span>${p.nivel || '??'}</span>
+      </div>
+      <div class="rpg-lema-wrap">
+        <span class="rpg-lema-icon">❝</span>
+        <p class="rpg-lema">${p.lema || ''}</p>
+      </div>
+      <div class="rpg-stats-title">— Atributos —</div>
+      ${statsHTML}
+      <div class="rpg-abilities-title">— Habilidades desbloqueadas —</div>
+      <div class="rpg-abilities">${abilitiesHTML}</div>
+    </div>`;
+
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  // Animate bars after paint
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      wrap.querySelectorAll('.rpg-bar-fill').forEach(bar => {
+        bar.style.width = bar.dataset.val + '%';
+      });
+    }, 100);
+  });
 }
+
+function closeRPG() {
+  document.getElementById('rpg-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeRPG(); closeFP(); }
+});
 
 // ══════════════════════════════════════════════════
 // TABS, REVEAL, NAV, CONTACT
@@ -832,6 +1254,64 @@ function handleContactForm(e) {
   const msg = document.getElementById('contactMsg');
   msg.style.display = 'block'; e.target.reset();
   setTimeout(() => msg.style.display = 'none', 4000);
+}
+
+// ══════════════════════════════════════════════════
+// FULL PAGE — VER TODOS
+// ══════════════════════════════════════════════════
+async function openFP(type) {
+  const fp = document.getElementById('fullpage');
+  const inner = document.getElementById('fp-inner');
+  const title = document.getElementById('fp-title');
+  fp.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  fp.scrollTop = 0;
+  const adminMode = sessionStorage.getItem('tol_admin') === '1';
+
+  if (type === 'resultados') {
+    title.innerHTML = 'TODOS LOS <span>RESULTADOS</span>';
+    inner.innerHTML = `
+      <h2 class="fp-section-title">HISTORIAL <span>COMPLETO</span></h2>
+      <div class="fp-tabs">
+        <button class="fp-tab active" data-fptab="ftb" onclick="switchFPTab('ftb')">⚽ Fútbol</button>
+        <button class="fp-tab" data-fptab="esp" onclick="switchFPTab('esp')">🎮 Esports</button>
+      </div>
+      <div class="fp-pane active" id="fp-ftb"><div class="skeleton skeleton-match"></div><div class="skeleton skeleton-match"></div></div>
+      <div class="fp-pane" id="fp-esp"></div>`;
+    try {
+      const data = await sbFetch('resultados?order=fecha.desc&select=*');
+      ['ftb','esp'].forEach(tipo => {
+        const list = data.filter(r => r.tipo === tipo);
+        const el = document.getElementById('fp-' + tipo);
+        if (!list.length) { el.innerHTML = '<p class="empty-state">Sin resultados en esta categoría.</p>'; return; }
+        el.innerHTML = list.map(r => buildMatchHTML(r, adminMode)).join('');
+      });
+      observeReveals();
+    } catch(e) { inner.innerHTML = '<p class="empty-state">Error cargando datos.</p>'; }
+
+  } else if (type === 'noticias') {
+    title.innerHTML = 'TODAS LAS <span>NOTICIAS</span>';
+    inner.innerHTML = `
+      <h2 class="fp-section-title">ARCHIVO DE <span>NOTICIAS</span></h2>
+      <div class="fp-news-grid" id="fp-news-grid"><div class="skeleton skeleton-news"></div><div class="skeleton skeleton-news"></div></div>`;
+    try {
+      const data = await sbFetch('noticias?order=created_at.desc&select=*');
+      const grid = document.getElementById('fp-news-grid');
+      if (!data.length) { grid.innerHTML = '<p class="empty-state">Sin noticias publicadas.</p>'; return; }
+      grid.innerHTML = data.map(n => buildNewsHTML(n, adminMode, false)).join('');
+      observeReveals();
+    } catch(e) { inner.innerHTML = '<p class="empty-state">Error cargando noticias.</p>'; }
+  }
+}
+
+function switchFPTab(tab) {
+  document.querySelectorAll('.fp-tab').forEach(b => b.classList.toggle('active', b.dataset.fptab === tab));
+  document.querySelectorAll('.fp-pane').forEach(p => p.classList.toggle('active', p.id === 'fp-' + tab));
+}
+
+function closeFP() {
+  document.getElementById('fullpage').classList.remove('open');
+  document.body.style.overflow = '';
 }
 
 // ══════════════════════════════════════════════════

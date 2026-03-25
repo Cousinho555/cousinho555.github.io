@@ -149,7 +149,53 @@
   .news-item:hover{border-color:rgba(224,64,160,.4);transform:translateX(4px)}
   .news-item .news-h{font-size:17px;margin-bottom:7px}
 
-  /* CONTACT */
+  /* TOLERANCIA */
+  #tolerancia{background:var(--dark2);border-top:1px solid var(--dark4);border-bottom:1px solid var(--dark4)}
+  .tol-intro{font-family:var(--font-body);font-size:15px;color:var(--gray-mid);line-height:1.75;max-width:600px;margin-bottom:52px}
+  .tol-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .tol-col{border-radius:4px;overflow:hidden;border:1px solid var(--dark4)}
+  .tol-col-header{display:flex;align-items:center;gap:14px;padding:20px 24px;border-bottom:1px solid var(--dark4)}
+  .tol-col-icon{font-family:var(--font-display);font-size:22px;line-height:1;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:2px;flex-shrink:0}
+  .tol-col-title{font-family:var(--font-display);font-size:24px;letter-spacing:3px;line-height:1}
+  .tol-yes{background:var(--dark3)}
+  .tol-yes .tol-col-header{background:rgba(0,210,80,0.06);border-bottom-color:rgba(0,210,80,0.15)}
+  .tol-yes .tol-col-icon{background:rgba(0,210,80,0.1);color:#00d250;border:1px solid rgba(0,210,80,0.3)}
+  .tol-yes .tol-col-title{color:#00d250}
+  .tol-no{background:var(--dark3)}
+  .tol-no .tol-col-header{background:rgba(224,64,160,0.06);border-bottom-color:rgba(224,64,160,0.15)}
+  .tol-no .tol-col-icon{background:rgba(224,64,160,0.1);color:var(--pink-light);border:1px solid rgba(224,64,160,0.3)}
+  .tol-no .tol-col-title{color:var(--pink-light)}
+  .tol-list{list-style:none;padding:12px 0}
+  .tol-item{display:flex;align-items:flex-start;gap:14px;padding:14px 24px;border-bottom:1px solid rgba(255,255,255,0.04);transition:background .2s;position:relative}
+  .tol-item:last-child{border-bottom:none}
+  .tol-item:hover{background:rgba(255,255,255,0.03)}
+  .tol-item-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:6px}
+  .tol-yes .tol-item-dot{background:#00d250}
+  .tol-no .tol-item-dot{background:var(--pink)}
+  .tol-item-text{font-family:var(--font-body);font-size:14px;color:var(--gray-light);line-height:1.5}
+  .tol-item-del{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--gray);cursor:pointer;font-size:13px;opacity:0;transition:opacity .2s,color .2s;display:none;padding:4px 6px}
+  .tol-item:hover .tol-item-del{opacity:1}
+  .tol-item-del:hover{color:var(--pink)}
+  .tol-empty{font-family:var(--font-body);font-size:13px;color:var(--gray);padding:24px;text-align:center;font-style:italic}
+  .tol-skeleton{height:44px;background:var(--dark4);border-radius:2px;margin:4px 16px;animation:shimmer 1.5s infinite;list-style:none}
+
+  /* PATROCINADORES */
+  #patrocinadores{background:var(--dark);border-top:1px solid var(--dark4)}
+  .sponsors-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+  .sponsor-card{background:var(--dark3);border:1px solid var(--dark4);border-radius:4px;padding:32px 24px;display:flex;flex-direction:column;align-items:center;gap:14px;transition:border-color .25s,transform .25s;text-align:center}
+  .sponsor-card:hover{border-color:rgba(224,64,160,0.4);transform:translateY(-4px)}
+  .sponsor-logo-wrap{display:flex;flex-direction:column;align-items:center;gap:10px}
+  .sponsor-logo-wrap img{max-width:140px;max-height:70px;object-fit:contain;filter:grayscale(1) brightness(1.8);transition:filter .3s}
+  .sponsor-card:hover .sponsor-logo-wrap img{filter:grayscale(0) brightness(1)}
+  .sponsor-placeholder{font-size:48px;line-height:1}
+  .sponsor-name{font-family:var(--font-display);font-size:18px;letter-spacing:2px;color:var(--white);line-height:1.1;text-align:center}
+  .sponsor-tier{font-family:var(--font-body);font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--pink);border:1px solid rgba(224,64,160,0.3);padding:4px 12px;border-radius:2px}
+
+  @media(max-width:760px){
+    .tol-grid{grid-template-columns:1fr}
+  }
+
+  /* CONTACT (kept for reference but hidden) */
   #contacto{background:var(--dark2);border-top:1px solid var(--dark4)}
   .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:68px;align-items:start}
   .cform{display:flex;flex-direction:column;gap:14px}
@@ -380,7 +426,8 @@
     <li><a href="#equipo">Equipo</a></li>
     <li><a href="#resultados">Resultados</a></li>
     <li><a href="#noticias">Noticias</a></li>
-    <li><a href="#contacto" class="nav-cta">Contacto</a></li>
+    <li><a href="#tolerancia">Tolerancia</a></li>
+    <li><a href="#patrocinadores" class="nav-cta">Sponsors</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:8px">
     <button class="nav-admin-btn" onclick="openAdmin()">⚙ Admin</button>
@@ -451,13 +498,13 @@
     <span class="s-tag">Historial</span>
     <h2 class="s-title reveal">RESULTADOS</h2>
     <div class="tabs">
-      <button class="tab active" data-tab="ftb">⚽ Fútbol</button>
+      <button class="tab active" data-tab="esp">🎮 Esports</button>
+      <button class="tab" data-tab="ftb">⚽ Fútbol</button>
       <button class="tab" data-tab="pdl">🎾 Pádel</button>
-      <button class="tab" data-tab="esp">🎮 Esports</button>
     </div>
-    <div class="tab-pane active" id="tab-ftb"><div id="matches-ftb"></div></div>
+    <div class="tab-pane active" id="tab-esp"><div id="matches-esp"></div></div>
+    <div class="tab-pane" id="tab-ftb"><div id="matches-ftb"></div></div>
     <div class="tab-pane" id="tab-pdl"><div id="matches-pdl"></div></div>
-    <div class="tab-pane" id="tab-esp"><div id="matches-esp"></div></div>
   </div>
 </section>
 
@@ -474,34 +521,59 @@
   </div>
 </section>
 
-<!-- CONTACTO -->
-<section id="contacto">
+<!-- TOLERANCIA -->
+<section id="tolerancia">
   <div class="wrap">
-    <span class="s-tag">Únete o escríbenos</span>
-    <h2 class="s-title reveal">CONTACTO</h2>
-    <div class="contact-grid">
-      <form class="cform reveal" onsubmit="handleContactForm(event)">
-        <div class="fg"><label>Tu nombre</label><input type="text" placeholder="Nombre o nick" required></div>
-        <div class="fg"><label>Email</label><input type="email" placeholder="tu@email.com" required></div>
-        <div class="fg"><label>Mensaje</label><textarea placeholder="¿Quieres unirte? ¿Tienes alguna propuesta?"></textarea></div>
-        <button type="submit" class="btn-p">Enviar mensaje →</button>
-        <p id="contactMsg" style="font-family:var(--font-body);font-size:13px;color:var(--green);margin-top:8px;display:none">✓ ¡Mensaje enviado!</p>
-      </form>
-      <div class="cinfo reveal">
-        <div>
-          <h3 style="font-family:var(--font-display);font-size:26px;letter-spacing:2px;margin-bottom:12px">¿QUIERES UNIRTE?</h3>
-          <p class="cinfo-desc">Si quieres jugar con nosotros — en el campo o delante de una pantalla — escríbenos. Buscamos jugadores con ganas de competir y buen rollo.</p>
+    <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+    <span class="s-tag">El código del equipo</span>
+    <h2 class="s-title reveal">TOLERANCIA</h2>
+    <p class="tol-intro reveal">Somos un equipo con valores muy claros. Aquí tienes el reglamento no oficial — el que de verdad importa.</p>
+    <div class="tol-grid">
+      <div class="tol-col tol-yes reveal">
+        <div class="tol-col-header">
+          <span class="tol-col-icon">✓</span>
+          <span class="tol-col-title">TOLERAMOS</span>
         </div>
-        <div>
-          <p style="font-family:var(--font-body);font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gray);margin-bottom:12px">Síguenos</p>
-          <div class="socials">
-            <a href="#" class="social">📷 Instagram</a>
-            <a href="#" class="social">💬 Discord</a>
-            <a href="#" class="social">🐦 Twitter / X</a>
-          </div>
-        </div>
-        <div class="id-card"><div class="id-name">TOLERANCIA 0'1</div><div class="id-sub">Sin margen de error · Madrid, España</div></div>
+        <ul class="tol-list" id="tol-si-list">
+          <li class="tol-skeleton"></li><li class="tol-skeleton"></li><li class="tol-skeleton"></li>
+        </ul>
       </div>
+      <div class="tol-col tol-no reveal">
+        <div class="tol-col-header">
+          <span class="tol-col-icon">✕</span>
+          <span class="tol-col-title">NO TOLERAMOS</span>
+        </div>
+        <ul class="tol-list" id="tol-no-list">
+          <li class="tol-skeleton"></li><li class="tol-skeleton"></li><li class="tol-skeleton"></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PATROCINADORES -->
+<section id="patrocinadores">
+  <div class="wrap">
+    <span class="s-tag">Nos apoyan</span>
+    <h2 class="s-title reveal">PATROCINADORES</h2>
+    <p class="tol-intro reveal" style="margin-bottom:48px">Sin ellos, nada de esto sería posible. Gracias por creer en Tolerancia 0'1.</p>
+    <div class="sponsors-grid" id="sponsors-grid">
+      <!-- Patrocinadores fijos -->
+      <div class="sponsor-card reveal">
+        <div class="sponsor-logo-wrap">
+          <span class="sponsor-placeholder">☀️</span>
+          <span class="sponsor-name">JULIAN CALOR</span>
+        </div>
+        <span class="sponsor-tier">Patrocinador Oficial</span>
+      </div>
+      <div class="sponsor-card reveal">
+        <div class="sponsor-logo-wrap">
+          <span class="sponsor-placeholder">🥛</span>
+          <span class="sponsor-name">CENTRAL LECHERA ASTURIANA</span>
+        </div>
+        <span class="sponsor-tier">Patrocinador Oficial</span>
+      </div>
+      <!-- Los que se añadan desde admin aparecerán aquí -->
     </div>
   </div>
 </section>
@@ -553,6 +625,7 @@
       <div class="admin-tabs">
         <button class="admin-tab active" data-atab="resultados">⚽🎮 Resultados</button>
         <button class="admin-tab" data-atab="noticias">📰 Noticias</button>
+        <button class="admin-tab" data-atab="tolerancia">✓✕ Tolerancia</button>
       </div>
       <div class="admin-content">
 
@@ -660,6 +733,29 @@
         </div>
 
       </div>
+        <!-- TOLERANCIA -->
+        <div class="admin-pane" id="apane-tolerancia">
+          <div class="admin-section-title">Añadir a la lista</div>
+          <div class="aform">
+            <div class="afg"><label>Lista</label>
+              <select id="t-tipo">
+                <option value="si">✓ Toleramos</option>
+                <option value="no">✕ No Toleramos</option>
+              </select>
+            </div>
+            <div class="afg"><label>Texto</label>
+              <input id="t-texto" type="text" placeholder="Ej: Las barbacoas de Lorenzo, Los penaltis fallados...">
+            </div>
+            <button class="btn-p" id="t-submit" onclick="addTolItem()">Añadir a la lista</button>
+            <p class="admin-success" id="t-ok">✓ Añadido correctamente</p>
+            <p class="admin-error-msg" id="t-err">❌ Error al guardar.</p>
+          </div>
+          <div class="admin-list" style="margin-top:24px">
+            <div class="admin-list-title">Entradas guardadas</div>
+            <div id="admin-tol-list"><div class="skeleton skeleton-match"></div><div class="skeleton skeleton-match"></div></div>
+          </div>
+        </div>
+
       <div class="admin-footer">
         <button class="logout-btn" onclick="doLogout()">Cerrar sesión</button>
       </div>
@@ -1070,13 +1166,14 @@ async function deleteNews(id) {
 // ══════════════════════════════════════════════════
 async function renderAdminLists() {
   try {
-    const [results, newsList] = await Promise.all([
+    const [results, newsList, tolList] = await Promise.all([
       sbFetch('resultados?order=fecha.desc&select=*'),
-      sbFetch('noticias?order=created_at.desc&select=*')
+      sbFetch('noticias?order=created_at.desc&select=*'),
+      sbFetch('tolerancia?order=created_at.asc&select=*')
     ]);
     document.getElementById('admin-results-list').innerHTML =
       results.map(r => `<div class="admin-item">
-        <span class="admin-item-text">${r.fecha} · ${r.us} ${r.g1}–${r.g2} ${r.rival} (${r.tipo==='ftb'?'⚽':'🎮'})</span>
+        <span class="admin-item-text">${r.fecha} · ${r.us} ${r.g1}–${r.g2} ${r.rival} (${r.tipo==='ftb'?'⚽':r.tipo==='pdl'?'🎾':'🎮'})</span>
         <button class="admin-item-del" onclick="deleteResult(${r.id})">✕</button>
       </div>`).join('') || '<p class="empty-state" style="padding:12px 0">Sin resultados.</p>';
 
@@ -1085,6 +1182,12 @@ async function renderAdminLists() {
         <span class="admin-item-text">[${n.tag}] ${n.titulo}</span>
         <button class="admin-item-del" onclick="deleteNews(${n.id})">✕</button>
       </div>`).join('') || '<p class="empty-state" style="padding:12px 0">Sin noticias.</p>';
+
+    document.getElementById('admin-tol-list').innerHTML =
+      tolList.map(t => `<div class="admin-item">
+        <span class="admin-item-text">${t.tipo === 'si' ? '✓' : '✕'} ${t.texto}</span>
+        <button class="admin-item-del" onclick="deleteTolItem(${t.id})">✕</button>
+      </div>`).join('') || '<p class="empty-state" style="padding:12px 0">Sin entradas.</p>';
   } catch(e) {}
 }
 
@@ -1092,6 +1195,71 @@ function showMsg(id) {
   const el = document.getElementById(id);
   el.style.display = 'block';
   setTimeout(() => el.style.display = 'none', 3500);
+}
+
+// ══════════════════════════════════════════════════
+// TOLERANCIA
+// ══════════════════════════════════════════════════
+async function loadTolItems() {
+  document.getElementById('tol-si-list').innerHTML = '<li class="tol-skeleton"></li>'.repeat(3);
+  document.getElementById('tol-no-list').innerHTML = '<li class="tol-skeleton"></li>'.repeat(3);
+  try {
+    const data = await sbFetch('tolerancia?order=created_at.asc&select=*');
+    const adminMode = sessionStorage.getItem('tol_admin') === '1';
+    const si = data.filter(d => d.tipo === 'si');
+    const no = data.filter(d => d.tipo === 'no');
+
+    const buildList = (items, listId) => {
+      const el = document.getElementById(listId);
+      if (!items.length) {
+        el.innerHTML = `<li class="tol-empty">Aún no hay nada aquí... <br>¡añádelo desde el panel admin!</li>`;
+        return;
+      }
+      el.innerHTML = items.map(item => {
+        const del = adminMode
+          ? `<button class="tol-item-del" style="display:block" onclick="deleteTolItem(${item.id})">✕</button>`
+          : '';
+        return `<li class="tol-item">
+          <span class="tol-item-dot"></span>
+          <span class="tol-item-text">${item.texto}</span>
+          ${del}
+        </li>`;
+      }).join('');
+    };
+    buildList(si, 'tol-si-list');
+    buildList(no, 'tol-no-list');
+    observeReveals();
+  } catch(e) {
+    document.getElementById('tol-si-list').innerHTML = '<li class="tol-empty">Error cargando datos.</li>';
+    document.getElementById('tol-no-list').innerHTML = '<li class="tol-empty">Error cargando datos.</li>';
+  }
+}
+
+async function addTolItem() {
+  const texto = document.getElementById('t-texto').value.trim();
+  if (!texto) { alert('Escribe algo para añadir.'); return; }
+  const btn = document.getElementById('t-submit');
+  btn.innerHTML = '<span class="spinning">⏳</span> Guardando...';
+  btn.disabled = true;
+  try {
+    await sbFetch('tolerancia', {
+      method: 'POST',
+      body: JSON.stringify({ tipo: document.getElementById('t-tipo').value, texto })
+    });
+    document.getElementById('t-texto').value = '';
+    showMsg('t-ok');
+    loadTolItems();
+    renderAdminLists();
+  } catch(e) { showMsg('t-err'); }
+  btn.innerHTML = 'Añadir a la lista'; btn.disabled = false;
+}
+
+async function deleteTolItem(id) {
+  if (!confirm('¿Eliminar este elemento?')) return;
+  try {
+    await sbFetch('tolerancia?id=eq.' + id, { method: 'DELETE', prefer: 'return=minimal' });
+    loadTolItems(); renderAdminLists();
+  } catch(e) { alert('Error al eliminar.'); }
 }
 
 // ══════════════════════════════════════════════════
@@ -1113,6 +1281,9 @@ function showAdminContent() {
   document.getElementById('adminLogin').style.display = 'none';
   document.getElementById('adminContent').style.display = 'block';
   renderAdminLists();
+  loadTolItems();
+  loadMatches();
+  loadNews();
 }
 function doLogin() {
   if (document.getElementById('adminPass').value === ADMIN_PASSWORD) {
@@ -1351,6 +1522,7 @@ function closeFP() {
 renderTeam();
 loadMatches();
 loadNews();
+loadTolItems();
 observeReveals();
 document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 </script>

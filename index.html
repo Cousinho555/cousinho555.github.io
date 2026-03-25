@@ -392,7 +392,7 @@
 <section id="inicio">
   <div class="hero-glow"></div>
   <div class="hero-content">
-    <span class="hero-badge">⚽ Fútbol &nbsp;·&nbsp; 🎮 Esports &nbsp;·&nbsp; El Pto</span>
+    <span class="hero-badge">🏅 Deportes &nbsp;·&nbsp; 🎮 Esports &nbsp;·&nbsp; El Pto</span>
     <img src="logo.png" alt="Tolerancia 0'1" class="hero-shield" style="object-fit:contain">
     <h1 class="hero-title">TOLERANCIA<span class="accent">0'1</span></h1>
     <p class="hero-sub">Sin margen de error · Jugar para ganar</p>
@@ -408,7 +408,7 @@
       <div class="stat-item"><div class="stat-num">2</div><div class="stat-lbl">Modalidades</div></div>
     </div>
   </div>
-  <div class="scroll-hint"><span>.</span><div class="scroll-bar"></div></div>
+  <div class="scroll-hint"><span>Scroll</span><div class="scroll-bar"></div></div>
 </section>
 
 <!-- SOBRE -->
@@ -425,10 +425,10 @@
         <span class="s-tag">Quiénes somos</span>
         <h2 class="s-title">EL EQUIPO</h2>
         <p>Tolerancia 0'1 nació con una idea clara: competir sin excusas. Un nombre que lo dice todo — el margen es casi cero, la exigencia es máxima.</p>
-        <p>Nos movemos tanto en el verde como en la pantalla. Fútbol e Esports son nuestras disciplinas, y en ambas buscamos lo mismo: mejorar cada día y ganar con cabeza.</p>
+        <p>Nos movemos tanto en el campo como en la pantalla. Deportes y Esports son nuestras disciplinas, y en ambas buscamos lo mismo: mejorar cada día y ganar con cabeza.</p>
         <div class="feat-list">
-          <div class="feat"><div class="feat-icon">⚽</div><div><div class="feat-title">Fútbol</div><div class="feat-desc">Ligas y torneos locales. Técnica, táctica y actitud definen nuestro juego.</div></div></div>
-          <div class="feat"><div class="feat-icon">🎮</div><div><div class="feat-title">Esports</div><div class="feat-desc">LoL, Valorant, CS y más. Mente fría y ejecución precisa.</div></div></div>
+          <div class="feat"><div class="feat-icon">🏅</div><div><div class="feat-title">Deportes</div><div class="feat-desc">Fútbol, Pádel y lo que venga. Técnica, táctica y actitud definen nuestro juego.</div></div></div>
+          <div class="feat"><div class="feat-icon">🎮</div><div><div class="feat-title">Esports</div><div class="feat-desc">Rocket League, CS:GO, Crimson Desert y más. Mente fría y ejecución precisa.</div></div></div>
         </div>
       </div>
     </div>
@@ -452,9 +452,11 @@
     <h2 class="s-title reveal">RESULTADOS</h2>
     <div class="tabs">
       <button class="tab active" data-tab="ftb">⚽ Fútbol</button>
+      <button class="tab" data-tab="pdl">🎾 Pádel</button>
       <button class="tab" data-tab="esp">🎮 Esports</button>
     </div>
     <div class="tab-pane active" id="tab-ftb"><div id="matches-ftb"></div></div>
+    <div class="tab-pane" id="tab-pdl"><div id="matches-pdl"></div></div>
     <div class="tab-pane" id="tab-esp"><div id="matches-esp"></div></div>
   </div>
 </section>
@@ -560,11 +562,25 @@
           <div class="aform">
             <div class="aform-row">
               <div class="afg"><label>Modalidad</label>
-                <select id="r-tipo"><option value="ftb">⚽ Fútbol</option><option value="esp">🎮 Esports</option></select>
+                <select id="r-tipo" onchange="toggleJuegoField()">
+                  <option value="ftb">⚽ Fútbol</option>
+                  <option value="pdl">🎾 Pádel</option>
+                  <option value="esp">🎮 Esports</option>
+                </select>
               </div>
               <div class="afg"><label>Resultado</label>
                 <select id="r-result"><option value="w">Victoria (W)</option><option value="d">Empate (E)</option><option value="l">Derrota (L)</option></select>
               </div>
+            </div>
+            <!-- Campo juego: solo visible cuando modalidad = Esports -->
+            <div class="afg" id="r-juego-wrap" style="display:none">
+              <label>Juego</label>
+              <select id="r-juego">
+                <option value="Rocket League">🚀 Rocket League</option>
+                <option value="CS:GO">🔫 CS:GO</option>
+                <option value="Crimson Desert">⚔️ Crimson Desert</option>
+                <option value="Otro">🎮 Otro</option>
+              </select>
             </div>
             <div class="aform-row">
               <div class="afg"><label>Nuestro equipo</label><input id="r-us" type="text" value="Tolerancia 0'1"></div>
@@ -694,7 +710,7 @@ const players = [
     role:   'Barbacoa',
     clase:  'Maestro de las Brasas',
     nivel:  35,
-    lema:   'No puedo, tengo pádel.',
+    lema:   'Hoy toca torneo.',
     sports: ['Pádel', 'Rocket League', 'Crimson Desert'],
     photo:  'jugador2.jpg',
     ini:    'LG',
@@ -770,14 +786,14 @@ function fmtDate(str) {
 // RENDER MATCHES
 // ══════════════════════════════════════════════════
 async function loadMatches() {
-  ['ftb','esp'].forEach(t => {
+  ['ftb','pdl','esp'].forEach(t => {
     document.getElementById('matches-' + t).innerHTML =
       '<div class="skeleton skeleton-match"></div>'.repeat(3);
   });
   try {
     const data = await sbFetch('resultados?order=fecha.desc&select=*');
     const adminMode = sessionStorage.getItem('tol_admin') === '1';
-    ['ftb','esp'].forEach(tipo => {
+    ['ftb','pdl','esp'].forEach(tipo => {
       const wrap = document.getElementById('matches-' + tipo);
       const list = data.filter(r => r.tipo === tipo);
       if (!list.length) { wrap.innerHTML = '<p class="empty-state">Aún no hay resultados aquí.</p>'; return; }
@@ -791,7 +807,7 @@ async function loadMatches() {
     const comps = new Set(data.map(r => r.comp).filter(Boolean));
     document.getElementById('stat-torneos').innerHTML = comps.size + '<em>+</em>';
   } catch(e) {
-    ['ftb','esp'].forEach(t => {
+    ['ftb','pdl','esp'].forEach(t => {
       document.getElementById('matches-' + t).innerHTML =
         '<p class="empty-state">Error cargando resultados. Comprueba la conexión.</p>';
     });
@@ -810,9 +826,14 @@ function buildMatchHTML(r, adminMode) {
   const bc = r.result==='w'?'badge-w':r.result==='l'?'badge-l':'badge-d';
   const bt = r.result==='w'?'W':r.result==='l'?'L':'E';
   const del = adminMode ? `<button class="delete-btn" style="display:block" onclick="deleteResult(${r.id});closeFP();loadMatches()">✕</button>` : '';
+  // Show game name badge for esports entries
+  const juegoBadge = (r.tipo === 'esp' && r.juego)
+    ? `<span style="font-family:var(--font-body);font-size:10px;color:var(--gray);border:1px solid var(--dark4);padding:3px 8px;border-radius:2px;white-space:nowrap">${r.juego}</span>`
+    : '';
   return `<div class="match reveal">${del}
     <div class="match-date"><strong>${dt.day}</strong>${dt.mon}</div>
     <div class="match-teams">${tA}<span class="match-score">${sA} — ${sB}</span>${tB}</div>
+    ${juegoBadge}
     <span class="badge ${bc}">${bt}</span>
     <span class="match-comp">${r.comp||''}</span>
   </div>`;
@@ -897,6 +918,11 @@ async function loadNews() {
 // ══════════════════════════════════════════════════
 // ADD / DELETE RESULTS
 // ══════════════════════════════════════════════════
+function toggleJuegoField() {
+  const tipo = document.getElementById('r-tipo').value;
+  document.getElementById('r-juego-wrap').style.display = tipo === 'esp' ? 'block' : 'none';
+}
+
 async function addResult() {
   const rival = document.getElementById('r-rival').value.trim();
   const g1    = document.getElementById('r-g1').value.trim();
@@ -919,6 +945,9 @@ async function addResult() {
         fecha,
         comp:   document.getElementById('r-comp').value.trim(),
         local:  document.getElementById('r-local').value,
+        juego:  document.getElementById('r-tipo').value === 'esp'
+                  ? document.getElementById('r-juego').value
+                  : null,
       })
     });
     ['r-rival','r-g1','r-g2','r-comp'].forEach(id => document.getElementById(id).value = '');
@@ -1274,13 +1303,15 @@ async function openFP(type) {
       <h2 class="fp-section-title">HISTORIAL <span>COMPLETO</span></h2>
       <div class="fp-tabs">
         <button class="fp-tab active" data-fptab="ftb" onclick="switchFPTab('ftb')">⚽ Fútbol</button>
+        <button class="fp-tab" data-fptab="pdl" onclick="switchFPTab('pdl')">🎾 Pádel</button>
         <button class="fp-tab" data-fptab="esp" onclick="switchFPTab('esp')">🎮 Esports</button>
       </div>
       <div class="fp-pane active" id="fp-ftb"><div class="skeleton skeleton-match"></div><div class="skeleton skeleton-match"></div></div>
+      <div class="fp-pane" id="fp-pdl"></div>
       <div class="fp-pane" id="fp-esp"></div>`;
     try {
       const data = await sbFetch('resultados?order=fecha.desc&select=*');
-      ['ftb','esp'].forEach(tipo => {
+      ['ftb','pdl','esp'].forEach(tipo => {
         const list = data.filter(r => r.tipo === tipo);
         const el = document.getElementById('fp-' + tipo);
         if (!list.length) { el.innerHTML = '<p class="empty-state">Sin resultados en esta categoría.</p>'; return; }

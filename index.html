@@ -421,103 +421,26 @@
      GLITCH SPLASH SCREEN
   ════════════════════════════ */
   #splash{position:fixed;inset:0;z-index:9999;background:#090909;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;pointer-events:none}
-  #splash.hide{animation:splashFadeOut .4s ease forwards}
+  #splash.hide{animation:splashFadeOut .5s ease forwards}
   @keyframes splashFadeOut{to{opacity:0}}
-
-  /* Líneas de escáner de fondo */
-  #splash::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(224,64,160,0.03) 3px,rgba(224,64,160,0.03) 4px);pointer-events:none;animation:scanMove 8s linear infinite}
-  @keyframes scanMove{from{background-position:0 0}to{background-position:0 100px}}
-
-  /* Línea de escáner que baja */
-  #splash::after{content:'';position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(224,64,160,0.6),transparent);animation:scanLine 1.8s ease-in-out infinite;top:0}
-  @keyframes scanLine{0%{top:0;opacity:0}10%{opacity:1}90%{opacity:1}100%{top:100%;opacity:0}}
-
-  /* Contenedor del logo con glitch */
-  .glitch-wrap{position:relative;display:flex;flex-direction:column;align-items:center;gap:0}
-
-  /* Logo principal */
-  .glitch-logo{width:110px;height:110px;position:relative;animation:glitchLogoIn .4s ease both}
-  @keyframes glitchLogoIn{from{opacity:0;transform:scale(1.2)}to{opacity:1;transform:scale(1)}}
-
-  /* Capas de glitch del logo */
-  .glitch-logo img{width:100%;height:100%;object-fit:contain;position:relative;z-index:1}
-  .glitch-logo::before,.glitch-logo::after{content:'';position:absolute;inset:0;background:url('icon-512.png') center/contain no-repeat;opacity:0}
-  .glitch-logo::before{filter:hue-rotate(180deg) saturate(3);animation:glitchLayer1 2.5s .5s infinite}
-  .glitch-logo::after{filter:hue-rotate(90deg) saturate(3) brightness(2);animation:glitchLayer2 2.5s .8s infinite}
-
-  @keyframes glitchLayer1{
-    0%,89%{opacity:0;transform:translate(0)}
-    90%{opacity:.7;transform:translate(-4px,2px);clip-path:polygon(0 20%,100% 20%,100% 40%,0 40%)}
-    92%{opacity:.7;transform:translate(4px,-2px);clip-path:polygon(0 55%,100% 55%,100% 70%,0 70%)}
-    94%{opacity:.7;transform:translate(-3px,0);clip-path:polygon(0 10%,100% 10%,100% 25%,0 25%)}
-    96%,100%{opacity:0;transform:translate(0)}
-  }
-  @keyframes glitchLayer2{
-    0%,91%{opacity:0;transform:translate(0)}
-    92%{opacity:.6;transform:translate(5px,-3px);clip-path:polygon(0 40%,100% 40%,100% 55%,0 55%)}
-    94%{opacity:.6;transform:translate(-4px,2px);clip-path:polygon(0 70%,100% 70%,100% 85%,0 85%)}
-    96%,100%{opacity:0;transform:translate(0)}
-  }
-
-  /* Título con glitch de texto */
-  .glitch-title{position:relative;font-family:'Bebas Neue',sans-serif;font-size:72px;letter-spacing:8px;color:#f0f0f0;margin-top:20px;animation:glitchTitleIn .5s .2s ease both}
+  #splash-canvas{position:absolute;inset:0;width:100%;height:100%}
+  .glitch-wrap{position:relative;display:flex;flex-direction:column;align-items:center;z-index:2}
+  .glitch-logo-img{width:100px;height:100px;object-fit:contain;display:block}
+  .glitch-title{font-family:'Bebas Neue',sans-serif;font-size:68px;letter-spacing:8px;color:#f0f0f0;margin-top:16px;position:relative;z-index:2}
   .glitch-title span{color:#E040A0}
-  @keyframes glitchTitleIn{from{opacity:0;transform:translateY(10px) skewX(-5deg)}to{opacity:1;transform:translateY(0) skewX(0)}}
-
-  /* Capas de glitch del título */
-  .glitch-title::before,.glitch-title::after{content:'T01';position:absolute;top:0;left:0;width:100%;height:100%;opacity:0}
-  .glitch-title::before{color:#ff0066;text-shadow:2px 0 #ff0066;animation:glitchText1 2.5s .6s infinite}
-  .glitch-title::after{color:#00ffff;text-shadow:-2px 0 #00ffff;animation:glitchText2 2.5s .9s infinite}
-
-  @keyframes glitchText1{
-    0%,87%{opacity:0;transform:translate(0)}
-    88%{opacity:.8;transform:translate(-3px,1px);clip-path:polygon(0 30%,100% 30%,100% 50%,0 50%)}
-    90%{opacity:.8;transform:translate(3px,-1px);clip-path:polygon(0 60%,100% 60%,100% 75%,0 75%)}
-    92%,100%{opacity:0;transform:translate(0)}
-  }
-  @keyframes glitchText2{
-    0%,89%{opacity:0;transform:translate(0)}
-    90%{opacity:.7;transform:translate(4px,2px);clip-path:polygon(0 15%,100% 15%,100% 35%,0 35%)}
-    92%{opacity:.7;transform:translate(-3px,-1px);clip-path:polygon(0 65%,100% 65%,100% 80%,0 80%)}
-    94%,100%{opacity:0;transform:translate(0)}
-  }
-
-  /* Subtítulo */
-  .glitch-sub{font-family:'Inter',sans-serif;font-size:11px;font-weight:500;letter-spacing:6px;text-transform:uppercase;color:#555;margin-top:6px;animation:glitchTitleIn .5s .35s ease both}
-
-  /* Barra inferior con glitch */
-  .glitch-bar-wrap{width:140px;height:1px;background:rgba(255,255,255,0.06);margin-top:40px;overflow:visible;position:relative;animation:glitchTitleIn .5s .4s ease both}
-  .glitch-bar{position:absolute;top:0;left:0;height:1px;width:0%;background:#E040A0;animation:glitchBarFill 1.2s .5s ease forwards,glitchBarFlicker 2.5s 1.7s infinite}
-  @keyframes glitchBarFill{to{width:100%}}
-  @keyframes glitchBarFlicker{
-    0%,85%{opacity:1;transform:scaleX(1)}
-    86%{opacity:.3;transform:scaleX(1.02) translateX(-2px)}
-    88%{opacity:1;transform:scaleX(.98) translateX(2px)}
-    90%,100%{opacity:1;transform:scaleX(1)}
-  }
-  .glitch-bar::after{content:'';position:absolute;right:-4px;top:-3px;width:8px;height:7px;background:#E040A0;animation:glitchBarFill 1.2s .5s ease forwards,glitchCursor .6s 1.7s step-end infinite}
-  @keyframes glitchCursor{0%,100%{opacity:1}50%{opacity:0}}
-
-  /* Ruido de fondo ocasional */
-  .glitch-noise{position:absolute;inset:0;opacity:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px;animation:noisePulse 2.5s .7s infinite}
-  @keyframes noisePulse{
-    0%,84%{opacity:0}
-    85%{opacity:.04}
-    87%{opacity:.02}
-    89%{opacity:.05}
-    91%,100%{opacity:0}
-  }
+  .glitch-sub{font-family:'Inter',sans-serif;font-size:10px;font-weight:500;letter-spacing:6px;text-transform:uppercase;color:#444;margin-top:6px}
+  .glitch-bar-wrap{width:140px;height:1px;background:rgba(255,255,255,0.06);margin-top:36px;position:relative;overflow:hidden}
+  .glitch-bar{position:absolute;inset:0;width:0%;background:#E040A0;animation:gBarFill 1.4s .3s ease forwards}
+  @keyframes gBarFill{to{width:100%}}
 </style>
 </head>
 <body>
 
 <!-- GLITCH SPLASH SCREEN -->
 <div id="splash">
-  <div class="glitch-noise"></div>
+  <canvas id="splash-canvas"></canvas>
   <div class="glitch-wrap">
-    <div class="glitch-logo">
-      <img src="icon-512.png" alt="T01" onerror="this.src='logo.png'">
-    </div>
+    <img src="logo.png" class="glitch-logo-img" alt="T01" id="splash-logo">
     <div class="glitch-title">T<span>01</span></div>
     <div class="glitch-sub">Sin margen de error</div>
     <div class="glitch-bar-wrap"><div class="glitch-bar"></div></div>
@@ -1637,15 +1560,100 @@ document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 </script>
 <!-- SPLASH + PWA -->
 <script>
-// Glitch Splash
+// ── GLITCH SPLASH ENGINE ──
 (function() {
-  const splash = document.getElementById('splash');
-  function hideSplash() {
-    splash.classList.add('hide');
-    setTimeout(() => { splash.style.display = 'none'; }, 450);
+  const splash  = document.getElementById('splash');
+  const canvas  = document.getElementById('splash-canvas');
+  const ctx     = canvas.getContext('2d');
+  const logo    = document.getElementById('splash-logo');
+  let   running = true;
+  let   frame   = 0;
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
   }
-  // 2.2s para que se vea el glitch en acción antes de desaparecer
-  const minTime = new Promise(r => setTimeout(r, 2200));
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Draw scanlines + scanbeam + noise on canvas each frame
+  function drawFX() {
+    if (!running) return;
+    frame++;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Scanlines
+    ctx.fillStyle = 'rgba(224,64,160,0.025)';
+    for (let y = 0; y < canvas.height; y += 4) {
+      ctx.fillRect(0, y, canvas.width, 1);
+    }
+
+    // Travelling scan beam
+    const beamY = ((frame * 2.5) % (canvas.height + 60)) - 30;
+    const beam = ctx.createLinearGradient(0, beamY - 30, 0, beamY + 30);
+    beam.addColorStop(0,   'rgba(224,64,160,0)');
+    beam.addColorStop(0.5, 'rgba(224,64,160,0.18)');
+    beam.addColorStop(1,   'rgba(224,64,160,0)');
+    ctx.fillStyle = beam;
+    ctx.fillRect(0, beamY - 30, canvas.width, 60);
+
+    // Horizontal glitch slices — fire randomly
+    if (Math.random() < 0.06) {
+      const slices = Math.floor(Math.random() * 4) + 1;
+      for (let i = 0; i < slices; i++) {
+        const y  = Math.random() * canvas.height;
+        const h  = Math.random() * 6 + 1;
+        const dx = (Math.random() - 0.5) * 28;
+        ctx.save();
+        ctx.globalAlpha = Math.random() * 0.35 + 0.1;
+        // Pick cyan or magenta tint
+        ctx.fillStyle = Math.random() > 0.5 ? 'rgba(0,255,255,0.15)' : 'rgba(255,0,102,0.15)';
+        ctx.fillRect(0, y, canvas.width, h);
+        // Shift a strip of pixels horizontally using the canvas itself
+        try {
+          const imgData = ctx.getImageData(0, y, canvas.width, h);
+          ctx.putImageData(imgData, dx, y);
+        } catch(e) {}
+        ctx.restore();
+      }
+    }
+
+    // Occasional full-width colour flash
+    if (Math.random() < 0.008) {
+      ctx.fillStyle = Math.random() > 0.5
+        ? 'rgba(224,64,160,0.06)'
+        : 'rgba(0,255,255,0.04)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    // Glitch the logo img with CSS transform occasionally
+    if (logo) {
+      if (Math.random() < 0.04) {
+        const dx = (Math.random() - 0.5) * 10;
+        const dy = (Math.random() - 0.5) * 4;
+        logo.style.transform = `translate(${dx}px,${dy}px)`;
+        logo.style.filter = Math.random() > 0.5
+          ? 'hue-rotate(180deg) saturate(3) brightness(1.4)'
+          : 'hue-rotate(270deg) saturate(3)';
+        setTimeout(() => {
+          if (logo) { logo.style.transform = ''; logo.style.filter = ''; }
+        }, 60);
+      }
+    }
+
+    requestAnimationFrame(drawFX);
+  }
+
+  drawFX();
+
+  // Hide after 2.4s
+  function hideSplash() {
+    running = false;
+    splash.classList.add('hide');
+    setTimeout(() => { splash.style.display = 'none'; }, 520);
+  }
+
+  const minTime = new Promise(r => setTimeout(r, 2400));
   const loaded  = new Promise(r => {
     if (document.readyState === 'complete') r();
     else window.addEventListener('load', r);

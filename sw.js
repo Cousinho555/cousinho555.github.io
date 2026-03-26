@@ -4,7 +4,7 @@
 // hagas un cambio importante en la web para
 // forzar la actualización en todos los dispositivos
 // ══════════════════════════════════════════════════
-const VERSION = 'tol01-v1';
+const VERSION = 'tol01-v2';
 
 // Archivos que se guardan en caché para funcionar offline
 const STATIC_CACHE = [

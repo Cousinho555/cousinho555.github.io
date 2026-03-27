@@ -853,20 +853,13 @@ const ONESIGNAL_API_KEY = 'os_v2_app_uyfh3dpk75b2zdc3m6gluloxoeaq4z5vok2ehceyzv6
 // ── ENVIAR PUSH ──
 async function sendPush(title, body) {
   try {
-    await fetch('https://api.onesignal.com/notifications', {
+    await fetch('https://nrgsgdhuabsgyqqrjzfp.supabase.co/functions/v1/send-push', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Key ${ONESIGNAL_API_KEY}`
+        'apikey': SUPABASE_KEY
       },
-      body: JSON.stringify({
-        app_id: ONESIGNAL_APP_ID,
-        included_segments: ['Total Subscriptions'],
-        headings: { es: title, en: title },
-        contents: { es: body,  en: body  },
-        url: 'https://cousinho555.github.io/tolerancia01/',
-        chrome_web_icon: 'https://cousinho555.github.io/tolerancia01/icon-512.png',
-      })
+      body: JSON.stringify({ title, body })
     });
   } catch(e) { console.log('Push error:', e); }
 }

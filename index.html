@@ -856,9 +856,7 @@ async function sendPush(title, body) {
     await fetch('https://nrgsgdhuabsgyqqrjzfp.supabase.co/functions/v1/send-push', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'apikey': SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({ title, body })
     });

@@ -49,7 +49,8 @@ self.addEventListener('fetch', event => {
     url.hostname.includes('supabase.co') ||
     url.hostname.includes('googleapis.com') ||
     url.hostname.includes('gstatic.com') ||
-    url.hostname.includes('youtube.com')
+    url.hostname.includes('youtube.com') ||
+    url.hostname.includes('onesignal.com')
   ) {
     event.respondWith(fetch(event.request).catch(() => new Response('')));
     return;

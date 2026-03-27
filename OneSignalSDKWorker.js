@@ -14,9 +14,7 @@ const STATIC_CACHE = [
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(VERSION)
-      .then(cache => cache.addAll(STATIC_CACHE))
-      .then(() => self.skipWaiting())
+    caches.open(VERSION).then(cache => cache.addAll(STATIC_CACHE))
   );
 });
 

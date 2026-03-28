@@ -1828,10 +1828,10 @@ function toggleMobPlayer() {
     player.classList.remove('mob-open');
     document.getElementById('music-playlist').classList.remove('open');
     document.getElementById('btn-list').classList.remove('active');
-    fab.classList.remove('active');
+    fab.style.display = 'flex';
   } else {
     player.classList.add('mob-open');
-    fab.classList.add('active');
+    fab.style.display = 'none';
   }
 }
 

@@ -1,6 +1,6 @@
 importScripts("https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js");
 
-const VERSION = 'tol01-v5';
+const VERSION = 'tol01-v6';
 
 const STATIC_CACHE = [
   '/',

@@ -579,6 +579,59 @@
   /* disc-wrap acts as close button on mobile */
   #disc-wrap{ cursor:pointer; }
 }
+
+  /* ── NOTIF FOOTER BTN ── */
+#notif-footer-wrap {
+  margin-top: 18px;
+}
+#notif-footer-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gray-light);
+  background: none;
+  border: 1px solid rgba(224,64,160,0.35);
+  padding: 8px 20px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: color .2s, border-color .2s, background .2s;
+  animation: notifPulse 2.5s ease-in-out infinite;
+}
+#notif-footer-btn:hover {
+  color: var(--pink);
+  border-color: var(--pink);
+  background: rgba(224,64,160,0.07);
+  animation: none;
+}
+#notif-footer-btn.granted {
+  animation: none;
+  color: var(--green);
+  border-color: rgba(0,210,80,0.4);
+  pointer-events: none;
+}
+#notif-footer-btn.denied {
+  animation: none;
+  color: var(--gray);
+  border-color: var(--dark4);
+  cursor: default;
+}
+#notif-footer-hint {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--gray);
+  margin-top: 8px;
+  letter-spacing: 1px;
+  min-height: 16px;
+}
+@keyframes notifPulse {
+  0%, 100% { border-color: rgba(224,64,160,0.35); }
+  50%       { border-color: rgba(224,64,160,0.75); }
+}
 </style>
 </head>
 <body>
@@ -763,6 +816,13 @@
   <div class="foot-logo">TOLERANCIA <span>0'1</span></div>
   <div class="foot-rule"></div>
   <p class="foot-text">© 2026 Tolerancia 0'1 · Todos los derechos reservados</p>
+  <div id="notif-footer-wrap" style="display:none;margin-top:18px">
+    <button id="notif-footer-btn" onclick="requestNotifPermission()">
+      <span id="notif-footer-icon">🔔</span>
+      <span id="notif-footer-text">Activar notificaciones</span>
+    </button>
+    <p id="notif-footer-hint"></p>
+  </div>
 </footer>
 
   <!-- MINI PLAYER FLOTANTE -->
@@ -1947,6 +2007,62 @@ loadMatches();
 loadNews();
 loadTolItems();
 observeReveals();
+  // ── NOTIF FOOTER BUTTON ──
+(function() {
+  function updateNotifBtn() {
+    const wrap = document.getElementById('notif-footer-wrap');
+    const btn  = document.getElementById('notif-footer-btn');
+    const icon = document.getElementById('notif-footer-icon');
+    const text = document.getElementById('notif-footer-text');
+    const hint = document.getElementById('notif-footer-hint');
+    if (!wrap || !('Notification' in window)) return;
+
+    const perm = Notification.permission;
+
+    if (perm === 'granted') {
+      // Activas → ocultar completamente
+      wrap.style.display = 'none';
+    } else if (perm === 'denied') {
+      // Rechazadas → mostrar en gris con aviso
+      wrap.style.display = 'block';
+      btn.className = 'denied';
+      icon.textContent = '🔕';
+      text.textContent = 'Notificaciones bloqueadas';
+      hint.textContent = 'Actívalas desde los ajustes de tu navegador.';
+    } else {
+      // default → mostrar botón activo con pulso
+      wrap.style.display = 'block';
+      btn.className = '';
+      icon.textContent = '🔔';
+      text.textContent = 'Activar notificaciones';
+      hint.textContent = '';
+    }
+  }
+
+  window.requestNotifPermission = async function() {
+    const btn  = document.getElementById('notif-footer-btn');
+    const hint = document.getElementById('notif-footer-hint');
+    if (!('Notification' in window)) {
+      hint.textContent = 'Tu navegador no soporta notificaciones.';
+      return;
+    }
+    if (Notification.permission === 'denied') return;
+
+    try {
+      // Usar OneSignal si está disponible, si no el API nativo
+      if (window.OneSignal) {
+        await window.OneSignal.Notifications.requestPermission();
+      } else {
+        await Notification.requestPermission();
+      }
+    } catch(e) {}
+
+    updateNotifBtn();
+  };
+
+  // Ejecutar al cargar
+  updateNotifBtn();
+})();
 document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 </script>
 <!-- SPLASH + PWA -->

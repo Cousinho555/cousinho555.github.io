@@ -455,6 +455,8 @@
   .trophy-modal-meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
   .trophy-modal-meta-item{display:flex;align-items:center;gap:7px;font-family:var(--font-body);font-size:12px;color:var(--gray-mid);background:var(--dark3);border:1px solid var(--dark4);padding:7px 14px;border-radius:2px}
   .trophy-modal-desc{font-family:var(--font-body);font-size:14px;color:var(--gray-mid);line-height:1.85;margin-bottom:28px;border-left:3px solid rgba(224,64,160,.3);padding-left:16px}
+  .trophy-modal-desc p{margin-bottom:12px}
+  .trophy-modal-desc p:last-child{margin-bottom:0}
   .trophy-modal-stats-title{font-family:var(--font-ui);font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gray);margin-bottom:14px}
   .trophy-modal-stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-bottom:28px}
   .trophy-modal-stat{background:var(--dark3);border:1px solid var(--dark4);border-radius:3px;padding:16px;text-align:center}
@@ -2315,10 +2317,12 @@ async function openTrophyModal(id) {
     ? `<img class="trophy-modal-hero-photo" src="${t.foto_url}" alt="${t.nombre}" onerror="this.parentElement.innerHTML='<div class=\\'trophy-modal-hero-fallback\\'>🏆</div>'">`
     : `<div class="trophy-modal-hero-fallback"><div style="font-size:90px;opacity:.15">🏆</div></div>`;
 
-  // Copa badge en el hero
-  const cupaHTML = t.copa_url
-    ? `<img class="trophy-modal-cup" src="${t.copa_url}" alt="Copa">`
-    : `<div class="trophy-modal-cup-fallback">🏆</div>`;
+  // Copa badge: solo si NO hay foto del equipo (evita solapamiento en móvil)
+  const cupaHTML = !t.foto_url
+    ? (t.copa_url
+        ? `<img class="trophy-modal-cup" src="${t.copa_url}" alt="Copa">`
+        : `<div class="trophy-modal-cup-fallback">🏆</div>`)
+    : '';
 
   // Stats
   const statsArr = [
@@ -2362,7 +2366,7 @@ async function openTrophyModal(id) {
       <div class="trophy-modal-eyebrow">Tolerancia 0'1 · Palmarés</div>
       <div class="trophy-modal-title">${t.nombre}</div>
       ${metaHTML}
-      ${t.descripcion ? `<div class="trophy-modal-desc">${t.descripcion}</div>` : ''}
+      ${t.descripcion ? `<div class="trophy-modal-desc"><p>${t.descripcion.replace(/\n\n+/g,'</p><p>').replace(/\n/g,'<br>')}</p></div>` : ''}
       ${statsHTML}
       ${playersHTML}
     </div>`;

@@ -477,10 +477,25 @@ nav {
   margin-bottom: 32px;
 }
 
-.result-emoji {
-  font-size: 52px;
-  margin-bottom: 12px;
+/* ── RESULT GIF ── */
+.result-gif-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.result-gif {
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+  border-radius: 8px;
   animation: bounceIn .6s ease both;
+}
+
+.result-emoji-fallback {
+  font-size: 52px;
+  animation: bounceIn .6s ease both;
+  text-align: center;
 }
 
 @keyframes bounceIn {
@@ -924,79 +939,27 @@ const PLAYERS = [
 // Pueden ser de cualquier longitud (sin tildes en la lógica)
 // ══════════════════════════════════════════════════
 const WORD_LIST = [
-  // palabras
-  "raza", "negro", "blanco", "mestizo", "etnia",
-"tribu", "clan", "paria", "pobre", "rico",
-"odio", "amor", "paz", "bien", "mal",
-"dios", "fe", "alma", "culto", "misa",
-"rezo", "santo", "papa", "obispo", "monje",
-"monja", "cura", "imam", "rabbi", "islam",
-"budha", "karma", "yoga", "sufi", "laico",
-"ateo", "pagano", "hereje", "cisma", "secta",
-"bulo", "sesgos", "homo", "gay", "lesbos",
-"trans", "queer", "bisex", "genero", "sexo",
-"pene", "vulva", "cuerpo", "deseo", "beso",
-"pareja", "boda", "celos", "ritual", "taboo",
-"norma", "ley", "moral", "etica", "valor",
-"dogma", "credo", "rito", "mito", "culpa",
-"pecado", "gracia", "bendito", "heroe", "villano",
-"victima", "agresor", "pandilla", "banda", "ghetto",
-"barrio", "pueblo", "aldea", "ciudad", "nacion",
-"patria", "exilio", "asilo", "migrante", "refugio",
-"frontera", "visa", "ilegal", "preso", "celda",
-"juicio", "jurado", "juez", "cargo", "delito",
-"crimen", "droga", "alcohol", "vicio", "fiesta",
-"baile", "musica", "ritmo", "canto", "himno",
-"bandera", "escudo", "rey", "reina", "noble",
-"siervo", "esclavo", "amo", "poder", "trono",
-"corona", "guerra", "arma", "soldado", "capitan",
-"general", "tropa", "milicia", "policia", "guardia",
-"pena", "carcel", "muro", "valla", "puerta",
-"acceso", "orden", "caos", "revuelta", "marcha",
-"huelga", "voto", "urna", "fraude", "partido",
-"lider", "masa", "clase", "obrero", "patron",
-"sueldo", "empleo", "paro", "mendigo", "hambre",
-"miseria", "pobreza", "riqueza", "lujo", "palacio",
-"feudo", "tierra", "campo", "faena", "cosecha",
-"siembra", "labrador", "pastor", "rebano", "ganado",
-"caza", "pesca", "bosque", "rio", "lago",
-"mar", "isla", "desierto", "selva", "cumbre",
-"valle", "llanura", "sabana", "tundra", "glaciar",
-"volcan", "sequia", "tormenta", "nieve", "hielo",
-"fuego", "vida", "muerte", "nacer", "morir",
-"crecer", "sanar", "enfermar", "dolor", "alivio",
-"medicina", "virus", "plaga", "vacuna", "sangre",
-"hueso", "carne", "nervio", "mente", "razon",
-"locura", "memoria", "olvido", "sueno", "verdad",
-"mentira", "engano", "trampa", "fuga", "escape",
-"prision", "jaula", "libertad", "cadena", "yugo",
-"ira", "furia", "rabia", "calma", "miedo",
-"terror", "panico", "valentia", "cobarde", "martir",
-"idolo", "guru", "maestro", "alumno", "saber",
-"leer", "escribir", "hablar", "callar", "gritar",
-"llorar", "reir", "sufrir", "gozar", "vivir",
-"sonar", "buscar", "hallar", "perder", "ganar",
-"triunfar", "caer", "luchar", "rendir", "defender",
-"atacar", "huir", "resistir", "vencer", "gol",
-"tiro", "pase", "falta", "penal", "tarjeta",
-"roja", "amarilla", "portero", "defensa", "lateral",
-"pivote", "delantero", "ariete", "winger", "club",
-"estadio", "cancha", "cesped", "balon", "arco",
-"red", "silbato", "arbitro", "capitan", "equipo",
-"liga", "copa", "titulo", "trofeo", "final",
-"derby", "hincha", "ultras", "barra", "coro",
-"fanatic", "tifo", "grito", "insulto", "bofeton",
-"punetazo", "patada", "empujon", "acoso", "burla",
-"mofa", "desprecio", "rechazo", "marginar", "excluir",
-"incluir", "acoger", "apoyar", "respetar", "tolerar",
-"unir", "dividir", "aislar", "desterrar", "perdonar",
-"castigar", "juzgar", "condenar", "absolver", "salvar",
-"reparar", "honrar", "dignidad", "derechos", "deberes",
-"igualdad", "justicia", "equidad", "diversidad", "inclusion",
-"racismo", "fascismo", "nazismo", "extremismo", "sectarismo",
-"prejuicio", "estigma", "discriminar", "segregar", "homofobia",
-"transfobia", "xenofobia", "islamofobia", "antisemitismo", "tolerancia",
-  "maricon", "moro", "gallu", 
+  // 5 letras
+  "COHOP", "ATUNE", "BRASA", "PÁDEL", "GOLES", "RONCA", "TÁCTI", "CAMPO",
+  "RONDA", "LARGO", "FALTA", "TIROS", "BOLAS", "RUEDA", "CAÑON",
+  // 6 letras
+  "FÚTBOL", "COHETE", "CASCOS", "TÁCTICAS", "TORNEO", "COHOPA",
+  "PAREJA", "REBOTE", "REGATE", "COHETE", "ÁRBITRO"[0] + "RBITR",
+  // palabras del universo T01
+  "COUSINHO", "LAORUGA", "GATOPIJA",
+  "CEREALES", "BARBACOA", "PINGONIG",
+  "TOLERAN", "ROCKET", "CSGO",
+  "BRONCE", "DERROTA", "VICTORIA",
+  "NEVERA", "LORENZP", "IGNACIO",
+  "FARMIN", "VIVIDO",
+  // 4 letras
+  "PING", "GATO", "GOAL", "GAME", "LIGA",
+  // 7 letras
+  "MARICON", "JUGADOR", "ESPORTS", "TORNEOP",
+  // más palabras únicas
+  "CLASICO", "TACTICO", "PORTERO", "DEFENSA",
+  "ATAQUE", "PASE", "TIRO", "DRIBLING"[0]+"RIBLIN",
+  "BONUS", "COMBO", "EQUIPO", "ESCUDO",
 ].map(w => w.toUpperCase().replace(/Á/g,'A').replace(/É/g,'E').replace(/Í/g,'I').replace(/Ó/g,'O').replace(/Ú/g,'U').replace(/Ñ/g,'N'));
 
 // Deduplica y limpia
@@ -1406,16 +1369,27 @@ async function showResult(won, attempts) {
   renderResultScreen(won, attempts, scores);
 }
 
-function renderResultScreen(won, attempts, scores) {
+async function renderResultScreen(won, attempts, scores) {
   const grid = buildResultGrid();
-  const lb   = buildLeaderboard(scores);
+  const lb   = await buildLeaderboard(scores);
   const dist = buildDistribution();
   const countdown = buildCountdown();
+
+  // GIF personalizado: pon 'wordle-victoria.gif' y 'wordle-derrota.gif' en la misma carpeta
+  const gifSrc = won ? 'wordle-victoria.gif' : 'wordle-derrota.gif';
 
   const el = document.getElementById('screen-result');
   el.innerHTML = `
     <div class="result-header">
-      <div class="result-emoji">${won ? (attempts === 1 ? '🤯' : attempts <= 3 ? '🔥' : '😅') : '💀'}</div>
+      <div class="result-gif-wrap">
+        <img
+          src="${gifSrc}"
+          alt="${won ? 'Victoria' : 'Derrota'}"
+          class="result-gif"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+        >
+        <div class="result-emoji-fallback" style="display:none">${won ? (attempts === 1 ? '🤯' : attempts <= 3 ? '🔥' : '😅') : '💀'}</div>
+      </div>
       <div class="result-title ${won ? 'win' : 'lose'}">${won ? 'VICTORIA' : 'DERROTA'}</div>
       <div class="result-word">${targetWord}</div>
       <div class="result-sub">${won ? `Adivinada en ${attempts} intento${attempts !== 1 ? 's' : ''}` : 'No la pillaste hoy — mañana más'}</div>
@@ -1586,10 +1560,20 @@ async function showAlreadyPlayed(data) {
 
   const lbHtml = await buildLeaderboard(scores);
 
+  const gifSrc = data.won ? 'wordle-victoria.gif' : 'wordle-derrota.gif';
+
   const el = document.getElementById('screen-already');
   el.innerHTML = `
     <div class="already-banner">
-      <div class="already-icon">${data.won ? '✅' : '💀'}</div>
+      <div class="result-gif-wrap" style="margin-bottom:12px">
+        <img
+          src="${gifSrc}"
+          alt="${data.won ? 'Victoria' : 'Derrota'}"
+          class="result-gif"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+        >
+        <div class="result-emoji-fallback" style="display:none;font-size:40px">${data.won ? '✅' : '💀'}</div>
+      </div>
       <div class="already-title">${data.won ? '¡Ya ganaste hoy!' : 'Ya jugaste hoy'}</div>
       <div class="already-sub">
         La palabra era <strong style="color:var(--pink-light)">${data.word}</strong><br>

@@ -1376,7 +1376,7 @@ async function renderResultScreen(won, attempts, scores) {
   const countdown = buildCountdown();
 
   // GIF personalizado: pon 'wordle-victoria.gif' y 'wordle-derrota.gif' en la misma carpeta
-  const gifSrc = won ? 'wordle-victoria.gif' : 'wordle-derrota.gif';
+  const gifSrc = won ? 'https://cousinho555.github.io/gift/wordle-victoria.gif' : 'https://cousinho555.github.io/gift/wordle-derrota.gif';
 
   const el = document.getElementById('screen-result');
   el.innerHTML = `
@@ -1560,7 +1560,7 @@ async function showAlreadyPlayed(data) {
 
   const lbHtml = await buildLeaderboard(scores);
 
-  const gifSrc = data.won ? 'wordle-victoria.gif' : 'wordle-derrota.gif';
+  const gifSrc = data.won ? 'https://cousinho555.github.io/gift/wordle-victoria.gif' : 'https://cousinho555.github.io/gift/wordle-derrota.gif';
 
   const el = document.getElementById('screen-already');
   el.innerHTML = `

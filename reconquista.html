@@ -1,0 +1,3516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASTURIUS — La Reconquista de Tolerancia 0'1</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700;900&family=IM+Fell+English:ital@0;1&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════════════
+   VARIABLES & RESET
+══════════════════════════════════════════════ */
+:root {
+  --pink: #E040A0;
+  --pink-light: #F472C0;
+  --pink-dark: #9A1868;
+  --pink-glow: rgba(224,64,160,0.4);
+  --gold: #C9A84C;
+  --gold-light: #E8C97A;
+  --gold-dark: #8B6914;
+  --blood: #8B1A1A;
+  --blood-light: #C0392B;
+  --empire: #1a0505;
+  --free: #0a1a0a;
+  --dark: #07040a;
+  --dark2: #0e0a14;
+  --dark3: #160f1e;
+  --dark4: #1f1630;
+  --border: rgba(201,168,76,0.25);
+  --border-bright: rgba(201,168,76,0.6);
+  --white: #f0e8d8;
+  --gray: #6b5f4a;
+  --gray-mid: #8a7b60;
+  --gray-light: #b8a88a;
+  --green: #2ecc71;
+  --green-dark: #1a7a41;
+  --font-display: 'Cinzel Decorative', serif;
+  --font-title: 'Cinzel', serif;
+  --font-body: 'IM Fell English', serif;
+  --font-ui: 'Rajdhani', sans-serif;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--dark);
+  color: var(--white);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  min-height: 100vh;
+  cursor: default;
+}
+
+/* Parchment texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.6;
+}
+
+/* ══════════════════════════════════════════════
+   SCREENS
+══════════════════════════════════════════════ */
+.screen {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  overflow-y: auto;
+}
+.screen.active { display: flex; }
+
+/* ══════════════════════════════════════════════
+   SCREEN 1 — INTRO (ASTURIUS)
+══════════════════════════════════════════════ */
+#screen-intro {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated background */
+.intro-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(139,26,26,0.25) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 20% 80%, rgba(201,168,76,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 40% at 80% 20%, rgba(224,64,160,0.06) 0%, transparent 50%),
+    linear-gradient(180deg, #07040a 0%, #0e0508 50%, #07040a 100%);
+  z-index: 0;
+}
+
+/* Animated embers */
+.embers-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.ember {
+  position: absolute;
+  bottom: -10px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 6px var(--gold), 0 0 12px rgba(201,168,76,0.5);
+  animation: emberRise linear infinite;
+  opacity: 0;
+}
+
+@keyframes emberRise {
+  0%   { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 0.6; }
+  100% { transform: translateY(-100vh) translateX(var(--drift)) scale(0.3); opacity: 0; }
+}
+
+/* Vignette */
+.intro-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(7,4,10,0.85) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Army image placeholder */
+.intro-army {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+}
+.intro-army img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  opacity: 0.35;
+  filter: sepia(0.4) saturate(0.8);
+}
+.intro-army-placeholder {
+  width: 100%;
+  height: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 180px;
+  opacity: 0.07;
+  letter-spacing: -20px;
+  filter: blur(2px);
+  font-family: var(--font-display);
+  color: var(--blood);
+  user-select: none;
+}
+
+/* Content */
+.intro-content {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 24px;
+  max-width: 820px;
+  margin: auto;
+}
+
+.intro-eyebrow {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.3s ease forwards;
+}
+
+.intro-crown {
+  font-size: 48px;
+  margin-bottom: 8px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.5s ease forwards;
+  filter: drop-shadow(0 0 20px rgba(201,168,76,0.6));
+}
+
+.intro-title {
+  font-family: var(--font-display);
+  font-size: clamp(64px, 14vw, 140px);
+  letter-spacing: 8px;
+  line-height: 0.88;
+  color: var(--white);
+  text-shadow:
+    0 0 40px rgba(201,168,76,0.3),
+    0 0 80px rgba(139,26,26,0.4),
+    2px 2px 0 rgba(0,0,0,0.8);
+  opacity: 0;
+  animation: titleReveal 1.2s 0.7s ease forwards;
+  margin-bottom: 4px;
+}
+
+@keyframes titleReveal {
+  0%   { opacity: 0; transform: translateY(30px) scale(0.95); letter-spacing: 20px; }
+  100% { opacity: 1; transform: translateY(0) scale(1); letter-spacing: 8px; }
+}
+
+.intro-subtitle {
+  font-family: var(--font-title);
+  font-size: clamp(13px, 2.5vw, 18px);
+  letter-spacing: 4px;
+  color: var(--gold-light);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  opacity: 0;
+  animation: fadeUp 0.8s 1.2s ease forwards;
+}
+
+.intro-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 28px 0;
+  width: 320px;
+  opacity: 0;
+  animation: fadeUp 0.8s 1.4s ease forwards;
+}
+.intro-divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.intro-divider-gem {
+  width: 10px; height: 10px;
+  background: var(--gold);
+  transform: rotate(45deg);
+  box-shadow: 0 0 10px var(--gold);
+}
+
+.intro-tagline {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--gray-light);
+  line-height: 1.7;
+  max-width: 460px;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp 0.8s 1.6s ease forwards;
+}
+
+.intro-btns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  opacity: 0;
+  animation: fadeUp 0.8s 1.9s ease forwards;
+}
+
+.btn-main {
+  font-family: var(--font-title);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--dark);
+  background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+  border: none;
+  padding: 16px 52px;
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 30px rgba(201,168,76,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+}
+.btn-main::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.4s;
+}
+.btn-main:hover::before { left: 100%; }
+.btn-main:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(201,168,76,0.6); }
+.btn-main:active { transform: translateY(0); }
+
+.btn-lore {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gray-mid);
+  background: none;
+  border: 1px solid rgba(201,168,76,0.2);
+  padding: 10px 28px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-lore:hover { color: var(--gold); border-color: rgba(201,168,76,0.5); }
+
+/* Scroll hint */
+.intro-scroll {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  opacity: 0;
+  animation: fadeUp 1s 2.5s ease forwards;
+}
+.intro-scroll span {
+  font-family: var(--font-ui);
+  font-size: 9px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.intro-scroll-bar {
+  width: 1px;
+  height: 32px;
+  background: linear-gradient(180deg, var(--gold), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+/* ══════════════════════════════════════════════
+   LORE MODAL
+══════════════════════════════════════════════ */
+#lore-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 800;
+  background: rgba(0,0,0,0.92);
+  backdrop-filter: blur(12px);
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+#lore-modal.open { display: flex; animation: fadeUp 0.3s ease both; }
+.lore-panel {
+  background: var(--dark2);
+  border: 1px solid var(--border-bright);
+  border-radius: 4px;
+  width: 100%;
+  max-width: 860px;
+  overflow: hidden;
+  position: relative;
+}
+.lore-close {
+  position: absolute; top: 14px; right: 14px; z-index: 10;
+  background: rgba(0,0,0,0.6); border: 1px solid var(--border);
+  color: var(--gray-light); font-size: 18px; width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; border-radius: 2px; transition: color .2s, border-color .2s;
+}
+.lore-close:hover { color: var(--gold); border-color: var(--border-bright); }
+.lore-yt-wrap {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lore-yt-wrap iframe { width: 100%; height: 100%; border: none; }
+.lore-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  height: 100%;
+  color: var(--gray);
+}
+.lore-placeholder p {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.lore-placeholder span { font-size: 48px; opacity: 0.3; }
+.lore-body { padding: 20px 28px; }
+.lore-body h3 {
+  font-family: var(--font-title);
+  font-size: 18px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.lore-body p {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--gray-mid);
+  line-height: 1.7;
+}
+
+/* ══════════════════════════════════════════════
+   SCREEN 2 — PLAYER SELECT
+══════════════════════════════════════════════ */
+#screen-pick {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 60px 20px;
+  background: var(--dark);
+  position: relative;
+  overflow: hidden;
+}
+
+.pick-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 50%, rgba(201,168,76,0.05) 0%, transparent 70%),
+    linear-gradient(180deg, #07040a 0%, #0e060e 50%, #07040a 100%);
+}
+
+.pick-header {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin-bottom: 56px;
+}
+.pick-eyebrow {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  display: block;
+}
+.pick-title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 54px);
+  letter-spacing: 4px;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.pick-sub {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--gray-mid);
+}
+
+/* Player cards */
+.pick-cards {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 28px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.pick-card {
+  width: 260px;
+  background: var(--dark3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), border-color 0.3s, box-shadow 0.3s;
+  transform-style: preserve-3d;
+}
+
+.pick-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(7,4,10,0.95) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Aura glow on hover */
+.pick-card::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, var(--gold), var(--pink), var(--gold));
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.pick-card:hover {
+  transform: translateY(-12px) rotateX(4deg) scale(1.02);
+  border-color: var(--gold);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.7),
+    0 0 40px rgba(201,168,76,0.25),
+    inset 0 1px 0 rgba(201,168,76,0.2);
+}
+.pick-card:hover::after { opacity: 0.6; }
+
+/* Particle aura */
+.pick-card-aura {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  background: radial-gradient(ellipse 80% 40% at 50% 100%, var(--card-color, rgba(201,168,76,0.2)) 0%, transparent 70%);
+}
+.pick-card:hover .pick-card-aura { opacity: 1; }
+
+/* Floating particles on hover */
+.pick-card-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+.pick-particle {
+  position: absolute;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 6px var(--gold);
+  opacity: 0;
+  bottom: 20%;
+}
+.pick-card:hover .pick-particle {
+  animation: particleFloat 1.5s ease-in-out infinite;
+}
+.pick-particle:nth-child(1) { left: 20%; animation-delay: 0s; }
+.pick-particle:nth-child(2) { left: 40%; animation-delay: 0.2s; }
+.pick-particle:nth-child(3) { left: 60%; animation-delay: 0.4s; }
+.pick-particle:nth-child(4) { left: 80%; animation-delay: 0.1s; }
+.pick-particle:nth-child(5) { left: 30%; animation-delay: 0.6s; }
+
+@keyframes particleFloat {
+  0%   { transform: translateY(0) scale(1); opacity: 0; }
+  20%  { opacity: 1; }
+  100% { transform: translateY(-80px) scale(0); opacity: 0; }
+}
+
+.pick-card-img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  position: relative;
+  z-index: 0;
+  transition: transform 0.4s ease, filter 0.3s;
+}
+.pick-card:hover .pick-card-img {
+  transform: scale(1.05) translateY(-4px);
+  filter: brightness(1.1) saturate(1.1);
+}
+
+.pick-card-img-placeholder {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: linear-gradient(160deg, var(--dark3), var(--dark4));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 0;
+}
+.pick-card-ini {
+  font-family: var(--font-display);
+  font-size: 80px;
+  color: rgba(201,168,76,0.12);
+  transition: color 0.3s, transform 0.3s;
+}
+.pick-card:hover .pick-card-ini {
+  color: rgba(201,168,76,0.22);
+  transform: scale(1.1);
+}
+
+.pick-card-info {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  z-index: 4;
+  padding: 20px 20px 22px;
+  transform: translateY(4px);
+  transition: transform 0.3s;
+}
+.pick-card:hover .pick-card-info { transform: translateY(0); }
+
+.pick-card-num {
+  font-family: var(--font-title);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+  display: block;
+}
+.pick-card-name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  letter-spacing: 2px;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.pick-card-nick {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--gray-light);
+  margin-bottom: 12px;
+}
+.pick-card-cta {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.25s, transform 0.25s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pick-card:hover .pick-card-cta { opacity: 1; transform: translateY(0); }
+
+.pick-back {
+  position: relative;
+  z-index: 2;
+  margin-top: 36px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gray);
+  background: none;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 9px 22px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: color .2s, border-color .2s;
+}
+.pick-back:hover { color: var(--gold); border-color: var(--border); }
+
+/* ══════════════════════════════════════════════
+   SCREEN 3 — MAP
+══════════════════════════════════════════════ */
+#screen-map {
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--dark);
+}
+
+.map-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  background: rgba(7,4,10,0.96);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(16px);
+  flex-shrink: 0;
+}
+.map-nav-logo {
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: 3px;
+  color: var(--white);
+}
+.map-nav-logo span { color: var(--gold); }
+.map-nav-player {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.map-nav-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--pink);
+  box-shadow: 0 0 8px var(--pink-glow);
+}
+.map-nav-name {
+  font-family: var(--font-title);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--white);
+}
+.map-nav-dev {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #ff6b35;
+  background: rgba(255,107,53,0.08);
+  border: 1px solid rgba(255,107,53,0.35);
+  padding: 5px 12px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+.map-nav-dev:hover { background: rgba(255,107,53,0.18); border-color: rgba(255,107,53,0.7); }
+.map-nav-change {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gray);
+  background: none;
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 5px 14px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: color .2s, border-color .2s;
+}
+.map-nav-change:hover { color: var(--gold); border-color: var(--border); }
+
+.map-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  flex: 1;
+  min-height: calc(100vh - 58px);
+}
+
+/* Map area */
+.map-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  position: relative;
+}
+
+.map-title {
+  font-family: var(--font-title);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+/* Spain SVG Map */
+#spain-map {
+  width: 100%;
+  max-width: 760px;
+  height: auto;
+  cursor: default;
+}
+
+#spain-map path, #spain-map polygon {
+  stroke: rgba(201,168,76,0.35);
+  stroke-width: 0.6;
+  transition: fill 0.4s ease, opacity 0.2s, stroke 0.2s;
+}
+
+#spain-map path.province-gallu {
+  fill: rgba(139,26,26,0.75);
+}
+#spain-map path.province-free {
+  fill: rgba(46,204,113,0.3);
+}
+#spain-map path.province-player {
+  fill: rgba(224,64,160,0.5);
+  stroke: var(--pink);
+  stroke-width: 1.5;
+}
+#spain-map path.province-cadiz-start {
+  fill: rgba(46,204,113,0.5);
+  stroke: var(--green);
+  stroke-width: 1.5;
+}
+#spain-map path.province-selectable {
+  cursor: pointer;
+  animation: provincePulse 1.5s ease-in-out infinite;
+}
+#spain-map path.province-selectable:hover {
+  fill: rgba(201,168,76,0.5) !important;
+  stroke: var(--gold) !important;
+  stroke-width: 2;
+}
+
+@keyframes provincePulse {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.7; }
+}
+
+/* Tooltip */
+.map-svg-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+}
+.player-pins-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+.player-pin {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  pointer-events: none;
+  z-index: 10;
+  transition: left 0.6s cubic-bezier(0.34,1.56,0.64,1), top 0.6s cubic-bezier(0.34,1.56,0.64,1);
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.8));
+}
+.player-pin-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--pin-color, #E040A0);
+  overflow: hidden;
+  background: var(--dark3);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 11px;
+  color: var(--pin-color, #E040A0);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.6), 0 0 10px var(--pin-color, rgba(224,64,160,0.5));
+}
+.player-pin-avatar img {
+  width: 100%; height: 100%; object-fit: cover; object-position: top;
+}
+.player-pin-tail {
+  width: 2px; height: 8px;
+  background: var(--pin-color, #E040A0);
+  box-shadow: 0 0 4px var(--pin-color, rgba(224,64,160,0.6));
+}
+.player-pin-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--pin-color, #E040A0);
+  box-shadow: 0 0 6px var(--pin-color, rgba(224,64,160,0.6));
+  margin-top: -1px;
+}
+.player-pin-label {
+  position: absolute;
+  top: -2px;
+  left: 32px;
+  font-family: var(--font-ui);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--white);
+  background: rgba(7,4,10,0.85);
+  padding: 2px 5px;
+  border-radius: 2px;
+  white-space: nowrap;
+  border: 1px solid var(--pin-color,rgba(224,64,160,0.4));
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.player-pin:hover .player-pin-label { opacity: 1; }
+.map-svg-wrap svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.map-tooltip {
+  position: fixed;
+  z-index: 200;
+  background: rgba(7,4,10,0.96);
+  border: 1px solid var(--border-bright);
+  border-radius: 3px;
+  padding: 10px 16px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .15s;
+}
+.map-tooltip.visible { opacity: 1; }
+.map-tooltip-name {
+  font-family: var(--font-title);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--white);
+  margin-bottom: 2px;
+}
+.map-tooltip-status {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.map-tooltip-status.gallu { color: var(--blood-light); }
+.map-tooltip-status.free  { color: var(--green); }
+.map-tooltip-status.player { color: var(--pink); }
+
+/* Sidebar */
+.map-sidebar {
+  background: var(--dark2);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.sidebar-section {
+  padding: 20px 22px;
+  border-bottom: 1px solid rgba(201,168,76,0.1);
+}
+
+.sidebar-label {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  display: block;
+}
+
+/* Player positions */
+.player-position-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--dark3);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 3px;
+  margin-bottom: 8px;
+}
+.player-pos-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.player-pos-info { flex: 1; }
+.player-pos-name {
+  font-family: var(--font-title);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--white);
+  line-height: 1;
+}
+.player-pos-province {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--gray-mid);
+  font-style: italic;
+}
+.player-pos-status {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 2px;
+}
+.player-pos-status.won  { color: var(--green); background: rgba(46,204,113,0.1); border: 1px solid rgba(46,204,113,0.3); }
+.player-pos-status.lost { color: var(--blood-light); background: rgba(139,26,26,0.1); border: 1px solid rgba(139,26,26,0.3); }
+.player-pos-status.pending { color: var(--gray); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); }
+
+/* Territory stats */
+.territory-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.terr-stat {
+  background: var(--dark3);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 3px;
+  padding: 12px;
+  text-align: center;
+}
+.terr-stat-val {
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 2px;
+  line-height: 1;
+  margin-bottom: 3px;
+}
+.terr-stat-val.free-color { color: var(--green); }
+.terr-stat-val.gallu-color { color: var(--blood-light); }
+.terr-stat-lbl {
+  font-family: var(--font-ui);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+/* Progress bar */
+.progress-wrap {
+  margin-top: 14px;
+}
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.progress-label span {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.progress-bar-track {
+  height: 6px;
+  background: rgba(139,26,26,0.4);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green-dark), var(--green));
+  border-radius: 3px;
+  transition: width 1s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* Daily action */
+.daily-action {
+  padding: 20px 22px;
+  border-top: 1px solid var(--border);
+  margin-top: auto;
+}
+.action-state-text {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--gray-mid);
+  line-height: 1.6;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.btn-action {
+  width: 100%;
+  font-family: var(--font-title);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--dark);
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  border: none;
+  padding: 14px 20px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+  box-shadow: 0 4px 20px rgba(201,168,76,0.3);
+}
+.btn-action:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,168,76,0.5); }
+.btn-action:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+.btn-action-done {
+  width: 100%;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--green);
+  background: rgba(46,204,113,0.08);
+  border: 1px solid rgba(46,204,113,0.3);
+  padding: 13px 20px;
+  border-radius: 2px;
+  cursor: default;
+}
+
+/* Map legend */
+.map-legend {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.legend-dot {
+  width: 10px; height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* Gallu expansion log */
+.expansion-log {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+.log-entry {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--gray-mid);
+  line-height: 1.4;
+}
+.log-entry-icon { flex-shrink: 0; font-size: 12px; }
+.log-entry.gallu { color: rgba(192,57,43,0.8); }
+.log-entry.free  { color: rgba(46,204,113,0.8); }
+.log-entry-empty { font-family: var(--font-body); font-style: italic; font-size: 12px; color: var(--gray); text-align: center; padding: 12px 0; }
+
+/* ══════════════════════════════════════════════
+   SCREEN 4 — WORDLE GAME
+══════════════════════════════════════════════ */
+#screen-game {
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--dark);
+}
+
+.game-nav {
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  background: rgba(7,4,10,0.98);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.game-nav-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.game-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gray-light);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color .2s;
+  padding: 0;
+}
+.game-back-btn:hover { color: var(--gold); }
+.game-nav-province {
+  font-family: var(--font-title);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--gold);
+}
+.game-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.game-nav-player {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gray-mid);
+  background: var(--dark3);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 5px 14px;
+  border-radius: 2px;
+}
+
+.game-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 20px 40px;
+  gap: 20px;
+  max-width: 520px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Narrative banner */
+.game-narrative {
+  width: 100%;
+  padding: 16px 20px;
+  background: rgba(139,26,26,0.08);
+  border: 1px solid rgba(139,26,26,0.25);
+  border-left: 3px solid var(--blood-light);
+  border-radius: 0 3px 3px 0;
+  text-align: left;
+}
+.game-narrative-title {
+  font-family: var(--font-title);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.game-narrative-text {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--gray-light);
+  line-height: 1.6;
+}
+
+/* Wordle grid */
+#wordle-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  width: 100%;
+}
+.wordle-row { display: flex; gap: 6px; }
+.wordle-cell {
+  width: 58px; height: 58px;
+  border: 2px solid var(--border);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 1px;
+  color: var(--white);
+  background: var(--dark3);
+  transition: border-color .15s, transform .1s;
+  position: relative;
+}
+.wordle-cell.filled {
+  border-color: var(--gold);
+  animation: cellPop .1s ease both;
+}
+.wordle-cell.correct {
+  background: rgba(46,204,113,0.2);
+  border-color: var(--green);
+  color: var(--green);
+  animation: flipIn .4s ease both;
+}
+.wordle-cell.present {
+  background: rgba(201,168,76,0.15);
+  border-color: var(--gold);
+  color: var(--gold-light);
+  animation: flipIn .4s ease both;
+}
+.wordle-cell.absent {
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.08);
+  color: var(--gray);
+  animation: flipIn .4s ease both;
+}
+.wordle-cell.shake { animation: shake .4s ease both; }
+
+@keyframes cellPop {
+  0%{transform:scale(1)} 50%{transform:scale(1.15)} 100%{transform:scale(1)}
+}
+@keyframes flipIn {
+  0%{transform:rotateX(0)} 50%{transform:rotateX(-90deg)} 100%{transform:rotateX(0)}
+}
+@keyframes shake {
+  0%,100%{transform:translateX(0)} 20%{transform:translateX(-7px)} 40%{transform:translateX(7px)} 60%{transform:translateX(-5px)} 80%{transform:translateX(5px)}
+}
+
+/* Keyboard */
+#keyboard {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.kb-row {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+.kb-key {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--white);
+  background: var(--dark4);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  height: 50px;
+  min-width: 34px;
+  flex: 1;
+  max-width: 42px;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, transform .1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.kb-key:active { transform: scale(.92); }
+.kb-key.wide { min-width: 60px; max-width: 70px; font-size: 11px; }
+.kb-key.correct { background: rgba(46,204,113,0.25); border-color: var(--green); color: var(--green); }
+.kb-key.present { background: rgba(201,168,76,0.2); border-color: var(--gold); color: var(--gold-light); }
+.kb-key.absent  { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.06); color: var(--gray); }
+
+/* Rules hint */
+.game-rules-hint {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--gray);
+  text-align: center;
+  line-height: 1.7;
+}
+
+/* ══════════════════════════════════════════════
+   SCREEN 5 — RESULT
+══════════════════════════════════════════════ */
+#screen-result {
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 80px 24px 60px;
+  background: var(--dark);
+  overflow-y: auto;
+}
+
+.result-wrap {
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+}
+
+.result-banner {
+  text-align: center;
+  margin-bottom: 36px;
+  position: relative;
+}
+
+.result-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 300px;
+  height: 200px;
+  border-radius: 50%;
+  filter: blur(60px);
+  z-index: 0;
+  pointer-events: none;
+}
+.result-glow.win  { background: radial-gradient(circle, rgba(46,204,113,0.25), transparent); }
+.result-glow.lose { background: radial-gradient(circle, rgba(139,26,26,0.3), transparent); }
+
+.result-icon {
+  font-size: 64px;
+  line-height: 1;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+  animation: bounceIn .6s ease both;
+  filter: drop-shadow(0 0 20px rgba(201,168,76,0.4));
+}
+@keyframes bounceIn {
+  0%{transform:scale(0) rotate(-10deg);opacity:0}
+  60%{transform:scale(1.25) rotate(5deg);opacity:1}
+  100%{transform:scale(1) rotate(0)}
+}
+
+.result-title {
+  font-family: var(--font-display);
+  font-size: clamp(38px, 8vw, 64px);
+  letter-spacing: 4px;
+  line-height: .9;
+  position: relative;
+  z-index: 1;
+}
+.result-title.win  { color: var(--green); text-shadow: 0 0 30px rgba(46,204,113,0.4); }
+.result-title.lose { color: var(--blood-light); text-shadow: 0 0 30px rgba(139,26,26,0.5); }
+
+.result-province {
+  font-family: var(--font-title);
+  font-size: 16px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.result-word {
+  font-family: var(--font-display);
+  font-size: 26px;
+  letter-spacing: 6px;
+  color: var(--gold-light);
+  margin-top: 6px;
+  position: relative;
+  z-index: 1;
+}
+
+.result-narrative {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--gray-mid);
+  line-height: 1.75;
+  max-width: 420px;
+  margin: 14px auto 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* Result mini-grid */
+.result-grid-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.result-mini-row { display: flex; gap: 3px; margin-bottom: 3px; }
+.result-mini-cell {
+  width: 22px; height: 22px;
+  border-radius: 2px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Gallu expansion alert */
+.gallu-alert {
+  background: rgba(139,26,26,0.12);
+  border: 1px solid rgba(139,26,26,0.4);
+  border-left: 3px solid var(--blood-light);
+  border-radius: 0 3px 3px 0;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+.gallu-alert-title {
+  font-family: var(--font-title);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--blood-light);
+  margin-bottom: 6px;
+}
+.gallu-alert-text {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--gray-light);
+  line-height: 1.6;
+}
+
+/* Leaderboard */
+.result-lb {
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.result-lb-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(201,168,76,0.04);
+}
+.result-lb-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  letter-spacing: 3px;
+  color: var(--gold);
+}
+.lb-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background .15s;
+}
+.lb-row:last-child { border-bottom: none; }
+.lb-row.me { background: rgba(201,168,76,0.05); }
+.lb-pos {
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--gray);
+  min-width: 22px;
+}
+.lb-pos.gold   { color: #ffd700; }
+.lb-pos.silver { color: #c0c0c0; }
+.lb-pos.bronze { color: #cd7f32; }
+.lb-name { flex: 1; }
+.lb-name-main {
+  font-family: var(--font-title);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--white);
+  line-height: 1;
+}
+.lb-name-nick {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--gray);
+}
+.lb-stats { display: flex; gap: 16px; align-items: center; }
+.lb-stat { text-align: center; }
+.lb-stat-val {
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--gold);
+  letter-spacing: 1px;
+  line-height: 1;
+}
+.lb-stat-lbl {
+  font-family: var(--font-ui);
+  font-size: 9px;
+  color: var(--gray);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.lb-today {
+  font-family: var(--font-body);
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+.lb-today.won  { color: var(--green); border: 1px solid rgba(46,204,113,0.3); background: rgba(46,204,113,0.07); }
+.lb-today.lost { color: var(--blood-light); border: 1px solid rgba(139,26,26,0.3); background: rgba(139,26,26,0.07); }
+.lb-today.pending { color: var(--gray); border: 1px solid rgba(255,255,255,0.08); background: transparent; }
+
+/* Countdown */
+.next-word-card {
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 18px;
+  text-align: center;
+  margin-bottom: 14px;
+}
+.next-word-label {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 8px;
+}
+.next-word-time {
+  font-family: var(--font-display);
+  font-size: 36px;
+  letter-spacing: 4px;
+  color: var(--pink);
+}
+
+.result-back-btn {
+  width: 100%;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gray-mid);
+  background: none;
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 13px 20px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: color .2s, border-color .2s;
+  margin-top: 8px;
+}
+.result-back-btn:hover { color: var(--gold); border-color: var(--border); }
+
+/* ══════════════════════════════════════════════
+   SCREEN — FINAL VICTORY
+══════════════════════════════════════════════ */
+#screen-victory {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 60px 24px;
+  background: linear-gradient(160deg, #04100a, #07040a, #04100a);
+  overflow: hidden;
+  position: relative;
+}
+
+.victory-bg-glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 40%, rgba(46,204,113,0.15) 0%, transparent 70%),
+    radial-gradient(ellipse 30% 30% at 20% 70%, rgba(201,168,76,0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.victory-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 800px;
+  margin: auto;
+}
+
+.victory-eyebrow {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 20px;
+  animation: fadeUp .8s .2s ease both;
+}
+
+.victory-title {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 12vw, 110px);
+  letter-spacing: 6px;
+  line-height: .85;
+  color: var(--white);
+  text-shadow: 0 0 60px rgba(46,204,113,0.4), 0 0 120px rgba(201,168,76,0.2);
+  animation: titleReveal 1s .5s ease both;
+  margin-bottom: 8px;
+}
+
+.victory-title-sub {
+  font-family: var(--font-title);
+  font-size: clamp(16px, 3vw, 24px);
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 32px;
+  animation: fadeUp .8s 1.2s ease both;
+}
+
+/* Image placeholder for team victory photo */
+.victory-img-wrap {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 32px;
+  position: relative;
+  border: 1px solid rgba(46,204,113,0.3);
+  border-radius: 4px;
+  overflow: hidden;
+  animation: fadeUp .8s 1.5s ease both;
+}
+.victory-img-wrap img {
+  width: 100%;
+  display: block;
+}
+.victory-img-placeholder {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: linear-gradient(135deg, #04100a, #0a1a0a, #04100a);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.victory-img-placeholder span { font-size: 64px; opacity: 0.4; filter: drop-shadow(0 0 20px rgba(46,204,113,0.5)); }
+.victory-img-placeholder p {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--gray);
+  letter-spacing: 2px;
+}
+.victory-img-border-glow {
+  position: absolute;
+  inset: 0;
+  border: 2px solid transparent;
+  background: linear-gradient(var(--dark), var(--dark)) padding-box,
+    linear-gradient(135deg, var(--green), var(--gold), var(--green)) border-box;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.victory-flavor {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--gray-light);
+  line-height: 1.8;
+  max-width: 500px;
+  margin: 0 auto 40px;
+  animation: fadeUp .8s 1.8s ease both;
+}
+
+.victory-cta {
+  animation: fadeUp .8s 2.2s ease both;
+}
+
+/* ══════════════════════════════════════════════
+   SCREEN — GAME OVER
+══════════════════════════════════════════════ */
+#screen-gameover {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 60px 24px;
+  background: linear-gradient(160deg, #100404, #07040a, #0e0202);
+  overflow: hidden;
+  position: relative;
+}
+
+.gameover-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 40%, rgba(139,26,26,0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.gameover-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 800px;
+  margin: auto;
+}
+
+.gameover-eyebrow {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--blood-light);
+  margin-bottom: 20px;
+  animation: fadeUp .8s .2s ease both;
+}
+
+.gameover-title {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 12vw, 110px);
+  letter-spacing: 6px;
+  line-height: .85;
+  color: var(--white);
+  text-shadow: 0 0 60px rgba(139,26,26,0.5), 0 0 120px rgba(139,26,26,0.3);
+  animation: titleReveal 1s .5s ease both;
+  margin-bottom: 8px;
+}
+
+.gameover-title-sub {
+  font-family: var(--font-title);
+  font-size: clamp(14px, 2.5vw, 20px);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--blood-light);
+  margin-bottom: 32px;
+  animation: fadeUp .8s 1.2s ease both;
+}
+
+.gameover-img-wrap {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 32px;
+  position: relative;
+  border: 1px solid rgba(139,26,26,0.3);
+  border-radius: 4px;
+  overflow: hidden;
+  animation: fadeUp .8s 1.5s ease both;
+}
+.gameover-img-wrap img { width: 100%; display: block; }
+.gameover-img-placeholder {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: linear-gradient(135deg, #100404, #1a0505, #100404);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.gameover-img-placeholder span { font-size: 64px; opacity: 0.35; filter: drop-shadow(0 0 20px rgba(139,26,26,0.6)); }
+.gameover-img-placeholder p {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--gray);
+  letter-spacing: 2px;
+}
+
+.gameover-flavor {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--gray-light);
+  line-height: 1.8;
+  max-width: 500px;
+  margin: 0 auto 40px;
+  animation: fadeUp .8s 1.8s ease both;
+}
+
+/* ══════════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════════ */
+#toast {
+  position: fixed;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+  background: var(--white);
+  color: var(--dark);
+  font-family: var(--font-title);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 12px 28px;
+  border-radius: 3px;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s, transform .2s;
+  white-space: nowrap;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+}
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ══════════════════════════════════════════════
+   LOADING
+══════════════════════════════════════════════ */
+#screen-loading {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--dark);
+  gap: 20px;
+}
+.loading-disc {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  border: 2px solid var(--dark4);
+  border-top-color: var(--gold);
+  animation: spin .8s linear infinite;
+}
+.loading-text {
+  font-family: var(--font-title);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ══════════════════════════════════════════════
+   MISC SHARED
+══════════════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.already-banner {
+  text-align: center;
+  padding: 28px 24px 24px;
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+.already-icon { font-size: 40px; margin-bottom: 12px; }
+.already-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 2px;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.already-sub {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--gray-mid);
+  line-height: 1.7;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--dark2); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border-bright); }
+
+/* ══════════════════════════════════════════════
+   MOBILE
+══════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .map-layout { grid-template-columns: 1fr; }
+  .map-sidebar {
+    border-left: none;
+    border-top: 1px solid var(--border);
+    max-height: 320px;
+  }
+}
+@media (max-width: 600px) {
+  .pick-cards { flex-direction: column; align-items: center; }
+  .pick-card { width: 100%; max-width: 320px; }
+  .wordle-cell { width: 46px; height: 46px; font-size: 22px; }
+  .kb-key { height: 44px; min-width: 28px; font-size: 12px; }
+  .kb-key.wide { min-width: 52px; font-size: 10px; }
+  .map-nav { padding: 0 16px; }
+  .game-nav { padding: 0 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<!-- LORE MODAL -->
+<div id="lore-modal">
+  <div class="lore-panel">
+    <button class="lore-close" onclick="closeLore()">✕</button>
+    <div class="lore-yt-wrap" id="lore-yt-wrap">
+      <!-- Replace 'YOUTUBE_ID_HERE' with your actual YouTube video ID -->
+      <div class="lore-placeholder">
+        <span>🎬</span>
+        <p>Vídeo de lore próximamente</p>
+      </div>
+    </div>
+    <div class="lore-body">
+      <h3>La Reconquista de Tolerancia 0'1</h3>
+      <p>Desde las tierras de Laviana, el Imperio Asturiano amenaza España entera. Solo vosotros podéis detenerlo.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN: LOADING -->
+<div class="screen active" id="screen-loading">
+  <div class="loading-disc"></div>
+  <div class="loading-text">Cargando campaña…</div>
+</div>
+
+<!-- SCREEN: INTRO -->
+<div class="screen" id="screen-intro">
+  <div class="intro-bg"></div>
+  <div class="intro-army">
+    <img src="gallu-army.jpg" alt="El Ejército de Gallu" onerror="this.style.display='none'">
+    <div class="intro-army-placeholder" id="intro-army-placeholder">⚔ ⚔ ⚔</div>
+  </div>
+  <div class="embers-wrap" id="embers-wrap"></div>
+  <div class="intro-vignette"></div>
+
+  <div class="intro-content">
+    <span class="intro-eyebrow">Tolerancia 0'1 · La Reconquista</span>
+    <div class="intro-crown">⚔️</div>
+    <h1 class="intro-title">ASTURIUS</h1>
+    <div class="intro-subtitle">La Reconquista de España</div>
+    <div class="intro-divider">
+      <div class="intro-divider-line"></div>
+      <div class="intro-divider-gem"></div>
+      <div class="intro-divider-line"></div>
+    </div>
+    <p class="intro-tagline">
+      El Imperio Asturiano avanza. Cada palabra que descubras activa el poder de tu espada.<br>
+      Libera España. Derrota a Gallu. El destino del país está en tus manos.
+    </p>
+    <div class="intro-btns">
+      <button class="btn-main" onclick="goToPick()">⚔ Seleccionar Jugador</button>
+      <button class="btn-lore" onclick="openLore()">📜 Historia &amp; Lore</button>
+    </div>
+  </div>
+
+  <div class="intro-scroll">
+    <span>Desplaza</span>
+    <div class="intro-scroll-bar"></div>
+  </div>
+</div>
+
+<!-- SCREEN: PLAYER PICK -->
+<div class="screen" id="screen-pick">
+  <div class="pick-bg"></div>
+
+  <div class="pick-header">
+    <span class="pick-eyebrow">Elige tu destino</span>
+    <div class="pick-title">SELECCIÓN DE<br>GUERRERO</div>
+    <div class="pick-sub">¿Quién defenderá España hoy?</div>
+  </div>
+
+  <div class="pick-cards" id="pick-cards"></div>
+
+  <button class="pick-back" onclick="goToIntro()">← Volver al inicio</button>
+</div>
+
+<!-- SCREEN: MAP -->
+<div class="screen" id="screen-map">
+  <div class="map-nav">
+    <div class="map-nav-logo">ASTURIUS <span>· Mapa</span></div>
+    <div class="map-nav-player">
+      <div class="map-nav-dot"></div>
+      <span class="map-nav-name" id="map-nav-name">Jugador</span>
+    </div>
+    <button class="map-nav-change" onclick="goToPick()">Cambiar jugador</button>
+    <button class="map-nav-dev" onclick="devNextDay()" title="Simular siguiente día" style="color:#4fc3f7;border-color:rgba(79,195,247,0.35);background:rgba(79,195,247,0.08)">⏭ NEXT DAY</button>
+    <button class="map-nav-dev" onclick="devReset()" title="Reset completo — solo para desarrollo">🔄 DEV RESET</button>
+  </div>
+
+  <div class="map-layout">
+    <div class="map-area">
+      <div class="map-title">— Mapa de la Campaña — España Peninsular —</div>
+                  <div class="map-svg-wrap">
+            <svg id="spain-map" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+        <path id="prov-baleares" data-name="Baleares" class="province province-gallu" d="M 705.3,297.3 L 700.8,299.5 L 699.7,301.5 L 698.0,301.3 L 699.4,304.5 L 704.8,302.2 L 703.4,305.7 L 700.2,306.3 L 701.0,309.8 L 707.4,313.6 L 711.6,311.4 L 712.6,309.3 L 717.2,312.5 L 718.8,312.3 L 718.3,314.1 L 719.7,314.6 L 718.5,315.3 L 718.5,318.8 L 717.4,320.4 L 715.3,320.8 L 714.6,323.3 L 715.7,324.3 L 711.7,327.1 L 709.6,330.3 L 708.6,335.9 L 707.9,335.4 L 707.0,338.7 L 705.8,339.0 L 706.3,339.8 L 701.6,342.1 L 697.4,346.6 L 692.9,343.1 L 693.1,341.6 L 691.3,339.7 L 682.0,339.7 L 679.6,336.6 L 679.9,334.1 L 678.5,331.7 L 679.9,329.2 L 675.6,325.5 L 673.6,325.1 L 672.9,326.4 L 673.6,326.7 L 671.9,326.3 L 671.3,327.7 L 668.6,328.2 L 667.5,333.0 L 665.1,332.3 L 665.2,330.5 L 664.0,329.6 L 665.3,328.7 L 664.0,327.5 L 662.0,328.3 L 661.7,327.2 L 660.2,328.4 L 660.3,327.5 L 658.9,327.6 L 660.4,326.6 L 658.0,325.3 L 658.5,322.4 L 671.0,314.5 L 675.6,309.1 L 677.0,309.2 L 677.2,307.8 L 681.4,305.7 L 681.5,304.6 L 685.2,304.2 L 690.9,300.0 L 692.7,300.8 L 695.2,298.9 L 696.9,300.0 L 702.7,297.2 L 705.3,297.3 Z M 753.3,288.0 L 753.8,291.1 L 755.5,289.8 L 755.1,292.4 L 755.6,289.5 L 756.7,289.5 L 757.6,290.0 L 757.0,291.9 L 758.8,292.0 L 759.4,294.8 L 759.5,293.4 L 760.2,294.5 L 762.9,294.6 L 762.1,294.8 L 762.1,296.9 L 766.1,303.1 L 762.2,301.6 L 765.0,303.9 L 763.9,307.5 L 759.5,306.8 L 746.0,298.7 L 738.4,299.6 L 739.2,294.1 L 737.2,294.5 L 736.8,293.2 L 738.5,290.7 L 742.7,290.0 L 743.9,291.1 L 744.6,289.8 L 747.0,290.7 L 749.9,289.6 L 751.1,290.6 L 753.3,288.0 Z M 613.6,357.1 L 614.9,358.9 L 617.5,359.1 L 616.6,361.1 L 618.4,363.6 L 616.5,364.4 L 616.3,366.3 L 613.3,366.8 L 613.4,369.5 L 609.4,371.5 L 609.5,372.4 L 608.5,371.5 L 607.5,372.4 L 606.7,377.6 L 604.8,377.6 L 603.3,374.7 L 602.0,375.8 L 600.7,374.3 L 599.1,374.3 L 598.1,375.8 L 596.8,374.8 L 596.2,372.5 L 597.4,369.9 L 596.3,368.5 L 597.0,367.4 L 601.3,367.5 L 600.1,366.0 L 600.6,363.3 L 604.1,360.3 L 605.0,361.1 L 613.6,357.1 Z M 608.3,382.5 L 611.6,387.8 L 613.5,388.9 L 615.6,387.5 L 616.4,389.6 L 613.1,390.3 L 608.9,388.0 L 605.6,391.1 L 605.3,385.6 L 606.2,384.4 L 607.4,385.3 L 608.3,382.5 Z M 691.0,353.8 L 692.4,354.3 L 691.3,356.5 L 689.2,356.4 L 689.1,354.0 L 689.9,355.4 L 691.0,353.8 Z"/>
+        <path id="prov-asturias" data-name="Asturias" class="province province-gallu" d="M 211.4,33.5 L 212.0,35.0 L 214.6,35.6 L 214.1,36.8 L 216.1,39.0 L 220.4,39.9 L 219.0,40.2 L 220.2,42.0 L 223.6,40.7 L 230.3,41.8 L 234.7,41.0 L 236.1,42.8 L 241.2,42.4 L 245.5,46.7 L 250.5,46.0 L 255.3,47.7 L 261.3,47.6 L 273.7,51.7 L 283.5,52.4 L 284.0,53.5 L 282.4,56.1 L 283.3,56.6 L 283.4,60.6 L 281.9,61.4 L 281.5,60.0 L 278.7,59.1 L 277.4,61.5 L 271.9,62.2 L 272.6,63.8 L 271.1,67.4 L 265.9,67.7 L 264.3,64.3 L 262.1,63.7 L 257.4,68.2 L 253.1,67.6 L 251.7,73.3 L 249.2,72.4 L 241.9,75.0 L 237.1,73.8 L 236.0,77.0 L 231.2,76.7 L 230.3,79.0 L 219.5,76.5 L 217.5,77.5 L 215.6,82.7 L 213.4,83.2 L 207.4,81.1 L 205.1,79.2 L 204.1,75.9 L 201.6,76.7 L 198.3,75.2 L 197.5,78.3 L 195.3,79.1 L 193.0,77.2 L 191.0,77.2 L 190.4,79.9 L 187.2,78.0 L 184.9,78.3 L 183.1,76.3 L 181.1,77.8 L 181.2,79.4 L 179.6,81.4 L 176.6,81.2 L 176.9,82.9 L 179.1,83.1 L 179.1,84.9 L 173.2,86.8 L 163.3,86.4 L 160.6,88.9 L 160.7,87.8 L 157.1,86.5 L 157.1,83.6 L 155.2,81.4 L 153.1,81.3 L 150.5,77.9 L 150.3,81.2 L 148.3,79.2 L 149.2,77.6 L 150.1,78.1 L 149.9,76.5 L 151.5,74.4 L 152.8,75.3 L 157.6,71.8 L 157.0,68.7 L 155.4,67.0 L 154.4,69.4 L 150.5,70.9 L 149.2,68.7 L 149.8,66.0 L 144.8,63.2 L 144.9,58.8 L 142.7,58.9 L 141.0,57.0 L 141.2,54.0 L 138.2,52.6 L 138.7,49.9 L 142.6,50.1 L 145.5,46.6 L 146.9,40.7 L 152.3,39.6 L 163.3,40.9 L 168.6,39.7 L 173.6,41.7 L 176.8,41.4 L 177.1,39.9 L 183.3,41.3 L 189.4,38.2 L 192.5,39.3 L 192.6,40.4 L 196.6,41.0 L 201.8,38.6 L 205.1,39.3 L 207.4,36.1 L 210.0,35.6 L 211.4,33.5 Z"/>
+        <path id="prov-coruna" data-name="A Coruña" class="province province-gallu" d="M 111.1,24.5 L 112.1,25.4 L 109.9,28.1 L 109.9,31.7 L 108.9,31.6 L 110.5,34.0 L 108.1,36.2 L 109.0,39.0 L 107.5,39.2 L 106.7,41.5 L 107.6,44.1 L 103.4,51.9 L 100.1,51.5 L 99.2,52.7 L 99.8,56.5 L 96.5,60.2 L 97.9,61.4 L 95.7,67.0 L 98.2,74.3 L 96.7,75.7 L 98.8,81.6 L 98.2,85.4 L 96.7,86.5 L 97.2,87.4 L 91.1,92.6 L 89.5,91.0 L 87.3,91.9 L 83.6,90.5 L 81.6,91.7 L 82.3,93.0 L 79.8,92.2 L 78.3,94.0 L 76.4,91.5 L 75.9,92.6 L 75.1,91.9 L 75.5,95.2 L 74.3,96.3 L 72.3,95.6 L 71.4,98.1 L 68.0,98.8 L 63.3,97.6 L 63.4,98.6 L 60.9,98.9 L 60.5,100.9 L 58.1,99.9 L 54.5,101.5 L 52.9,105.4 L 50.3,106.5 L 48.6,105.8 L 49.3,104.3 L 47.6,102.9 L 47.8,104.7 L 46.7,105.8 L 47.9,106.8 L 46.8,107.2 L 46.9,108.6 L 45.2,108.3 L 46.0,106.8 L 44.6,105.9 L 42.5,108.6 L 43.5,110.0 L 39.7,111.5 L 39.3,114.1 L 36.8,114.9 L 36.9,111.5 L 34.1,110.7 L 36.9,106.4 L 37.2,102.3 L 44.3,95.6 L 44.3,93.8 L 45.9,92.8 L 44.1,93.0 L 44.1,95.1 L 42.8,94.3 L 41.1,96.3 L 40.5,95.4 L 38.1,96.2 L 38.0,94.8 L 35.6,95.7 L 36.5,97.0 L 34.4,99.2 L 30.9,95.0 L 33.0,93.9 L 33.2,92.3 L 30.9,89.7 L 32.2,87.3 L 30.3,86.8 L 29.7,84.5 L 28.7,84.0 L 28.8,86.6 L 26.4,84.8 L 24.8,86.3 L 24.2,89.1 L 24.1,87.0 L 22.8,86.0 L 25.1,80.4 L 22.7,77.0 L 24.8,77.1 L 25.0,74.1 L 27.0,74.3 L 27.1,72.4 L 28.7,74.1 L 30.0,73.0 L 30.1,69.7 L 28.6,71.9 L 27.4,69.0 L 28.2,69.6 L 29.6,66.9 L 30.9,66.6 L 35.8,67.4 L 38.4,63.9 L 39.3,65.2 L 42.4,64.4 L 41.7,61.8 L 39.6,61.0 L 41.4,59.6 L 43.0,60.5 L 44.2,59.6 L 43.9,57.7 L 47.4,57.8 L 47.8,56.0 L 50.8,58.9 L 54.8,59.9 L 60.5,57.6 L 64.5,58.1 L 66.7,54.9 L 68.7,54.9 L 69.6,53.4 L 71.3,54.3 L 71.8,52.8 L 73.2,54.6 L 71.6,54.6 L 73.0,55.1 L 72.5,56.4 L 74.2,56.1 L 75.2,53.7 L 74.3,52.7 L 76.9,51.7 L 82.2,57.2 L 81.5,53.0 L 84.2,50.6 L 79.5,50.8 L 76.4,48.9 L 79.7,47.3 L 82.6,47.8 L 85.4,43.7 L 82.7,46.6 L 80.1,46.6 L 80.1,45.4 L 79.1,47.2 L 75.0,47.9 L 76.2,45.1 L 75.5,44.0 L 77.5,42.4 L 76.1,40.3 L 79.4,40.8 L 83.4,36.3 L 85.2,36.7 L 88.5,33.1 L 89.4,34.7 L 90.7,34.3 L 89.5,33.5 L 90.1,30.4 L 93.6,30.3 L 98.8,25.7 L 100.8,25.4 L 100.6,28.2 L 101.9,30.0 L 100.4,29.0 L 100.8,30.2 L 99.5,31.8 L 100.6,32.7 L 98.8,32.7 L 102.0,33.0 L 101.2,30.2 L 103.7,31.0 L 102.9,30.0 L 103.9,28.8 L 108.6,27.4 L 111.1,24.5 Z"/>
+        <path id="prov-girona" data-name="Girona" class="province province-gallu" d="M 625.4,116.6 L 629.5,117.1 L 633.2,119.9 L 635.6,119.4 L 637.2,124.7 L 639.9,127.1 L 643.7,126.0 L 647.2,121.9 L 650.4,122.1 L 653.1,120.6 L 662.7,123.8 L 665.3,127.5 L 668.0,128.1 L 670.2,126.3 L 675.7,127.5 L 674.6,124.3 L 675.8,123.1 L 679.1,121.5 L 682.7,122.0 L 684.9,119.1 L 689.2,119.3 L 690.8,117.5 L 691.9,118.7 L 695.4,118.0 L 698.3,121.5 L 703.2,120.8 L 702.1,124.8 L 704.3,127.9 L 706.1,126.8 L 707.3,128.3 L 708.2,127.6 L 711.2,129.1 L 709.3,130.2 L 710.0,131.5 L 708.7,131.4 L 709.3,132.9 L 707.5,133.8 L 708.1,134.9 L 706.2,133.9 L 705.5,135.3 L 702.5,133.0 L 699.7,137.1 L 700.4,142.7 L 703.3,143.9 L 705.3,147.5 L 704.3,150.8 L 706.4,155.3 L 704.7,159.5 L 700.8,163.1 L 699.2,162.9 L 696.7,166.9 L 692.4,169.1 L 690.1,172.1 L 683.8,174.0 L 681.5,176.8 L 680.4,174.7 L 681.5,170.7 L 675.0,169.8 L 668.9,171.8 L 664.8,166.8 L 658.3,165.5 L 657.0,160.1 L 660.0,161.0 L 665.3,157.8 L 662.5,154.0 L 665.0,154.0 L 665.7,152.9 L 664.7,152.3 L 666.3,151.7 L 665.8,147.0 L 664.1,146.2 L 661.9,147.2 L 660.9,144.5 L 659.1,143.2 L 655.2,144.5 L 655.4,142.3 L 653.8,141.5 L 650.8,141.7 L 650.1,143.0 L 647.0,142.4 L 646.0,143.8 L 644.1,141.5 L 639.3,141.2 L 637.2,137.6 L 639.5,138.0 L 639.4,140.3 L 642.4,139.1 L 642.0,136.2 L 640.0,135.2 L 642.9,131.0 L 633.8,128.8 L 630.5,130.0 L 630.1,126.5 L 631.2,125.5 L 628.5,125.4 L 628.3,121.5 L 624.5,120.4 L 624.1,117.1 L 625.4,116.6 Z M 638.9,117.2 L 638.4,118.2 L 639.8,119.9 L 636.7,119.2 L 637.9,116.6 L 638.9,117.2 Z"/>
+        <path id="prov-pontevedra" data-name="Pontevedra" class="province province-gallu" d="M 83.8,90.7 L 87.3,91.9 L 89.5,91.0 L 91.1,92.6 L 95.3,91.3 L 96.0,92.0 L 94.7,94.0 L 94.8,96.3 L 101.2,101.5 L 99.7,103.1 L 99.5,107.0 L 97.5,110.6 L 94.0,111.0 L 92.6,113.2 L 85.6,112.7 L 84.2,111.1 L 77.1,116.9 L 73.7,117.1 L 75.0,118.6 L 76.5,124.7 L 75.9,127.2 L 79.3,129.3 L 79.2,133.8 L 81.1,135.2 L 84.8,134.4 L 84.7,136.0 L 83.1,136.9 L 84.8,139.1 L 75.5,145.8 L 65.1,146.2 L 63.3,148.2 L 58.9,148.5 L 57.4,151.7 L 53.0,154.3 L 52.4,156.5 L 46.1,161.3 L 44.5,143.8 L 47.2,142.7 L 48.6,143.6 L 48.9,141.7 L 47.3,140.7 L 48.8,140.6 L 49.1,138.5 L 51.4,136.0 L 54.8,134.6 L 57.6,131.5 L 60.3,131.3 L 59.6,129.7 L 60.3,127.2 L 58.9,127.1 L 58.9,128.5 L 57.5,129.6 L 58.1,130.6 L 56.0,131.9 L 53.7,131.4 L 50.4,134.3 L 47.0,133.2 L 46.0,134.0 L 47.0,129.7 L 49.1,132.0 L 47.9,127.6 L 50.5,128.5 L 52.5,127.6 L 53.4,125.0 L 58.1,121.3 L 56.5,121.8 L 55.7,120.6 L 51.4,124.2 L 49.3,123.2 L 47.9,124.4 L 45.6,122.3 L 45.5,119.4 L 42.7,119.5 L 42.5,117.7 L 45.1,117.5 L 46.1,116.1 L 47.0,118.1 L 46.2,119.9 L 48.9,119.6 L 48.3,117.3 L 49.7,116.1 L 48.6,115.1 L 49.3,114.1 L 48.4,114.9 L 48.0,112.0 L 49.0,112.0 L 48.1,111.6 L 51.5,109.5 L 51.1,108.1 L 53.9,104.2 L 54.5,101.5 L 58.1,99.9 L 60.5,100.9 L 60.9,98.9 L 63.3,98.7 L 63.4,97.6 L 70.1,98.6 L 71.4,98.1 L 72.3,95.6 L 74.3,96.3 L 75.5,95.2 L 75.1,91.9 L 75.9,92.6 L 76.4,91.5 L 78.4,94.0 L 79.8,92.2 L 82.3,93.0 L 81.6,91.7 L 83.8,90.7 Z M 45.8,110.9 L 47.0,111.5 L 46.1,114.5 L 46.2,111.8 L 45.0,111.3 L 45.8,110.9 Z M 43.4,123.3 L 42.1,126.5 L 42.1,124.7 L 43.4,123.3 Z M 43.8,133.9 L 44.8,135.6 L 43.8,136.8 L 43.8,133.9 Z"/>
+        <path id="prov-cantabria" data-name="Cantabria" class="province province-gallu" d="M 334.2,44.0 L 342.9,47.6 L 342.9,49.1 L 341.0,48.9 L 339.5,50.3 L 341.1,49.8 L 341.0,51.8 L 341.8,49.5 L 343.2,51.1 L 348.7,50.7 L 348.9,51.9 L 354.3,52.5 L 358.0,55.4 L 358.1,58.7 L 354.9,60.4 L 354.1,58.6 L 351.1,59.9 L 348.2,59.1 L 347.8,60.8 L 341.9,63.8 L 343.6,71.1 L 333.4,69.9 L 330.9,67.7 L 327.9,72.3 L 324.7,74.8 L 320.2,74.5 L 321.0,76.0 L 320.0,77.7 L 317.8,77.6 L 314.4,80.6 L 312.3,85.5 L 313.3,86.8 L 315.7,86.6 L 315.4,87.7 L 319.1,83.8 L 321.1,85.6 L 319.1,87.7 L 316.8,86.7 L 317.7,88.6 L 315.9,88.5 L 317.4,89.1 L 316.5,90.5 L 318.4,91.2 L 319.3,88.4 L 320.8,89.3 L 321.9,94.1 L 319.3,95.8 L 317.6,94.5 L 316.7,97.1 L 311.8,97.0 L 311.6,92.6 L 308.8,97.4 L 307.4,97.6 L 306.1,95.3 L 303.6,95.6 L 301.7,93.6 L 303.2,92.1 L 304.2,92.7 L 304.9,90.8 L 303.6,89.7 L 300.1,91.5 L 298.7,83.7 L 292.8,82.5 L 290.1,78.1 L 287.4,76.4 L 285.9,77.8 L 283.4,77.2 L 281.4,79.2 L 278.8,78.0 L 277.0,79.4 L 272.4,79.3 L 271.3,78.6 L 271.2,76.5 L 270.0,76.6 L 270.0,75.3 L 265.4,71.6 L 266.3,69.3 L 265.6,67.9 L 271.8,67.0 L 272.6,63.7 L 271.9,62.2 L 277.4,61.5 L 278.7,59.1 L 281.5,60.0 L 281.9,61.4 L 283.3,60.7 L 283.3,56.6 L 282.4,55.2 L 283.9,52.5 L 302.3,52.0 L 307.4,49.3 L 313.0,49.2 L 314.8,47.0 L 323.5,45.5 L 324.7,47.3 L 321.3,48.4 L 321.9,49.4 L 321.1,49.6 L 322.5,50.2 L 321.9,51.9 L 323.9,50.6 L 323.2,49.8 L 324.0,48.5 L 325.7,48.4 L 324.0,47.9 L 334.2,44.0 Z M 352.2,61.8 L 351.9,65.9 L 350.8,66.5 L 349.7,62.1 L 352.2,61.8 Z"/>
+        <path id="prov-malaga" data-name="Málaga" class="province province-gallu" d="M 289.6,488.5 L 291.1,488.5 L 291.5,492.7 L 294.2,493.5 L 293.7,494.4 L 296.2,499.5 L 297.0,507.0 L 299.2,506.9 L 302.7,511.1 L 306.4,511.4 L 309.3,515.0 L 315.7,516.4 L 319.0,518.7 L 321.3,518.4 L 324.5,522.2 L 324.0,526.7 L 320.3,525.6 L 314.1,527.6 L 308.1,526.0 L 302.0,528.4 L 289.0,528.2 L 283.9,537.1 L 278.9,539.2 L 277.0,543.2 L 271.4,544.9 L 264.9,543.1 L 260.8,543.7 L 257.0,546.6 L 247.6,549.8 L 245.3,552.6 L 243.7,557.2 L 242.1,555.3 L 239.8,556.2 L 238.3,549.5 L 233.8,541.3 L 230.4,541.1 L 228.7,543.9 L 224.1,542.8 L 224.3,540.2 L 228.7,541.5 L 232.1,537.4 L 232.4,535.2 L 236.5,534.3 L 239.6,531.3 L 239.6,527.7 L 241.4,524.1 L 238.7,520.9 L 240.8,517.4 L 242.6,516.3 L 247.9,520.6 L 250.0,519.5 L 252.5,514.8 L 251.3,511.0 L 252.1,510.3 L 249.5,507.6 L 250.7,506.0 L 254.4,505.9 L 262.3,499.9 L 262.5,498.2 L 260.4,496.8 L 260.6,495.5 L 262.4,495.1 L 262.9,496.9 L 264.1,496.8 L 265.2,493.9 L 266.8,493.8 L 268.5,497.1 L 273.2,494.0 L 271.9,491.9 L 272.7,491.0 L 271.7,490.6 L 272.6,489.6 L 278.3,489.9 L 279.0,493.2 L 280.4,493.2 L 284.7,492.1 L 287.5,488.3 L 289.6,488.5 Z"/>
+        <path id="prov-almeria" data-name="Almería" class="province province-gallu" d="M 411.0,444.0 L 422.3,446.2 L 421.1,448.2 L 420.4,452.8 L 421.1,456.2 L 420.2,458.1 L 422.2,464.0 L 429.3,475.7 L 431.3,477.2 L 431.2,475.9 L 435.3,476.5 L 441.1,481.3 L 438.5,482.9 L 432.0,491.7 L 429.1,503.2 L 426.3,508.9 L 426.2,512.5 L 424.2,512.6 L 421.3,515.6 L 420.9,519.5 L 417.6,521.6 L 417.6,523.9 L 415.1,525.0 L 414.1,527.2 L 410.9,528.1 L 405.0,520.9 L 401.2,519.3 L 397.6,521.5 L 395.0,519.7 L 395.6,520.5 L 390.3,521.2 L 387.1,527.5 L 382.7,530.6 L 378.8,530.8 L 376.4,529.0 L 374.6,529.8 L 370.4,525.8 L 367.6,526.7 L 359.3,525.8 L 358.7,523.2 L 364.8,519.1 L 362.4,513.8 L 364.7,513.4 L 364.8,511.8 L 367.7,509.6 L 364.8,500.0 L 369.1,501.2 L 370.2,496.9 L 372.9,494.7 L 374.8,488.2 L 378.4,489.3 L 379.5,491.9 L 380.9,491.2 L 384.9,493.0 L 384.6,487.7 L 385.2,483.8 L 386.1,483.6 L 385.9,480.4 L 392.9,473.9 L 396.0,473.1 L 396.0,471.8 L 401.4,470.8 L 399.6,463.0 L 404.1,462.9 L 403.3,458.6 L 405.8,452.8 L 404.4,450.5 L 404.8,445.6 L 409.6,442.8 L 411.0,444.0 Z"/>
+        <path id="prov-murcia" data-name="Murcia" class="province province-gallu" d="M 467.3,383.7 L 474.0,390.2 L 475.4,396.0 L 474.0,399.6 L 474.7,401.4 L 470.3,405.6 L 471.2,406.1 L 470.9,412.1 L 476.0,414.0 L 477.2,417.2 L 476.1,422.6 L 473.4,427.0 L 474.2,431.4 L 480.9,442.3 L 484.7,446.5 L 488.4,447.7 L 489.0,449.5 L 489.0,451.9 L 487.7,449.7 L 486.6,450.3 L 486.5,452.1 L 483.9,454.8 L 483.3,457.2 L 486.2,461.2 L 490.3,462.8 L 489.3,452.4 L 490.6,455.3 L 489.7,455.7 L 490.1,459.7 L 492.5,463.0 L 490.1,465.2 L 482.2,466.9 L 479.9,468.6 L 477.6,468.3 L 477.2,467.5 L 478.2,467.6 L 475.9,465.2 L 476.3,466.4 L 474.5,467.3 L 471.4,466.4 L 469.5,467.5 L 468.5,468.7 L 469.4,470.0 L 466.4,469.4 L 466.0,468.0 L 463.8,467.1 L 462.0,467.0 L 461.5,468.3 L 457.7,468.0 L 450.4,473.4 L 448.9,477.9 L 447.1,477.3 L 441.3,481.4 L 435.3,476.5 L 431.2,475.9 L 431.3,477.2 L 429.3,475.7 L 420.3,460.2 L 421.1,456.2 L 420.4,452.8 L 422.3,446.2 L 415.4,445.6 L 414.2,443.9 L 411.5,444.7 L 402.3,435.0 L 402.9,432.2 L 406.6,428.8 L 409.3,422.3 L 414.7,419.8 L 418.2,415.0 L 421.9,416.8 L 426.0,415.6 L 432.7,411.4 L 432.0,410.4 L 434.8,409.6 L 438.0,410.7 L 437.7,412.7 L 438.9,414.6 L 445.0,413.6 L 449.4,410.0 L 448.3,398.9 L 448.9,396.7 L 450.8,395.4 L 451.0,390.5 L 452.5,388.6 L 455.5,386.7 L 456.7,388.6 L 461.8,384.2 L 467.3,383.7 Z"/>
+        <path id="prov-albacete" data-name="Albacete" class="province province-gallu" d="M 449.1,335.8 L 448.8,337.0 L 450.0,336.9 L 449.5,337.6 L 450.8,337.2 L 449.9,338.3 L 451.0,338.6 L 450.6,339.9 L 452.8,338.5 L 457.1,341.8 L 458.4,341.1 L 466.5,343.4 L 465.6,350.5 L 461.5,358.0 L 460.9,361.9 L 467.5,370.6 L 477.7,369.5 L 479.6,373.3 L 479.6,378.1 L 479.3,381.0 L 477.6,381.6 L 480.0,387.2 L 477.5,390.0 L 473.6,390.0 L 469.1,386.1 L 468.9,384.3 L 465.4,383.0 L 461.8,384.2 L 456.7,388.6 L 455.5,386.7 L 454.5,387.0 L 451.0,390.5 L 450.8,395.4 L 448.3,398.5 L 449.4,410.0 L 445.0,413.6 L 438.9,414.6 L 437.7,412.7 L 437.9,410.7 L 433.5,409.8 L 433.4,410.8 L 432.0,410.4 L 432.7,411.4 L 426.0,415.6 L 421.9,416.8 L 417.4,415.6 L 414.7,419.8 L 409.3,422.3 L 406.6,428.8 L 402.9,432.2 L 402.3,435.0 L 397.9,434.4 L 391.0,431.1 L 396.6,423.6 L 397.1,417.4 L 394.4,415.4 L 394.6,408.6 L 389.7,407.3 L 390.0,401.9 L 388.6,400.4 L 383.8,401.4 L 379.2,398.7 L 380.2,397.9 L 379.2,395.9 L 380.0,393.0 L 379.3,392.1 L 381.2,392.9 L 384.4,390.6 L 386.1,384.4 L 382.9,381.0 L 381.0,381.1 L 379.3,374.1 L 372.8,369.9 L 375.5,363.9 L 376.7,363.9 L 377.0,359.9 L 374.9,356.0 L 381.5,346.7 L 380.4,343.0 L 387.1,341.3 L 391.0,342.5 L 393.0,341.2 L 400.5,349.0 L 401.8,345.7 L 403.4,345.3 L 405.2,349.4 L 411.7,345.5 L 418.1,346.6 L 415.7,340.0 L 419.8,340.5 L 419.4,341.6 L 421.5,344.6 L 427.1,343.8 L 433.5,345.6 L 435.1,342.7 L 449.1,335.8 Z"/>
+        <path id="prov-avila" data-name="Ávila" class="province province-gallu" d="M 256.5,211.4 L 264.7,216.4 L 267.4,215.7 L 267.4,213.8 L 268.9,212.8 L 272.4,212.4 L 272.9,218.6 L 277.0,220.8 L 278.7,225.1 L 280.9,226.2 L 281.3,231.2 L 282.8,233.1 L 281.5,234.7 L 284.9,234.9 L 286.0,239.1 L 288.3,241.4 L 288.9,249.2 L 297.9,247.9 L 296.9,245.9 L 298.0,245.2 L 303.1,245.2 L 302.4,246.3 L 303.0,249.9 L 298.4,251.4 L 296.0,249.6 L 296.0,254.1 L 293.9,256.3 L 294.6,261.2 L 293.2,263.8 L 294.3,265.1 L 288.8,265.4 L 287.6,266.8 L 287.0,271.6 L 284.4,271.9 L 283.1,269.7 L 282.0,270.0 L 282.9,273.4 L 280.8,276.0 L 281.0,278.8 L 276.1,280.2 L 274.3,279.2 L 273.7,274.2 L 270.3,275.7 L 268.0,274.7 L 267.2,276.2 L 267.8,277.5 L 261.4,282.2 L 261.3,284.6 L 259.8,285.7 L 256.5,286.4 L 255.8,283.0 L 253.6,283.6 L 249.6,287.8 L 246.4,288.4 L 245.5,286.6 L 238.9,286.1 L 237.2,282.6 L 237.1,278.8 L 238.5,275.4 L 233.9,276.3 L 231.6,279.5 L 228.3,280.4 L 224.0,279.0 L 223.3,276.8 L 219.5,273.5 L 217.1,273.4 L 220.6,269.5 L 219.6,264.2 L 222.7,261.5 L 226.7,260.3 L 225.9,262.7 L 228.6,264.2 L 229.4,263.9 L 229.5,261.3 L 231.9,261.1 L 233.9,254.1 L 228.7,255.8 L 229.1,252.6 L 230.0,251.8 L 230.0,252.9 L 232.9,253.0 L 236.4,250.1 L 237.3,248.1 L 236.2,246.5 L 245.6,240.3 L 245.3,239.2 L 248.5,236.3 L 248.3,232.4 L 251.0,230.0 L 250.3,226.3 L 251.6,225.9 L 252.4,223.3 L 251.5,221.0 L 249.3,220.0 L 249.2,216.5 L 250.5,213.4 L 254.0,213.2 L 256.5,211.4 Z"/>
+        <path id="prov-araba" data-name="Álava" class="province province-gallu" d="M 364.9,65.1 L 369.3,68.4 L 369.9,70.9 L 367.7,73.5 L 372.1,77.3 L 386.3,79.1 L 384.8,75.3 L 391.1,74.3 L 392.3,77.3 L 388.4,79.9 L 388.0,81.8 L 389.2,83.1 L 391.3,84.1 L 391.7,82.5 L 401.6,84.1 L 407.8,88.7 L 408.1,92.3 L 405.6,95.9 L 406.6,98.5 L 403.2,100.2 L 403.6,103.2 L 404.9,103.5 L 405.2,105.1 L 400.1,106.6 L 400.4,105.4 L 398.2,104.6 L 393.6,107.9 L 394.1,110.1 L 395.7,110.0 L 396.2,111.4 L 397.9,108.6 L 399.3,109.1 L 399.5,115.0 L 397.8,115.4 L 398.0,117.0 L 392.8,116.9 L 393.1,114.8 L 392.0,117.4 L 389.9,116.6 L 388.3,118.1 L 387.9,115.9 L 385.6,117.4 L 384.0,114.4 L 382.4,115.0 L 383.8,109.5 L 380.5,107.5 L 379.3,107.4 L 378.5,110.4 L 375.9,112.3 L 375.0,110.4 L 376.2,108.2 L 375.0,108.4 L 374.9,107.0 L 372.1,105.2 L 371.7,102.4 L 367.4,101.7 L 365.4,99.0 L 364.1,99.1 L 363.7,97.3 L 358.3,97.9 L 359.6,95.6 L 357.7,94.5 L 360.2,90.5 L 360.1,88.5 L 357.5,90.8 L 356.0,89.9 L 354.2,92.1 L 355.2,92.9 L 350.9,89.4 L 354.1,84.1 L 358.5,85.2 L 358.2,86.5 L 361.3,87.8 L 365.3,87.1 L 367.4,84.9 L 363.9,82.4 L 368.8,80.6 L 367.1,81.1 L 367.1,79.7 L 364.6,79.1 L 364.8,77.2 L 363.7,77.2 L 361.5,80.4 L 356.7,79.0 L 358.6,78.4 L 358.7,75.8 L 357.7,75.3 L 359.1,73.6 L 356.5,72.0 L 357.5,69.6 L 358.8,68.9 L 360.3,70.3 L 364.9,69.1 L 365.5,66.1 L 364.2,65.6 L 364.9,65.1 Z"/>
+        <path id="prov-badajoz" data-name="Badajoz" class="province province-gallu" d="M 274.8,334.6 L 273.3,342.2 L 270.3,342.7 L 273.2,350.6 L 276.4,353.8 L 267.6,351.4 L 264.1,358.4 L 266.7,361.0 L 266.4,362.3 L 263.8,363.3 L 259.3,361.4 L 261.7,368.6 L 266.4,369.9 L 265.6,373.9 L 261.9,373.6 L 257.8,384.1 L 251.9,386.4 L 247.2,385.5 L 248.1,388.3 L 247.2,389.8 L 245.9,389.2 L 245.6,390.6 L 241.3,393.3 L 240.4,395.7 L 237.0,395.2 L 235.9,397.4 L 236.4,398.3 L 235.1,398.1 L 234.4,400.3 L 231.1,402.3 L 230.8,403.8 L 226.3,405.9 L 225.4,408.3 L 226.8,410.7 L 225.9,413.4 L 228.6,418.0 L 228.9,422.0 L 227.9,422.5 L 227.8,425.4 L 225.4,427.4 L 222.7,427.0 L 219.4,430.8 L 217.2,430.7 L 217.0,427.3 L 219.3,426.1 L 218.8,424.7 L 220.0,425.6 L 219.7,423.9 L 217.6,422.7 L 209.6,425.5 L 209.2,427.4 L 206.7,429.3 L 207.7,432.3 L 206.3,433.5 L 205.3,437.1 L 196.4,438.1 L 192.9,441.0 L 191.7,439.5 L 186.2,438.4 L 183.5,436.3 L 182.7,433.3 L 180.2,432.6 L 178.0,432.8 L 176.7,436.3 L 171.0,435.3 L 171.1,433.1 L 168.8,429.9 L 162.8,430.4 L 158.6,428.9 L 159.4,424.1 L 156.1,424.1 L 151.6,422.1 L 151.6,421.1 L 143.5,424.7 L 140.0,417.2 L 132.9,406.9 L 129.9,405.8 L 132.1,402.8 L 130.6,402.7 L 131.7,398.0 L 134.9,392.4 L 133.5,391.3 L 134.3,385.1 L 146.0,375.2 L 145.3,372.2 L 150.8,363.9 L 148.4,358.5 L 146.0,357.1 L 142.4,358.5 L 140.3,357.8 L 140.8,353.4 L 135.0,350.7 L 134.7,347.5 L 135.6,345.7 L 137.1,346.6 L 139.7,343.2 L 139.7,342.1 L 138.5,342.0 L 139.8,339.4 L 144.2,338.4 L 144.7,339.0 L 143.9,340.5 L 142.6,340.9 L 144.0,343.5 L 145.8,342.3 L 147.7,337.9 L 144.5,336.0 L 145.5,334.4 L 154.6,338.3 L 159.0,337.8 L 159.3,341.0 L 162.0,342.6 L 161.2,345.9 L 159.0,348.5 L 160.9,352.1 L 165.6,352.9 L 166.7,351.4 L 168.2,351.5 L 173.3,354.5 L 173.3,352.6 L 182.0,354.0 L 185.0,352.3 L 185.7,357.6 L 190.1,359.2 L 191.6,361.5 L 194.1,361.6 L 195.0,363.3 L 201.7,356.4 L 202.2,361.8 L 205.9,357.8 L 206.8,359.6 L 211.8,357.7 L 213.1,355.3 L 216.1,356.1 L 219.8,359.7 L 224.3,358.4 L 225.4,357.1 L 224.5,356.0 L 225.8,354.8 L 223.8,352.2 L 227.2,350.2 L 228.5,351.9 L 229.2,350.6 L 232.2,354.3 L 234.8,354.4 L 238.2,348.9 L 238.7,341.8 L 243.8,344.1 L 250.5,341.6 L 251.1,338.0 L 254.3,339.7 L 260.7,337.3 L 264.3,339.3 L 269.6,337.3 L 274.2,333.4 L 274.8,334.6 Z"/>
+        <path id="prov-alicante" data-name="Alicante" class="province province-gallu" d="M 521.3,373.9 L 521.9,375.6 L 526.1,373.7 L 528.1,375.8 L 528.0,373.6 L 536.9,376.4 L 540.8,379.5 L 539.9,380.3 L 540.4,381.7 L 542.3,382.4 L 542.8,384.3 L 539.9,385.5 L 538.1,388.4 L 535.4,388.9 L 534.0,390.9 L 534.6,391.9 L 529.1,392.2 L 526.6,395.3 L 527.3,396.8 L 524.7,399.5 L 521.7,398.7 L 509.5,405.2 L 507.9,408.2 L 508.0,411.7 L 505.8,410.9 L 502.1,413.6 L 502.0,422.7 L 497.5,423.4 L 495.6,426.2 L 494.7,436.8 L 492.0,439.0 L 490.7,443.1 L 489.1,444.0 L 488.4,447.7 L 484.6,446.4 L 479.8,440.8 L 474.2,431.4 L 473.4,427.0 L 476.1,422.6 L 477.2,417.2 L 476.0,414.0 L 470.9,412.1 L 470.7,410.6 L 471.2,406.1 L 470.3,405.6 L 474.7,401.4 L 474.0,399.6 L 475.4,396.0 L 474.0,390.1 L 477.5,390.0 L 480.0,387.2 L 477.6,381.6 L 483.0,381.9 L 484.5,384.6 L 489.9,382.7 L 491.4,384.5 L 494.9,384.9 L 496.3,387.9 L 502.3,383.9 L 501.1,382.2 L 499.1,383.0 L 497.7,380.0 L 504.8,379.3 L 513.0,374.0 L 517.4,376.0 L 521.3,373.9 Z"/>
+        <path id="prov-ourense" data-name="Ourense" class="province province-gallu" d="M 98.0,111.4 L 99.7,113.2 L 97.8,114.4 L 99.0,114.7 L 98.4,115.6 L 104.5,117.6 L 106.5,116.6 L 107.4,117.6 L 105.2,118.6 L 109.3,119.6 L 114.4,124.4 L 116.8,123.0 L 120.5,124.3 L 126.4,120.8 L 128.0,121.8 L 131.4,121.2 L 136.2,124.2 L 135.6,126.2 L 137.1,128.6 L 140.0,120.7 L 142.7,119.1 L 144.0,115.6 L 149.4,116.7 L 150.4,114.9 L 152.3,114.8 L 155.8,117.0 L 157.8,116.8 L 158.3,121.4 L 156.7,122.9 L 162.7,126.2 L 162.7,129.1 L 160.9,133.5 L 158.9,134.8 L 159.8,136.4 L 154.8,136.2 L 151.3,139.5 L 151.2,141.7 L 148.7,143.2 L 148.0,145.8 L 146.3,146.5 L 147.5,148.1 L 149.6,147.9 L 150.3,149.8 L 147.8,155.3 L 144.2,155.4 L 143.4,153.7 L 140.5,152.5 L 138.5,153.3 L 137.8,156.0 L 138.7,157.5 L 137.4,160.4 L 135.5,161.3 L 131.0,163.0 L 128.1,162.4 L 124.9,165.5 L 123.5,161.4 L 120.8,161.1 L 119.8,163.1 L 114.7,164.0 L 116.2,160.2 L 112.5,160.3 L 109.9,158.4 L 102.1,160.3 L 100.4,162.5 L 99.5,161.8 L 99.9,157.2 L 98.8,157.0 L 97.9,160.4 L 94.7,160.9 L 92.9,164.0 L 88.5,165.4 L 84.6,164.8 L 84.3,160.4 L 82.7,160.8 L 81.8,158.0 L 84.7,153.0 L 89.0,150.6 L 89.0,148.4 L 87.2,146.0 L 83.4,146.5 L 82.8,140.8 L 84.8,139.0 L 83.1,136.9 L 84.7,136.0 L 84.8,134.4 L 81.1,135.2 L 79.2,133.8 L 79.3,129.3 L 75.9,127.2 L 76.5,124.7 L 75.0,118.6 L 73.7,117.1 L 77.1,116.9 L 84.2,111.1 L 85.6,112.7 L 92.6,113.2 L 94.0,111.0 L 98.0,111.4 Z"/>
+        <path id="prov-barcelona" data-name="Barcelona" class="province province-gallu" d="M 634.6,129.2 L 642.9,131.0 L 640.0,135.2 L 642.0,136.2 L 642.4,139.1 L 639.4,140.3 L 639.5,138.0 L 637.2,137.6 L 639.3,141.2 L 644.1,141.5 L 646.0,143.8 L 647.0,142.4 L 650.1,143.0 L 650.8,141.7 L 653.8,141.5 L 655.4,142.3 L 655.2,144.5 L 659.1,143.2 L 660.9,144.5 L 661.9,147.2 L 664.1,146.2 L 665.8,147.0 L 666.3,151.7 L 664.7,152.3 L 665.7,152.9 L 665.0,154.0 L 662.5,154.0 L 665.3,157.8 L 660.0,161.0 L 657.0,160.1 L 658.3,165.4 L 664.8,166.8 L 668.9,171.8 L 675.0,169.8 L 681.5,170.7 L 680.4,174.7 L 681.5,176.8 L 653.6,190.3 L 648.5,199.2 L 649.2,195.9 L 645.4,202.4 L 619.9,209.3 L 619.5,206.3 L 618.6,207.2 L 616.4,206.2 L 615.6,204.5 L 618.3,205.0 L 619.3,202.0 L 616.6,202.1 L 617.0,201.1 L 615.0,198.6 L 616.1,197.2 L 613.8,195.6 L 610.3,195.9 L 611.3,194.5 L 610.5,192.5 L 611.6,192.0 L 610.1,191.4 L 611.0,189.2 L 606.2,186.5 L 606.8,184.9 L 609.0,184.8 L 608.1,183.5 L 609.3,182.5 L 606.0,182.1 L 606.7,180.3 L 604.2,179.3 L 605.9,177.9 L 609.0,177.7 L 607.6,174.3 L 605.4,172.8 L 607.7,170.9 L 606.5,170.0 L 607.3,166.4 L 610.2,166.0 L 609.7,167.7 L 612.1,166.9 L 613.5,169.4 L 616.9,167.6 L 616.7,165.7 L 618.9,161.9 L 618.3,160.3 L 615.6,160.4 L 620.2,156.9 L 620.0,153.3 L 621.8,154.1 L 623.8,152.9 L 622.6,150.8 L 622.6,152.9 L 619.9,151.8 L 620.3,150.3 L 620.9,151.6 L 622.7,149.8 L 621.1,148.6 L 622.3,145.6 L 623.9,145.3 L 622.6,142.1 L 624.9,139.2 L 621.7,137.1 L 623.0,134.8 L 621.9,133.5 L 622.2,132.1 L 621.1,131.7 L 634.6,129.2 Z"/>
+        <path id="prov-burgos" data-name="Burgos" class="province province-gallu" d="M 352.8,66.6 L 354.1,68.4 L 358.7,68.8 L 356.4,71.9 L 359.1,73.6 L 357.7,75.3 L 358.7,75.8 L 358.6,78.5 L 356.7,79.0 L 363.1,80.3 L 364.1,82.7 L 367.4,84.9 L 365.3,87.1 L 361.3,87.8 L 358.2,86.5 L 358.5,85.2 L 354.1,84.1 L 350.9,89.4 L 355.2,92.9 L 354.2,92.1 L 356.0,89.9 L 357.5,90.8 L 360.1,88.5 L 360.2,90.5 L 357.7,94.5 L 359.6,95.6 L 358.3,97.9 L 363.7,97.3 L 364.1,99.1 L 365.4,99.0 L 367.4,101.7 L 371.7,102.4 L 372.0,105.1 L 374.1,106.3 L 370.9,107.7 L 369.3,106.3 L 361.8,106.2 L 363.1,109.8 L 359.0,113.2 L 362.4,114.1 L 361.2,117.0 L 363.9,120.1 L 362.9,121.5 L 363.3,125.4 L 362.1,122.2 L 360.8,122.1 L 360.6,124.3 L 362.9,126.4 L 360.4,126.8 L 361.5,134.3 L 359.3,137.7 L 364.5,145.7 L 370.1,145.6 L 371.1,150.2 L 369.1,152.2 L 368.0,156.9 L 365.9,157.4 L 365.4,159.9 L 361.1,160.3 L 358.9,165.2 L 357.0,166.6 L 355.8,164.0 L 350.9,160.1 L 351.3,168.3 L 347.0,170.5 L 346.8,173.7 L 344.9,173.9 L 341.3,181.1 L 337.5,179.4 L 336.3,180.6 L 336.8,181.9 L 335.1,182.8 L 330.3,182.7 L 326.6,186.2 L 326.0,190.9 L 324.4,190.3 L 324.6,184.7 L 322.5,185.7 L 323.4,188.4 L 321.4,188.8 L 317.6,183.7 L 309.9,178.8 L 310.4,173.7 L 307.6,170.8 L 308.8,170.3 L 309.7,166.8 L 306.9,163.9 L 307.0,161.0 L 312.9,158.9 L 312.8,156.7 L 315.7,154.7 L 317.7,154.8 L 317.8,152.5 L 310.0,155.1 L 311.0,151.9 L 313.4,149.4 L 312.8,148.2 L 307.5,149.2 L 306.2,145.6 L 308.8,144.6 L 305.3,142.7 L 300.6,142.3 L 301.5,139.2 L 299.2,137.0 L 299.3,134.0 L 296.5,125.9 L 296.9,124.3 L 293.8,124.0 L 294.6,122.6 L 293.5,121.1 L 294.5,119.1 L 298.6,119.3 L 298.3,116.6 L 296.2,115.3 L 296.7,113.0 L 295.3,112.2 L 295.2,111.1 L 297.0,110.4 L 295.8,108.7 L 297.4,107.8 L 295.8,102.6 L 297.3,101.6 L 297.8,102.8 L 303.9,98.2 L 305.8,99.5 L 307.2,97.4 L 313.7,97.8 L 316.7,97.1 L 317.6,94.5 L 319.3,95.8 L 321.5,94.9 L 321.3,89.8 L 319.3,88.4 L 318.4,91.2 L 316.5,90.5 L 317.4,89.1 L 315.9,88.5 L 317.7,88.6 L 316.8,86.7 L 319.0,87.8 L 320.9,86.4 L 320.6,84.9 L 318.0,84.2 L 317.7,85.9 L 315.4,87.7 L 315.6,86.6 L 313.2,86.8 L 312.5,84.8 L 314.8,80.2 L 317.8,77.6 L 320.0,77.8 L 321.0,76.0 L 320.2,74.5 L 324.7,74.8 L 327.9,72.3 L 330.8,67.7 L 333.4,69.9 L 342.7,71.2 L 352.8,66.6 Z M 375.8,95.7 L 381.0,95.2 L 385.8,97.3 L 388.1,96.9 L 388.8,98.4 L 390.5,97.5 L 387.7,102.2 L 389.4,104.2 L 392.4,103.1 L 392.7,105.8 L 386.3,105.7 L 385.0,103.9 L 379.0,104.4 L 378.1,102.0 L 373.5,99.1 L 375.8,95.7 Z"/>
+        <path id="prov-caceres" data-name="Cáceres" class="province province-gallu" d="M 190.2,259.6 L 194.2,261.8 L 194.7,263.2 L 196.4,262.8 L 195.7,264.3 L 199.2,266.0 L 197.0,268.9 L 201.9,270.1 L 202.4,272.5 L 206.1,274.3 L 207.2,274.5 L 209.0,271.0 L 213.7,269.1 L 214.6,272.1 L 213.5,273.1 L 214.0,273.9 L 219.5,273.5 L 223.3,276.8 L 223.8,278.8 L 227.4,280.3 L 231.6,279.5 L 233.9,276.3 L 238.6,275.5 L 237.1,278.8 L 237.2,282.6 L 238.9,286.1 L 237.1,287.2 L 237.4,295.5 L 235.1,303.0 L 239.6,302.0 L 241.8,304.0 L 240.2,306.8 L 240.5,311.4 L 243.4,312.0 L 246.0,308.7 L 248.2,308.6 L 248.6,311.4 L 247.8,312.0 L 249.8,314.6 L 248.4,319.8 L 246.0,323.0 L 259.9,337.4 L 258.7,337.5 L 258.1,339.1 L 254.3,339.7 L 251.1,338.0 L 250.5,341.6 L 243.8,344.1 L 238.7,341.8 L 238.2,348.9 L 234.8,354.4 L 232.2,354.3 L 229.2,350.6 L 228.5,351.9 L 227.2,350.2 L 223.8,352.2 L 225.8,354.8 L 224.5,356.0 L 225.4,357.1 L 224.3,358.4 L 219.8,359.7 L 216.1,356.1 L 213.1,355.3 L 211.8,357.7 L 206.8,359.6 L 205.9,357.8 L 202.2,361.8 L 201.7,356.4 L 195.0,363.3 L 194.1,361.6 L 191.6,361.5 L 190.1,359.2 L 185.7,357.6 L 185.0,352.3 L 182.0,354.0 L 173.3,352.6 L 173.3,354.5 L 168.2,351.5 L 166.7,351.4 L 165.6,352.9 L 160.9,352.1 L 159.0,348.5 L 161.2,345.9 L 162.0,342.6 L 159.3,341.0 L 158.9,337.7 L 154.6,338.3 L 145.5,334.4 L 144.5,336.0 L 147.7,337.9 L 145.7,342.4 L 143.8,343.4 L 142.6,340.3 L 143.9,340.5 L 144.7,339.0 L 141.3,338.4 L 139.4,339.8 L 138.5,342.0 L 139.9,342.7 L 137.1,346.6 L 131.4,341.6 L 130.5,338.3 L 132.0,332.9 L 127.4,330.5 L 126.8,327.8 L 124.7,327.5 L 121.1,323.8 L 118.5,318.3 L 130.0,319.9 L 134.5,318.0 L 140.0,319.0 L 147.3,317.8 L 149.5,310.5 L 148.9,307.8 L 153.4,303.5 L 153.1,300.1 L 155.6,293.4 L 151.4,286.3 L 147.5,285.3 L 146.6,281.1 L 147.5,278.2 L 150.9,275.9 L 155.5,275.0 L 157.2,276.7 L 161.5,277.3 L 163.5,275.1 L 165.1,277.0 L 166.1,275.6 L 170.7,275.0 L 172.4,273.6 L 172.2,270.9 L 173.5,269.6 L 178.8,267.8 L 179.9,265.9 L 182.5,265.7 L 183.9,262.8 L 190.2,259.6 Z"/>
+        <path id="prov-cadiz" data-name="Cádiz" class="province province-gallu" d="M 233.7,504.5 L 234.4,507.1 L 232.2,509.8 L 233.3,512.7 L 240.8,505.4 L 240.9,507.1 L 244.5,512.3 L 249.5,507.8 L 251.0,508.8 L 252.5,514.8 L 250.0,519.5 L 248.0,520.6 L 242.6,516.3 L 240.8,517.4 L 238.7,520.9 L 241.4,524.1 L 239.6,527.7 L 239.6,531.3 L 236.5,534.3 L 232.4,535.2 L 232.1,537.4 L 228.7,541.5 L 224.0,540.5 L 224.1,542.8 L 228.7,543.9 L 230.4,541.1 L 233.9,541.3 L 238.3,549.5 L 239.8,556.2 L 242.1,555.3 L 243.5,557.1 L 240.0,563.0 L 238.8,568.4 L 235.9,566.4 L 233.2,567.8 L 233.8,574.3 L 223.9,579.3 L 221.7,575.5 L 217.8,575.0 L 214.9,573.1 L 213.8,573.7 L 207.4,566.1 L 200.8,566.4 L 197.1,559.1 L 194.5,557.5 L 187.0,542.0 L 185.8,541.6 L 187.5,540.6 L 186.8,541.3 L 188.1,541.4 L 187.3,541.7 L 188.7,543.1 L 188.7,545.6 L 190.2,546.4 L 193.3,542.2 L 189.3,543.0 L 188.7,541.6 L 190.2,541.9 L 190.0,537.6 L 189.1,538.5 L 189.7,537.7 L 188.2,538.0 L 186.4,535.3 L 181.5,534.5 L 178.6,526.7 L 184.1,522.7 L 183.5,518.4 L 184.7,515.3 L 187.5,514.4 L 197.0,518.2 L 208.7,519.3 L 209.5,515.6 L 211.2,514.1 L 218.3,513.7 L 220.9,509.8 L 223.6,512.3 L 225.2,511.8 L 225.5,514.1 L 228.2,515.7 L 227.5,513.0 L 231.7,509.2 L 229.4,505.7 L 233.7,504.5 Z"/>
+        <path id="prov-castellon" data-name="Castellón" class="province province-gallu" d="M 521.0,238.1 L 526.5,242.5 L 530.9,242.4 L 532.3,245.1 L 536.1,242.5 L 542.3,242.1 L 542.9,244.3 L 545.9,245.3 L 544.6,247.4 L 545.2,249.4 L 551.9,251.4 L 554.2,253.1 L 553.9,255.3 L 558.0,257.5 L 552.8,265.8 L 552.3,268.9 L 545.2,276.9 L 544.4,279.5 L 540.4,282.2 L 538.0,288.4 L 532.7,291.8 L 529.7,300.4 L 525.2,304.7 L 519.7,314.1 L 515.6,312.4 L 512.1,308.5 L 509.4,308.6 L 508.4,311.5 L 505.1,314.6 L 501.1,308.8 L 498.5,310.5 L 497.9,312.7 L 494.4,311.8 L 494.2,306.0 L 492.3,304.8 L 490.2,307.5 L 484.6,300.7 L 484.3,296.0 L 487.6,294.4 L 488.9,291.0 L 492.7,291.2 L 496.5,289.3 L 495.7,287.0 L 498.4,284.5 L 500.3,276.4 L 503.0,278.0 L 506.7,276.9 L 509.1,275.4 L 508.2,273.3 L 508.8,272.4 L 510.0,272.6 L 511.4,270.1 L 514.6,268.3 L 511.1,262.7 L 515.1,260.6 L 513.5,257.6 L 514.0,250.8 L 509.8,250.6 L 509.2,247.0 L 512.1,245.8 L 513.3,247.3 L 517.1,245.1 L 517.8,240.6 L 519.2,238.4 L 521.0,238.1 Z"/>
+        <path id="prov-ciudadreal" data-name="Ciudad Real" class="province province-gallu" d="M 304.2,325.2 L 309.5,324.6 L 310.2,328.4 L 308.5,328.4 L 308.1,333.0 L 305.4,333.0 L 303.7,339.7 L 305.2,339.7 L 306.1,341.3 L 307.8,339.5 L 313.3,340.5 L 313.6,344.3 L 319.6,347.1 L 323.2,344.7 L 327.0,346.4 L 329.3,344.3 L 337.3,343.9 L 340.4,341.1 L 340.7,339.0 L 344.0,336.7 L 349.5,337.1 L 349.1,334.6 L 350.3,332.0 L 356.3,331.8 L 357.8,330.2 L 362.6,333.5 L 365.1,333.0 L 366.4,334.1 L 370.3,332.0 L 370.1,333.3 L 373.5,337.7 L 372.0,339.4 L 372.8,340.6 L 375.4,340.4 L 377.6,337.2 L 378.6,337.4 L 381.5,346.5 L 374.9,356.0 L 377.0,359.9 L 376.8,363.5 L 375.5,363.9 L 372.8,369.9 L 375.3,372.3 L 377.7,372.3 L 379.4,374.1 L 381.0,381.1 L 382.9,381.0 L 385.9,383.9 L 384.4,390.6 L 381.2,392.9 L 379.3,392.1 L 380.0,393.0 L 379.2,395.9 L 380.2,397.9 L 378.4,400.5 L 372.8,404.6 L 368.3,403.2 L 366.7,404.7 L 366.3,407.7 L 362.8,402.7 L 358.8,405.6 L 348.6,402.5 L 345.9,403.0 L 345.8,405.5 L 341.7,408.3 L 337.5,407.7 L 336.8,405.1 L 334.6,404.6 L 333.7,408.4 L 323.5,406.5 L 321.1,407.4 L 319.8,410.1 L 316.4,410.5 L 297.8,408.2 L 296.7,409.0 L 297.2,412.1 L 296.1,412.4 L 287.1,408.3 L 283.9,403.8 L 279.4,402.2 L 277.8,399.5 L 273.4,397.4 L 273.2,396.1 L 264.9,393.1 L 264.0,387.9 L 257.0,387.3 L 256.8,385.9 L 254.7,384.9 L 257.8,384.1 L 260.4,375.9 L 261.9,373.6 L 265.6,373.9 L 266.5,370.2 L 261.7,368.6 L 259.3,361.4 L 263.8,363.3 L 266.4,362.3 L 266.7,361.0 L 264.1,358.4 L 267.6,351.4 L 276.5,353.7 L 273.2,350.6 L 270.3,342.7 L 273.3,342.2 L 275.3,335.3 L 274.3,333.5 L 278.1,333.2 L 278.1,331.0 L 280.8,330.1 L 281.2,327.6 L 282.8,327.7 L 283.2,325.5 L 285.5,327.2 L 283.9,328.4 L 286.6,331.5 L 287.7,328.3 L 291.2,330.2 L 298.6,331.5 L 301.3,330.3 L 303.2,324.5 L 304.2,325.2 Z M 269.9,328.8 L 271.4,333.1 L 270.0,334.7 L 270.6,335.9 L 269.6,337.2 L 264.3,339.3 L 260.5,337.4 L 262.3,330.4 L 264.7,325.9 L 269.9,328.8 Z"/>
+        <path id="prov-jaen" data-name="Jaén" class="province province-gallu" d="M 379.1,398.8 L 382.6,401.1 L 388.2,400.3 L 389.8,401.6 L 389.7,407.3 L 394.6,408.6 L 394.4,415.4 L 397.1,417.4 L 396.6,423.6 L 391.5,430.2 L 387.8,432.4 L 387.9,436.9 L 384.4,439.6 L 382.6,438.8 L 378.1,442.7 L 372.9,453.9 L 371.6,454.5 L 371.7,459.0 L 372.7,459.5 L 367.6,462.9 L 367.6,465.1 L 363.6,464.0 L 361.6,465.6 L 357.0,462.3 L 354.6,462.2 L 352.0,462.5 L 350.2,466.1 L 344.6,467.9 L 338.7,464.1 L 332.2,470.4 L 324.0,474.1 L 323.5,473.1 L 320.5,480.5 L 314.5,481.1 L 312.7,480.4 L 309.2,474.7 L 307.0,473.4 L 308.5,472.0 L 306.5,471.6 L 302.3,464.6 L 299.8,463.9 L 299.4,462.5 L 302.9,459.5 L 301.8,457.7 L 298.8,456.8 L 300.5,452.5 L 296.2,451.3 L 297.7,441.1 L 296.4,435.2 L 298.7,433.5 L 298.1,432.3 L 300.1,430.4 L 299.9,428.9 L 303.0,426.4 L 300.8,421.6 L 301.1,419.9 L 300.0,419.2 L 300.4,415.3 L 298.8,414.4 L 298.9,412.5 L 297.1,412.0 L 297.2,408.5 L 316.4,410.5 L 319.8,410.1 L 321.1,407.4 L 323.5,406.5 L 333.7,408.4 L 334.6,404.6 L 335.4,404.6 L 337.2,405.5 L 337.5,407.7 L 340.7,408.5 L 345.8,405.5 L 345.9,403.0 L 348.6,402.5 L 358.8,405.6 L 362.8,402.7 L 366.3,407.7 L 366.7,404.7 L 368.3,403.2 L 372.8,404.6 L 379.1,398.8 Z"/>
+        <path id="prov-cordoba" data-name="Córdoba" class="province province-gallu" d="M 255.3,385.1 L 257.0,387.3 L 264.0,387.9 L 264.9,393.1 L 273.2,396.1 L 273.4,397.4 L 277.8,399.5 L 279.4,402.2 L 283.9,403.8 L 287.1,408.3 L 296.1,412.4 L 298.9,412.5 L 298.8,414.4 L 300.4,415.3 L 300.0,419.2 L 301.1,419.9 L 300.8,421.6 L 302.7,423.9 L 303.0,426.5 L 299.9,428.9 L 300.1,430.4 L 298.1,432.3 L 298.7,433.5 L 297.1,434.0 L 297.6,435.2 L 296.4,435.2 L 297.7,441.1 L 296.2,451.3 L 300.6,452.6 L 298.8,456.8 L 301.8,457.7 L 302.9,459.5 L 299.4,462.5 L 299.8,463.9 L 302.3,464.6 L 306.5,471.6 L 308.5,472.0 L 307.0,473.4 L 309.2,474.7 L 311.8,479.4 L 307.1,479.3 L 303.2,483.7 L 300.7,482.9 L 298.9,484.1 L 298.9,486.9 L 297.5,489.5 L 297.9,491.7 L 295.7,493.9 L 293.9,494.9 L 294.2,493.5 L 291.0,491.6 L 291.1,488.5 L 289.0,487.9 L 285.4,490.1 L 284.7,492.1 L 279.0,493.2 L 278.3,489.9 L 276.6,490.5 L 274.7,487.4 L 275.9,486.4 L 274.5,485.6 L 275.2,484.2 L 272.6,482.5 L 272.0,484.2 L 269.2,484.7 L 267.0,482.5 L 267.4,481.2 L 265.5,478.8 L 266.0,477.0 L 263.6,476.9 L 264.1,476.0 L 261.9,473.6 L 262.4,472.4 L 260.1,470.9 L 261.0,469.2 L 261.0,464.1 L 258.7,465.3 L 259.8,461.6 L 257.3,457.7 L 253.3,457.6 L 252.3,459.6 L 253.5,461.1 L 251.9,460.3 L 251.3,458.1 L 250.2,458.3 L 251.4,460.9 L 249.1,461.0 L 247.6,459.6 L 239.6,464.3 L 238.1,466.4 L 234.7,462.1 L 235.8,461.4 L 234.8,460.7 L 235.3,458.7 L 236.2,458.4 L 236.7,459.8 L 238.5,457.8 L 240.5,458.2 L 240.4,452.9 L 238.2,451.5 L 238.5,448.2 L 234.7,446.1 L 234.6,440.8 L 231.4,438.6 L 230.3,437.0 L 230.3,433.8 L 225.5,428.6 L 225.3,426.8 L 227.8,425.4 L 227.9,422.5 L 228.9,422.0 L 228.6,418.0 L 225.9,413.4 L 226.8,410.7 L 225.4,408.2 L 227.1,405.1 L 230.8,403.8 L 231.1,402.3 L 234.9,399.7 L 235.1,398.1 L 236.3,398.3 L 235.9,397.4 L 237.0,395.2 L 240.4,395.7 L 241.3,393.3 L 245.6,390.6 L 245.9,389.2 L 247.2,389.8 L 248.1,388.3 L 247.2,385.5 L 251.9,386.4 L 255.3,385.1 Z M 252.8,462.0 L 255.6,462.4 L 256.3,465.8 L 252.8,462.0 Z"/>
+        <path id="prov-cuenca" data-name="Cuenca" class="province province-gallu" d="M 412.6,247.5 L 415.9,248.3 L 421.7,252.6 L 422.8,250.7 L 425.1,252.1 L 428.9,264.1 L 433.0,266.4 L 437.4,271.4 L 435.7,272.7 L 436.2,274.6 L 437.8,272.2 L 446.0,280.7 L 451.5,280.3 L 450.6,285.0 L 453.2,287.1 L 452.5,287.6 L 454.9,293.1 L 461.8,294.7 L 466.4,293.6 L 467.7,296.3 L 464.1,298.3 L 464.5,304.4 L 463.7,307.9 L 460.4,312.9 L 461.2,315.8 L 458.7,317.8 L 455.4,316.4 L 452.7,318.9 L 450.3,324.5 L 447.1,326.4 L 448.0,326.7 L 448.2,329.9 L 446.6,333.2 L 447.0,334.8 L 448.4,335.0 L 447.9,335.8 L 435.1,342.7 L 433.5,345.6 L 427.1,343.8 L 421.5,344.6 L 419.4,341.6 L 419.8,340.5 L 415.7,340.0 L 418.1,346.6 L 411.7,345.5 L 405.2,349.4 L 403.4,345.3 L 401.8,345.7 L 400.5,349.0 L 393.0,341.2 L 391.0,342.5 L 387.1,341.3 L 380.4,342.9 L 378.6,337.4 L 377.6,337.2 L 375.6,340.3 L 372.8,340.6 L 372.0,339.4 L 373.4,337.7 L 370.1,333.2 L 370.4,322.7 L 371.4,319.8 L 366.5,314.3 L 362.2,304.6 L 359.4,303.2 L 361.1,299.1 L 361.1,295.2 L 358.6,295.4 L 357.3,292.3 L 357.6,289.7 L 359.9,289.9 L 363.1,287.9 L 363.3,286.2 L 361.1,283.3 L 362.9,282.3 L 365.5,283.4 L 366.1,279.4 L 371.2,283.1 L 373.3,281.9 L 373.8,280.1 L 376.1,279.7 L 377.1,275.5 L 376.3,268.4 L 378.4,262.6 L 379.5,262.8 L 379.5,264.9 L 381.5,266.0 L 381.8,264.4 L 383.5,266.0 L 382.5,264.0 L 384.2,262.3 L 384.7,263.2 L 388.9,262.2 L 392.8,264.1 L 393.4,262.3 L 391.2,260.5 L 392.1,258.8 L 391.1,257.3 L 392.2,255.5 L 393.9,258.1 L 397.6,255.8 L 398.4,256.9 L 400.2,255.6 L 398.1,252.7 L 399.1,250.6 L 402.2,253.7 L 404.7,253.5 L 404.9,249.8 L 405.9,248.4 L 409.2,250.2 L 411.7,249.4 L 412.6,247.5 Z"/>
+        <path id="prov-granada" data-name="Granada" class="province province-gallu" d="M 390.9,430.9 L 397.8,434.4 L 402.3,435.0 L 409.6,442.8 L 404.8,445.6 L 404.4,450.5 L 405.8,452.8 L 403.3,458.6 L 404.0,463.2 L 399.6,463.0 L 401.4,470.8 L 396.0,471.8 L 396.0,473.1 L 392.9,473.9 L 385.9,480.4 L 386.1,483.6 L 385.2,483.8 L 384.6,487.7 L 384.9,493.0 L 380.9,491.2 L 379.5,491.9 L 378.4,489.3 L 374.8,488.2 L 372.9,494.7 L 370.2,496.9 L 369.1,501.2 L 364.8,500.0 L 367.7,509.6 L 364.8,511.8 L 364.7,513.4 L 362.4,513.8 L 364.8,519.1 L 358.7,523.2 L 359.3,525.8 L 348.0,526.7 L 343.5,529.9 L 340.0,529.6 L 337.7,527.7 L 336.2,528.4 L 333.5,526.3 L 330.5,526.1 L 326.3,528.0 L 324.0,526.7 L 324.5,522.2 L 321.3,518.4 L 319.0,518.7 L 315.7,516.4 L 309.3,515.0 L 306.4,511.4 L 302.7,511.1 L 299.2,506.9 L 297.0,507.0 L 296.2,499.5 L 293.9,494.9 L 297.9,491.7 L 297.5,489.5 L 298.9,486.9 L 298.9,484.1 L 300.7,482.9 L 303.2,483.7 L 307.1,479.3 L 311.8,479.4 L 314.5,481.1 L 320.4,480.6 L 323.5,473.1 L 324.0,474.1 L 332.2,470.4 L 338.7,464.1 L 344.6,467.9 L 350.2,466.1 L 352.0,462.5 L 354.6,462.2 L 357.0,462.3 L 361.6,465.6 L 363.6,464.0 L 367.6,465.1 L 367.6,462.9 L 372.7,459.5 L 371.7,459.0 L 371.6,454.5 L 372.9,453.9 L 378.1,442.7 L 382.6,438.8 L 384.4,439.6 L 387.9,437.0 L 387.8,432.4 L 390.9,430.9 Z"/>
+        <path id="prov-guadalajara" data-name="Guadalajara" class="province province-gallu" d="M 371.8,199.9 L 373.5,200.5 L 373.6,203.5 L 376.1,204.8 L 378.6,205.2 L 379.4,203.5 L 381.8,203.4 L 382.2,205.1 L 385.7,205.9 L 386.6,207.7 L 388.8,207.1 L 388.5,208.8 L 387.0,209.7 L 389.4,210.3 L 388.4,212.4 L 389.5,213.1 L 391.6,211.5 L 393.2,214.6 L 394.6,214.8 L 395.3,217.5 L 398.1,219.0 L 401.5,216.9 L 403.3,219.0 L 406.5,218.3 L 408.2,216.2 L 411.3,217.1 L 413.7,214.6 L 417.8,218.1 L 418.3,212.2 L 423.1,210.8 L 424.6,213.2 L 431.6,216.7 L 441.8,227.1 L 441.6,231.6 L 445.7,236.2 L 446.0,240.1 L 444.8,241.6 L 446.2,245.4 L 444.6,250.5 L 445.7,251.9 L 442.8,254.3 L 438.5,252.2 L 437.2,255.8 L 437.7,259.6 L 434.6,261.3 L 431.5,265.9 L 428.9,264.1 L 425.5,252.8 L 423.0,250.7 L 421.7,252.6 L 414.9,247.9 L 412.3,247.4 L 411.7,249.4 L 409.2,250.2 L 405.9,248.4 L 404.8,249.9 L 404.9,253.1 L 402.7,253.9 L 399.1,250.6 L 398.1,252.7 L 400.0,255.8 L 393.9,258.1 L 392.2,255.5 L 391.5,256.3 L 392.1,258.8 L 391.2,260.5 L 393.4,262.3 L 392.8,264.1 L 388.9,262.2 L 384.7,263.2 L 384.2,262.3 L 382.5,264.0 L 383.5,266.0 L 381.8,264.4 L 381.5,266.0 L 378.3,262.7 L 376.3,268.4 L 377.1,275.5 L 376.0,279.8 L 373.8,280.1 L 373.3,281.9 L 371.2,283.1 L 366.1,279.4 L 365.5,283.4 L 362.7,283.1 L 360.4,274.0 L 356.9,277.6 L 355.8,276.6 L 359.2,265.4 L 357.9,263.0 L 355.5,262.8 L 355.5,257.7 L 352.7,255.5 L 350.2,256.0 L 350.9,253.8 L 348.5,251.9 L 347.9,249.7 L 349.1,247.6 L 347.5,248.9 L 344.9,245.0 L 344.3,246.6 L 340.8,245.2 L 342.6,242.4 L 341.8,242.0 L 342.1,240.0 L 341.3,238.6 L 338.5,238.1 L 340.3,235.6 L 340.6,232.7 L 342.3,231.9 L 341.2,229.7 L 342.1,229.7 L 343.5,223.9 L 344.8,223.0 L 342.4,220.0 L 343.1,217.2 L 339.7,216.3 L 336.9,211.3 L 340.9,210.0 L 342.1,207.7 L 344.4,207.8 L 343.7,203.6 L 348.0,205.0 L 351.3,203.5 L 352.5,204.7 L 353.8,202.1 L 355.5,201.4 L 363.0,203.6 L 369.1,202.2 L 369.6,200.7 L 371.8,199.9 Z"/>
+        <path id="prov-gipuzkoa" data-name="Gipuzkoa" class="province province-gallu" d="M 432.3,52.4 L 432.4,55.4 L 435.2,57.0 L 435.7,59.6 L 432.7,60.1 L 432.1,63.0 L 428.5,65.5 L 428.1,64.1 L 427.4,65.8 L 425.6,64.5 L 425.2,69.8 L 426.3,70.9 L 419.7,75.9 L 418.8,81.9 L 415.7,82.5 L 413.8,84.9 L 409.4,84.1 L 407.8,88.0 L 405.1,87.5 L 401.6,84.1 L 391.7,82.5 L 391.2,84.1 L 388.0,81.8 L 388.4,79.9 L 392.3,77.3 L 391.1,74.5 L 393.6,73.7 L 393.1,69.1 L 394.5,68.4 L 393.7,64.9 L 397.1,63.2 L 398.1,61.5 L 397.0,59.6 L 398.5,57.5 L 401.7,59.3 L 409.9,58.4 L 410.6,59.7 L 413.8,60.1 L 419.2,57.7 L 421.4,58.1 L 423.0,56.5 L 425.1,56.9 L 432.3,52.4 Z"/>
+        <path id="prov-huelva" data-name="Huelva" class="province province-gallu" d="M 152.2,422.2 L 159.4,424.1 L 158.2,428.3 L 160.7,428.8 L 161.4,430.2 L 168.8,429.9 L 171.1,433.1 L 170.9,435.3 L 176.7,436.3 L 178.5,432.6 L 182.7,433.3 L 183.8,436.6 L 189.7,439.7 L 191.7,439.5 L 193.5,443.2 L 194.8,442.5 L 195.9,443.6 L 193.8,446.6 L 196.1,449.9 L 195.4,451.9 L 191.7,450.7 L 190.6,455.4 L 189.0,455.1 L 189.0,453.7 L 185.8,453.6 L 176.8,456.4 L 175.4,460.5 L 173.5,461.7 L 173.9,464.2 L 181.2,464.5 L 181.3,468.6 L 186.0,477.2 L 183.3,478.7 L 183.0,481.3 L 183.9,482.0 L 181.8,484.0 L 184.6,486.8 L 183.1,491.1 L 184.4,496.0 L 183.1,498.2 L 184.1,499.3 L 181.7,502.6 L 183.4,508.9 L 182.1,512.7 L 184.7,515.3 L 183.5,518.2 L 183.9,522.4 L 181.1,521.8 L 178.2,514.6 L 174.3,509.7 L 152.7,495.5 L 157.3,500.4 L 152.3,496.3 L 144.9,493.0 L 133.4,493.7 L 127.7,495.9 L 126.0,495.0 L 124.5,490.3 L 125.2,488.5 L 124.1,485.9 L 124.2,480.3 L 122.9,478.9 L 123.9,478.2 L 122.9,473.4 L 119.7,468.6 L 120.5,468.3 L 120.7,465.0 L 124.0,460.7 L 125.2,454.0 L 130.5,449.9 L 132.7,446.1 L 134.6,440.1 L 133.8,438.2 L 137.2,436.6 L 140.9,436.8 L 141.2,434.7 L 142.8,433.7 L 144.9,435.6 L 148.1,435.2 L 148.9,429.4 L 150.8,425.9 L 149.9,425.0 L 152.2,422.2 Z"/>
+        <path id="prov-huesca" data-name="Huesca" class="province province-gallu" d="M 489.2,86.1 L 490.5,86.2 L 489.8,86.8 L 490.9,88.7 L 493.0,88.8 L 497.2,92.5 L 497.2,94.6 L 499.0,94.3 L 499.0,96.2 L 501.1,95.4 L 502.4,92.9 L 505.9,95.1 L 508.5,94.9 L 512.9,91.3 L 519.7,95.7 L 521.3,95.0 L 524.2,100.5 L 526.3,100.6 L 526.9,102.5 L 530.0,103.0 L 539.6,99.3 L 544.2,100.8 L 546.1,103.8 L 549.6,100.2 L 553.0,102.6 L 562.6,101.5 L 566.0,102.6 L 568.6,107.6 L 571.9,108.3 L 570.9,113.7 L 569.3,114.4 L 570.4,115.8 L 567.7,117.1 L 570.7,124.4 L 569.5,125.8 L 572.1,126.8 L 570.4,127.8 L 571.7,128.8 L 568.3,138.3 L 568.9,140.2 L 568.0,141.0 L 568.2,144.2 L 565.0,153.1 L 563.7,152.6 L 560.6,156.2 L 563.1,157.6 L 562.3,160.0 L 563.1,161.0 L 560.3,162.3 L 559.7,164.6 L 556.4,166.0 L 555.6,168.6 L 551.7,169.1 L 551.6,170.9 L 551.0,170.3 L 547.9,174.5 L 549.5,178.1 L 549.1,180.4 L 553.4,180.1 L 554.4,184.4 L 551.6,188.1 L 548.7,188.6 L 549.4,190.9 L 548.3,194.0 L 543.1,192.5 L 542.0,194.3 L 538.9,194.1 L 535.1,198.1 L 530.5,197.4 L 528.7,194.8 L 529.6,198.3 L 527.3,197.4 L 526.0,196.2 L 524.3,188.5 L 521.5,184.9 L 521.5,181.0 L 518.8,180.2 L 516.6,182.2 L 512.9,178.6 L 510.4,177.8 L 509.6,174.0 L 501.7,171.1 L 502.7,168.8 L 501.8,163.4 L 499.7,161.0 L 497.1,160.2 L 497.5,159.0 L 495.6,158.0 L 494.1,154.8 L 487.6,154.8 L 481.7,151.6 L 483.6,149.9 L 483.3,148.2 L 485.7,145.2 L 486.7,147.9 L 488.4,147.0 L 489.2,140.7 L 488.6,133.0 L 490.2,130.6 L 489.8,125.5 L 487.6,123.9 L 487.9,127.1 L 486.0,132.5 L 482.2,131.7 L 481.4,134.7 L 479.9,133.5 L 483.3,127.6 L 484.0,124.4 L 485.5,123.7 L 480.7,120.8 L 480.7,119.5 L 482.1,118.9 L 481.1,117.7 L 481.3,115.5 L 479.1,115.8 L 481.2,112.7 L 479.0,111.0 L 480.7,109.1 L 479.4,105.1 L 481.3,104.6 L 482.0,102.8 L 479.7,101.9 L 480.7,101.1 L 480.9,97.6 L 482.4,97.7 L 483.8,95.8 L 483.3,91.5 L 485.4,89.9 L 485.3,87.6 L 489.2,86.1 Z"/>
+        <path id="prov-leon" data-name="León" class="province province-gallu" d="M 263.1,63.6 L 266.0,67.0 L 265.4,71.6 L 266.4,73.2 L 271.8,77.2 L 271.6,79.2 L 268.5,81.5 L 267.7,85.5 L 264.6,90.5 L 262.8,90.3 L 263.0,95.9 L 260.8,97.9 L 261.9,100.5 L 264.3,101.4 L 262.7,104.1 L 261.9,112.3 L 263.4,113.5 L 262.7,119.7 L 261.4,120.7 L 262.5,121.6 L 262.5,124.3 L 258.8,125.1 L 258.1,127.7 L 260.5,127.5 L 259.8,130.6 L 255.2,130.6 L 254.4,133.4 L 251.2,129.6 L 247.3,133.0 L 244.4,132.3 L 243.4,134.7 L 244.9,135.7 L 244.1,136.5 L 241.6,135.4 L 240.5,137.6 L 236.1,136.0 L 236.7,148.9 L 233.3,149.6 L 228.5,144.4 L 226.7,147.8 L 225.8,147.1 L 225.3,148.2 L 225.2,146.3 L 222.6,146.0 L 223.4,144.2 L 220.9,141.7 L 219.8,142.0 L 220.4,143.2 L 216.7,143.7 L 216.1,142.1 L 214.9,142.1 L 211.2,143.9 L 208.3,140.7 L 205.6,141.7 L 205.3,143.0 L 200.0,140.4 L 194.0,140.0 L 191.1,141.3 L 186.7,139.1 L 185.7,137.1 L 175.6,138.8 L 174.0,137.3 L 163.5,136.6 L 159.9,133.7 L 162.3,130.5 L 162.7,126.2 L 156.7,122.9 L 158.3,121.4 L 157.8,116.8 L 151.9,114.7 L 149.4,116.7 L 144.0,115.6 L 144.9,114.1 L 144.4,112.3 L 146.4,110.2 L 145.4,109.3 L 145.6,106.7 L 147.9,106.0 L 145.7,102.3 L 147.6,100.3 L 149.7,100.2 L 150.4,98.0 L 151.7,99.0 L 155.4,95.7 L 156.9,93.1 L 155.2,89.6 L 158.3,89.8 L 156.5,86.7 L 160.3,87.6 L 160.6,88.9 L 165.1,86.1 L 176.0,86.2 L 179.1,84.9 L 179.1,83.1 L 176.9,82.9 L 176.6,81.2 L 179.6,81.4 L 181.2,79.4 L 181.1,77.8 L 183.1,76.3 L 184.9,78.3 L 187.2,78.0 L 190.4,79.9 L 191.0,77.2 L 193.0,77.2 L 195.3,79.1 L 197.4,78.4 L 198.3,75.2 L 201.6,76.7 L 204.1,75.9 L 205.1,79.2 L 207.4,81.1 L 213.4,83.2 L 215.6,82.7 L 217.5,77.5 L 219.5,76.5 L 230.3,79.0 L 231.2,76.7 L 236.0,77.0 L 237.1,73.8 L 241.9,75.0 L 249.2,72.4 L 251.7,73.3 L 253.1,67.6 L 257.4,68.2 L 259.2,65.4 L 263.1,63.6 Z"/>
+        <path id="prov-lleida" data-name="Lleida" class="province province-gallu" d="M 569.1,90.7 L 576.7,92.9 L 580.5,95.6 L 582.4,94.4 L 583.7,95.8 L 588.8,95.6 L 593.6,101.3 L 597.0,100.0 L 604.0,100.5 L 603.7,101.7 L 605.8,102.9 L 608.7,108.9 L 607.8,110.3 L 608.8,111.3 L 607.1,113.6 L 609.1,113.3 L 610.1,115.5 L 607.4,117.3 L 608.6,117.9 L 608.8,120.4 L 614.6,121.0 L 615.1,119.1 L 620.4,118.5 L 621.1,115.9 L 622.9,116.9 L 624.1,115.9 L 624.5,120.4 L 628.3,121.5 L 628.5,125.4 L 631.2,125.5 L 630.1,126.5 L 630.5,130.0 L 621.1,131.7 L 622.2,132.1 L 621.9,133.5 L 623.0,134.8 L 621.7,137.1 L 624.9,139.2 L 622.6,142.1 L 623.9,145.3 L 622.3,145.6 L 621.1,148.6 L 622.7,149.8 L 620.9,151.6 L 620.3,150.3 L 619.9,151.8 L 622.6,152.9 L 622.6,150.8 L 623.8,152.9 L 621.8,154.1 L 620.0,153.3 L 620.2,156.9 L 615.6,160.4 L 618.3,160.3 L 618.9,161.9 L 616.7,165.7 L 616.9,167.6 L 613.5,169.4 L 612.1,166.9 L 609.7,167.7 L 610.2,166.0 L 607.3,166.4 L 606.5,170.0 L 607.7,170.9 L 605.4,172.8 L 607.6,174.3 L 609.0,177.7 L 605.9,177.9 L 604.2,179.3 L 606.7,180.3 L 605.9,181.9 L 606.6,183.3 L 596.5,182.5 L 596.0,184.0 L 593.5,185.0 L 594.4,188.3 L 590.7,189.8 L 586.7,187.4 L 586.6,188.9 L 588.6,190.4 L 581.6,198.1 L 577.1,199.0 L 576.1,197.2 L 574.7,199.6 L 571.6,199.2 L 571.0,200.4 L 564.3,202.3 L 560.2,199.8 L 558.7,202.4 L 557.5,202.4 L 555.2,199.2 L 553.7,200.2 L 553.6,203.4 L 551.0,203.2 L 549.0,199.6 L 550.3,197.9 L 547.5,195.0 L 549.4,190.9 L 548.7,188.6 L 551.6,188.1 L 554.4,184.4 L 553.4,180.1 L 549.1,180.4 L 549.5,178.1 L 547.8,174.7 L 551.0,170.3 L 551.6,170.9 L 551.7,169.1 L 555.6,168.6 L 556.4,166.0 L 559.7,164.6 L 560.3,162.3 L 563.1,160.9 L 562.3,160.0 L 563.1,157.6 L 560.6,156.2 L 566.2,150.9 L 565.5,149.9 L 568.9,140.2 L 568.3,138.3 L 571.7,128.8 L 570.4,127.8 L 572.1,126.8 L 569.5,125.8 L 570.7,124.4 L 567.7,117.1 L 570.4,115.8 L 569.3,114.4 L 570.9,113.7 L 571.9,108.3 L 568.1,107.0 L 568.0,104.9 L 566.0,102.7 L 566.9,102.6 L 567.1,100.3 L 565.0,98.1 L 566.4,96.6 L 565.2,96.0 L 566.5,94.7 L 566.0,92.0 L 569.1,90.7 Z"/>
+        <path id="prov-larioja" data-name="La Rioja" class="province province-gallu" d="M 366.5,106.1 L 370.9,107.7 L 374.4,106.5 L 375.0,108.4 L 376.2,108.2 L 375.0,110.4 L 376.0,112.3 L 378.5,110.4 L 379.3,107.4 L 380.5,107.5 L 383.8,109.5 L 382.4,115.0 L 384.0,114.4 L 385.6,117.4 L 387.9,115.9 L 388.3,118.1 L 389.9,116.6 L 392.0,117.4 L 393.1,114.8 L 392.8,116.9 L 398.2,116.9 L 402.0,119.7 L 402.9,118.4 L 405.2,118.5 L 405.9,120.1 L 411.4,122.8 L 414.8,121.9 L 414.6,123.4 L 416.6,125.6 L 416.0,127.1 L 420.0,125.5 L 422.5,126.6 L 422.8,128.0 L 425.4,128.5 L 425.6,130.4 L 428.0,131.2 L 427.9,133.8 L 429.1,133.3 L 431.7,135.9 L 438.4,138.2 L 437.2,139.5 L 438.4,141.0 L 436.2,142.3 L 435.1,141.1 L 430.0,141.3 L 425.9,147.6 L 426.3,149.7 L 429.2,151.2 L 428.7,154.2 L 422.5,157.6 L 419.4,155.1 L 418.9,156.1 L 414.7,154.6 L 414.1,152.1 L 415.0,151.6 L 412.1,147.1 L 414.0,146.1 L 413.6,144.6 L 406.2,145.5 L 405.5,142.4 L 403.6,141.5 L 397.0,142.0 L 394.5,144.2 L 392.8,143.7 L 392.8,146.9 L 391.0,148.1 L 389.3,152.1 L 380.2,151.2 L 379.6,149.5 L 382.4,144.4 L 380.8,142.9 L 377.7,144.1 L 377.4,148.5 L 372.4,151.1 L 371.1,150.2 L 370.1,145.6 L 364.5,145.7 L 359.3,137.6 L 361.5,134.3 L 360.4,126.8 L 362.9,126.4 L 360.6,124.3 L 360.8,122.1 L 362.1,122.2 L 363.3,125.4 L 362.9,121.5 L 363.9,120.1 L 361.2,117.0 L 362.4,114.1 L 359.0,113.2 L 363.1,109.8 L 361.8,106.2 L 366.5,106.1 Z"/>
+        <path id="prov-soria" data-name="Soria" class="province province-gallu" d="M 402.1,141.4 L 405.5,142.4 L 406.2,145.5 L 409.5,144.4 L 414.0,144.9 L 414.0,146.1 L 412.1,147.1 L 415.0,151.6 L 414.1,152.1 L 414.9,154.8 L 418.9,156.1 L 419.4,155.1 L 422.5,157.6 L 428.8,154.2 L 428.7,158.3 L 430.9,162.3 L 428.9,166.9 L 431.5,169.3 L 431.3,170.6 L 433.2,171.4 L 431.2,174.2 L 431.5,175.7 L 428.6,175.9 L 425.1,180.4 L 421.3,180.3 L 422.7,184.2 L 421.9,188.4 L 423.5,190.1 L 424.3,194.0 L 419.3,195.7 L 418.5,194.8 L 419.0,192.6 L 415.4,191.3 L 414.6,195.8 L 412.0,197.7 L 411.4,202.5 L 412.9,209.9 L 416.6,210.9 L 418.1,212.6 L 417.8,218.1 L 413.7,214.6 L 411.3,217.1 L 408.2,216.2 L 406.5,218.3 L 403.3,219.0 L 401.5,216.9 L 398.1,219.0 L 395.3,217.5 L 394.6,214.8 L 393.2,214.6 L 391.6,211.5 L 389.5,213.1 L 388.4,212.4 L 389.4,210.3 L 387.0,209.7 L 388.5,208.8 L 388.8,207.1 L 386.6,207.7 L 385.7,205.9 L 382.2,205.1 L 381.8,203.4 L 379.4,203.5 L 378.6,205.2 L 376.1,204.8 L 373.6,203.5 L 373.6,200.8 L 372.4,199.9 L 369.6,200.7 L 369.1,202.2 L 363.0,203.6 L 355.1,201.4 L 347.2,194.9 L 348.3,190.2 L 343.8,189.1 L 343.4,186.4 L 341.7,185.0 L 340.2,185.9 L 337.0,183.7 L 336.8,179.7 L 341.3,181.1 L 344.9,173.9 L 346.8,173.7 L 347.0,170.5 L 351.3,168.3 L 350.9,160.1 L 355.8,164.0 L 357.0,166.6 L 358.9,165.2 L 361.1,160.3 L 365.4,159.9 L 366.4,156.7 L 368.0,156.9 L 370.1,150.5 L 372.7,151.1 L 377.4,148.5 L 377.1,146.1 L 378.6,143.0 L 380.8,142.9 L 382.4,144.4 L 379.6,149.5 L 380.2,151.2 L 389.3,152.1 L 391.0,148.1 L 392.8,146.9 L 392.8,143.7 L 394.5,144.2 L 396.9,142.1 L 402.1,141.4 Z"/>
+        <path id="prov-navarra" data-name="Navarra" class="province province-gallu" d="M 439.9,58.5 L 441.4,58.8 L 442.3,62.6 L 444.1,62.8 L 444.7,60.0 L 446.2,59.5 L 454.5,62.5 L 454.7,67.0 L 453.5,67.9 L 452.9,71.4 L 449.6,74.4 L 451.4,77.3 L 456.1,78.6 L 457.3,72.9 L 460.7,72.1 L 458.6,75.5 L 461.1,77.4 L 463.9,76.9 L 467.5,78.7 L 467.7,80.0 L 469.2,78.9 L 478.4,83.9 L 485.8,84.0 L 488.8,82.8 L 490.5,86.1 L 487.3,86.1 L 485.3,87.6 L 485.4,89.9 L 483.3,91.5 L 483.8,95.8 L 482.8,97.5 L 480.9,97.6 L 480.9,98.9 L 479.7,98.8 L 478.3,101.1 L 473.9,101.9 L 472.6,106.0 L 467.2,105.7 L 466.9,108.3 L 465.6,108.3 L 466.8,109.1 L 464.4,110.6 L 464.4,112.6 L 460.7,112.7 L 459.4,115.4 L 460.6,117.5 L 456.8,121.6 L 455.8,124.9 L 457.5,126.5 L 453.7,131.1 L 452.7,136.7 L 454.1,138.9 L 453.7,142.8 L 456.2,146.6 L 458.5,146.7 L 458.8,148.8 L 452.6,158.0 L 444.9,157.9 L 439.8,154.3 L 436.4,154.9 L 433.6,152.1 L 430.0,152.2 L 426.3,149.7 L 426.2,146.5 L 430.0,141.3 L 435.1,141.1 L 436.2,142.3 L 438.4,141.0 L 437.2,139.5 L 438.4,138.2 L 431.7,135.9 L 429.1,133.3 L 427.9,133.8 L 428.0,131.2 L 425.6,130.4 L 425.4,128.5 L 422.8,128.0 L 421.2,125.9 L 416.0,127.1 L 416.6,125.6 L 414.6,123.4 L 414.8,121.9 L 411.4,122.8 L 405.9,120.1 L 405.2,118.5 L 402.9,118.4 L 402.1,119.7 L 399.1,118.2 L 397.8,115.5 L 399.5,115.0 L 399.3,109.1 L 397.9,108.6 L 396.2,111.4 L 395.7,110.0 L 394.1,110.1 L 393.7,108.3 L 398.2,104.6 L 400.4,105.4 L 400.1,106.6 L 405.2,105.1 L 404.9,103.5 L 403.6,103.2 L 403.2,100.2 L 406.6,98.5 L 405.6,95.9 L 408.2,91.9 L 407.1,88.2 L 407.9,88.0 L 408.1,85.8 L 409.4,84.1 L 411.0,85.2 L 414.5,84.7 L 415.7,82.5 L 418.8,81.9 L 419.7,75.9 L 426.3,70.9 L 425.2,69.8 L 425.6,64.5 L 427.4,65.8 L 428.1,64.1 L 428.5,65.5 L 432.1,63.0 L 432.7,60.1 L 439.9,58.5 Z"/>
+        <path id="prov-lugo" data-name="Lugo" class="province province-gallu" d="M 113.5,26.9 L 113.8,29.1 L 115.1,29.4 L 114.7,32.0 L 115.6,33.3 L 115.4,32.0 L 116.7,31.2 L 116.3,29.8 L 119.6,28.1 L 120.1,29.3 L 122.6,29.0 L 122.1,30.1 L 123.1,29.8 L 123.7,31.2 L 128.7,32.7 L 132.1,38.4 L 134.8,39.6 L 133.4,40.5 L 134.2,41.6 L 135.3,40.0 L 146.2,41.2 L 145.5,46.6 L 142.6,50.1 L 138.7,49.9 L 138.2,52.6 L 141.2,54.0 L 141.0,57.0 L 142.7,58.9 L 144.9,58.8 L 144.8,63.2 L 149.8,66.0 L 149.2,68.7 L 150.5,70.9 L 154.4,69.4 L 155.4,67.0 L 157.9,70.4 L 155.2,74.1 L 152.8,75.3 L 151.5,74.4 L 149.9,76.5 L 150.1,78.1 L 149.2,77.6 L 148.3,79.2 L 150.3,81.2 L 150.5,77.9 L 153.1,81.3 L 155.6,81.7 L 157.1,83.6 L 156.8,85.7 L 157.8,86.6 L 156.5,86.7 L 158.3,89.8 L 155.2,89.6 L 156.9,93.1 L 155.4,95.7 L 151.7,99.0 L 150.4,98.0 L 149.7,100.2 L 147.6,100.3 L 145.7,102.3 L 147.9,106.0 L 145.6,106.7 L 145.4,109.3 L 146.4,110.2 L 144.4,112.3 L 144.9,114.1 L 144.0,116.4 L 142.7,119.1 L 140.0,120.7 L 137.1,128.6 L 135.6,126.2 L 136.2,124.2 L 131.6,121.3 L 128.0,121.8 L 126.4,120.8 L 120.5,124.3 L 116.8,123.0 L 114.5,124.4 L 109.3,119.6 L 105.2,118.6 L 107.4,117.6 L 106.5,116.6 L 104.4,117.6 L 97.8,114.4 L 99.7,113.5 L 97.4,110.6 L 99.5,107.0 L 99.7,103.1 L 101.2,101.5 L 94.8,96.3 L 94.7,94.0 L 96.0,92.0 L 93.7,91.3 L 98.6,84.0 L 98.8,81.6 L 96.7,75.7 L 98.2,74.3 L 95.7,67.0 L 97.9,61.4 L 96.5,60.2 L 99.8,56.5 L 99.2,52.8 L 100.1,51.5 L 103.3,52.0 L 104.1,49.4 L 105.6,48.6 L 107.6,44.1 L 106.7,41.5 L 107.3,39.4 L 109.0,39.0 L 108.1,36.2 L 110.5,34.0 L 108.9,31.6 L 110.1,31.0 L 110.0,28.2 L 113.5,26.9 Z"/>
+        <path id="prov-madrid" data-name="Madrid" class="province province-gallu" d="M 337.1,211.6 L 339.7,216.3 L 343.1,217.2 L 342.4,220.0 L 344.8,223.0 L 343.5,223.9 L 342.1,229.7 L 341.2,229.7 L 342.3,231.9 L 340.6,232.7 L 340.3,235.6 L 338.5,238.1 L 341.3,238.6 L 342.1,240.0 L 341.8,242.0 L 342.6,242.4 L 340.8,245.2 L 344.3,246.6 L 344.9,245.0 L 347.5,248.9 L 349.1,247.6 L 347.9,249.7 L 348.5,251.9 L 350.9,253.8 L 350.2,256.0 L 352.7,255.5 L 355.5,257.7 L 355.5,262.8 L 357.9,263.0 L 359.2,265.4 L 355.8,276.6 L 356.9,277.6 L 358.0,275.5 L 360.8,274.5 L 362.7,283.1 L 361.5,282.7 L 361.1,284.2 L 363.3,286.2 L 363.1,287.9 L 359.9,289.9 L 357.6,289.7 L 356.6,287.7 L 355.4,290.0 L 351.3,290.9 L 348.2,288.6 L 345.9,288.9 L 345.9,290.7 L 344.5,291.9 L 338.7,290.8 L 338.0,292.8 L 331.6,295.1 L 331.8,296.7 L 325.8,298.5 L 322.5,302.5 L 319.0,301.1 L 318.6,299.4 L 321.0,299.2 L 322.2,297.6 L 323.6,298.2 L 324.7,296.6 L 324.3,297.8 L 325.2,297.8 L 325.0,296.5 L 326.7,296.8 L 325.7,295.7 L 327.1,295.4 L 328.2,292.9 L 331.7,291.3 L 333.2,286.5 L 330.0,284.1 L 329.1,284.9 L 327.0,283.8 L 325.8,284.9 L 322.5,281.7 L 320.9,282.8 L 318.8,280.8 L 315.6,279.8 L 314.5,280.8 L 314.4,279.2 L 312.3,279.4 L 310.5,276.6 L 307.8,275.4 L 306.1,277.1 L 303.9,276.8 L 304.0,275.5 L 301.4,273.1 L 300.7,275.2 L 298.3,274.8 L 297.1,277.5 L 295.1,278.5 L 292.8,277.4 L 292.4,272.3 L 291.1,271.6 L 290.9,273.7 L 288.1,275.8 L 288.0,277.4 L 283.0,280.1 L 280.5,279.6 L 281.3,277.8 L 280.8,275.9 L 282.9,273.4 L 282.0,270.0 L 283.1,269.7 L 284.4,271.9 L 287.0,271.6 L 287.6,266.8 L 288.8,265.4 L 294.3,265.1 L 293.2,263.8 L 294.6,261.2 L 293.9,256.3 L 296.0,254.1 L 296.0,249.6 L 298.4,251.4 L 303.0,249.9 L 302.5,245.8 L 307.6,238.1 L 312.9,238.4 L 314.7,232.8 L 314.4,230.6 L 316.9,226.2 L 323.7,223.0 L 326.0,219.2 L 329.5,216.9 L 332.9,212.4 L 337.1,211.6 Z"/>
+        <path id="prov-palencia" data-name="Palencia" class="province province-gallu" d="M 286.9,76.5 L 290.1,78.1 L 292.8,82.5 L 298.7,83.7 L 299.6,90.8 L 300.9,91.6 L 303.9,89.9 L 305.0,90.9 L 304.2,92.7 L 303.1,92.2 L 301.8,94.0 L 303.6,95.6 L 306.4,95.4 L 307.4,97.3 L 305.8,99.5 L 303.9,98.2 L 297.8,102.8 L 297.3,101.6 L 295.8,102.6 L 297.4,107.8 L 295.8,108.7 L 297.0,110.4 L 295.2,111.1 L 295.3,112.2 L 296.7,113.0 L 296.2,115.3 L 298.3,116.6 L 298.6,119.3 L 294.5,119.1 L 293.5,121.9 L 294.6,122.6 L 293.8,123.0 L 294.3,124.7 L 296.9,124.3 L 296.5,125.9 L 299.3,134.0 L 299.2,137.0 L 301.5,139.2 L 300.6,142.3 L 305.3,142.7 L 308.8,144.6 L 306.2,145.6 L 307.5,149.2 L 312.8,148.2 L 313.4,149.4 L 311.0,151.9 L 310.0,155.1 L 317.7,152.1 L 317.7,154.8 L 315.7,154.7 L 312.8,156.7 L 312.9,158.9 L 307.0,161.0 L 306.9,163.9 L 309.7,166.8 L 309.6,168.3 L 306.3,167.9 L 305.1,165.5 L 300.1,166.1 L 298.9,165.1 L 294.5,168.7 L 290.6,166.9 L 287.0,169.0 L 284.5,168.1 L 285.2,164.6 L 286.7,164.6 L 286.0,163.0 L 283.9,164.4 L 281.9,163.9 L 280.9,165.2 L 275.3,158.9 L 268.8,164.8 L 264.4,156.7 L 261.2,157.9 L 260.0,156.5 L 258.2,158.2 L 257.0,156.2 L 259.2,151.3 L 260.8,150.5 L 260.1,147.9 L 262.5,146.2 L 261.2,141.1 L 257.6,141.5 L 255.8,140.8 L 255.5,139.4 L 256.6,138.3 L 255.9,136.1 L 257.2,131.2 L 259.8,130.6 L 260.4,128.5 L 260.4,127.1 L 258.1,127.7 L 258.8,125.1 L 262.5,124.3 L 262.5,121.6 L 261.4,120.7 L 262.7,119.7 L 263.4,113.5 L 261.9,112.3 L 262.7,104.1 L 264.3,101.4 L 260.7,98.8 L 263.0,95.9 L 262.7,90.5 L 264.6,90.5 L 267.7,85.5 L 268.5,81.5 L 270.5,79.5 L 277.0,79.4 L 278.8,78.0 L 281.4,79.2 L 283.4,77.2 L 285.9,77.8 L 286.9,76.5 Z M 311.8,94.1 L 311.6,97.4 L 309.3,97.2 L 311.2,92.6 L 311.8,94.1 Z"/>
+        <path id="prov-salamanca" data-name="Salamanca" class="province province-gallu" d="M 176.8,202.6 L 185.4,203.8 L 195.4,209.5 L 199.3,207.3 L 202.2,208.8 L 201.2,210.3 L 201.5,212.0 L 203.9,210.6 L 205.3,213.1 L 207.5,210.4 L 207.0,207.5 L 208.3,206.1 L 215.4,207.7 L 221.4,205.6 L 223.0,207.8 L 225.2,208.6 L 226.5,207.6 L 230.8,210.3 L 230.9,212.7 L 231.3,210.4 L 235.0,209.8 L 235.4,212.7 L 239.3,214.7 L 241.0,214.1 L 241.5,209.1 L 243.5,208.8 L 245.4,211.7 L 247.5,211.1 L 250.5,213.7 L 249.0,218.6 L 252.4,223.3 L 251.6,225.9 L 250.3,226.3 L 251.0,230.0 L 248.3,232.4 L 248.7,235.8 L 245.3,239.2 L 245.6,240.3 L 236.7,246.0 L 236.2,247.0 L 237.3,248.1 L 236.4,250.1 L 232.9,253.0 L 230.0,252.9 L 230.0,251.8 L 229.1,252.6 L 228.7,255.8 L 233.9,254.1 L 231.8,261.3 L 229.5,261.3 L 229.4,263.9 L 228.6,264.2 L 225.9,262.7 L 226.7,260.3 L 222.7,261.5 L 219.6,264.3 L 220.6,269.5 L 215.9,274.2 L 213.5,273.2 L 214.6,272.1 L 213.7,269.1 L 209.0,271.1 L 207.2,274.5 L 203.2,273.0 L 201.8,271.8 L 201.9,270.1 L 197.0,268.9 L 199.2,266.1 L 195.7,264.3 L 196.4,262.8 L 194.7,263.2 L 191.9,260.0 L 189.9,259.6 L 183.9,262.8 L 182.5,265.7 L 179.9,265.9 L 178.8,267.8 L 173.5,269.6 L 172.2,270.9 L 172.4,273.6 L 170.7,275.0 L 166.1,275.6 L 165.1,277.0 L 163.6,275.1 L 161.5,277.3 L 157.2,276.7 L 155.5,275.0 L 155.7,273.1 L 159.4,270.9 L 160.1,268.3 L 157.2,265.2 L 156.4,262.1 L 159.4,257.8 L 159.0,255.1 L 156.6,254.0 L 159.4,247.2 L 157.4,240.7 L 157.7,234.2 L 159.1,233.9 L 158.6,231.5 L 156.4,230.1 L 155.8,226.7 L 152.0,220.9 L 158.6,220.5 L 161.6,215.7 L 160.9,213.4 L 164.5,210.2 L 167.4,205.4 L 170.5,204.9 L 171.6,206.0 L 176.8,202.6 Z"/>
+        <path id="prov-segovia" data-name="Segovia" class="province province-gallu" d="M 313.8,181.3 L 319.0,185.1 L 321.4,188.8 L 323.4,188.4 L 322.5,185.7 L 324.6,184.7 L 324.4,190.3 L 326.0,190.9 L 326.6,186.2 L 329.7,183.1 L 336.6,181.7 L 337.0,183.7 L 339.0,185.4 L 341.4,184.8 L 343.3,186.3 L 343.8,189.1 L 348.3,190.2 L 347.2,194.9 L 355.1,201.4 L 352.5,204.7 L 351.3,203.5 L 348.0,205.0 L 343.7,203.6 L 344.4,207.8 L 342.1,207.7 L 340.9,210.0 L 338.2,211.5 L 332.9,212.4 L 329.5,216.9 L 326.0,219.2 L 323.7,223.0 L 317.8,225.3 L 315.2,228.3 L 312.9,238.4 L 308.0,237.7 L 303.8,244.9 L 298.0,245.2 L 294.6,246.8 L 293.7,248.9 L 288.9,249.2 L 288.3,241.4 L 286.0,239.1 L 284.9,234.9 L 281.5,234.7 L 282.8,233.1 L 281.3,231.2 L 280.9,226.2 L 278.7,225.1 L 277.0,220.8 L 272.9,218.6 L 272.5,211.9 L 274.7,209.8 L 277.6,210.9 L 276.3,207.3 L 280.5,203.5 L 279.0,201.5 L 279.3,200.2 L 281.3,201.5 L 283.0,200.2 L 286.3,202.0 L 284.3,198.3 L 285.4,196.9 L 283.7,193.9 L 289.4,191.6 L 291.9,192.0 L 292.1,191.0 L 297.6,191.0 L 303.2,188.7 L 304.0,189.6 L 311.8,186.3 L 312.9,181.5 L 313.8,181.3 Z"/>
+        <path id="prov-sevilla" data-name="Sevilla" class="province province-gallu" d="M 217.7,422.9 L 219.7,423.9 L 220.0,425.6 L 218.8,424.7 L 219.3,426.1 L 217.0,427.3 L 217.2,430.7 L 219.4,430.8 L 222.8,426.9 L 225.4,427.4 L 230.3,433.8 L 230.4,437.1 L 234.6,440.8 L 234.7,446.1 L 238.8,448.7 L 238.2,451.4 L 240.4,452.9 L 240.5,458.2 L 238.5,457.8 L 236.7,459.8 L 236.1,458.3 L 234.7,460.0 L 235.8,461.3 L 234.7,462.1 L 237.6,464.9 L 237.7,466.4 L 247.6,459.6 L 249.1,461.0 L 251.4,460.9 L 250.2,458.3 L 251.3,458.1 L 251.9,460.3 L 253.5,461.1 L 252.3,459.6 L 253.3,457.6 L 257.3,457.7 L 259.8,461.6 L 258.7,465.3 L 261.0,464.1 L 261.0,469.2 L 260.1,470.9 L 262.4,472.4 L 261.9,473.6 L 264.1,476.0 L 263.6,476.9 L 266.0,477.0 L 265.5,478.8 L 267.4,481.2 L 267.0,482.5 L 269.2,484.7 L 272.0,484.2 L 272.6,482.5 L 275.2,484.2 L 274.5,485.6 L 275.8,487.1 L 274.7,487.4 L 276.2,489.8 L 272.0,490.0 L 272.2,493.0 L 273.2,494.0 L 268.6,497.1 L 266.8,493.8 L 265.2,493.9 L 264.1,496.8 L 262.9,496.9 L 262.4,495.1 L 260.6,495.5 L 260.4,496.8 L 262.5,498.2 L 262.3,499.9 L 254.4,505.9 L 250.6,506.1 L 245.0,512.2 L 240.9,507.1 L 240.8,505.4 L 233.3,512.7 L 232.2,509.8 L 234.4,507.1 L 233.6,504.3 L 229.4,505.7 L 231.7,509.2 L 227.5,513.0 L 228.2,515.7 L 225.5,514.1 L 225.2,511.8 L 223.6,512.3 L 220.9,509.8 L 218.3,513.7 L 211.2,514.1 L 209.5,515.6 L 208.7,519.3 L 197.0,518.2 L 187.5,514.4 L 184.7,515.3 L 182.1,512.7 L 183.4,508.9 L 181.7,502.8 L 184.1,499.3 L 183.1,498.2 L 184.4,496.0 L 183.1,491.1 L 184.6,486.8 L 181.8,484.0 L 183.9,482.0 L 183.0,481.3 L 183.3,478.7 L 186.0,477.2 L 181.3,468.6 L 181.2,464.5 L 173.9,464.2 L 173.5,461.7 L 175.4,460.5 L 176.8,456.4 L 185.8,453.6 L 189.0,453.7 L 189.0,455.1 L 190.6,455.4 L 191.7,450.7 L 195.4,451.9 L 196.1,449.9 L 193.8,446.6 L 195.9,443.6 L 193.2,442.9 L 193.6,440.0 L 199.9,437.0 L 205.3,437.1 L 206.3,433.5 L 207.7,432.3 L 206.7,429.3 L 209.2,427.4 L 209.6,425.5 L 217.7,422.9 Z"/>
+        <path id="prov-toledo" data-name="Toledo" class="province province-gallu" d="M 291.4,271.9 L 292.4,272.3 L 292.8,277.4 L 295.1,278.5 L 297.1,277.5 L 298.3,274.8 L 300.7,275.2 L 301.4,273.1 L 304.0,275.5 L 303.9,276.8 L 306.1,277.1 L 307.8,275.4 L 310.5,276.6 L 312.3,279.4 L 314.4,279.2 L 314.5,280.8 L 315.6,279.8 L 318.8,280.8 L 320.9,282.8 L 322.5,281.7 L 324.3,284.4 L 330.0,284.1 L 333.2,286.5 L 331.7,291.3 L 325.7,295.7 L 326.7,296.8 L 318.6,299.4 L 319.0,301.1 L 321.9,302.5 L 325.8,298.5 L 331.8,296.7 L 331.6,295.1 L 334.2,293.4 L 338.0,292.8 L 338.7,290.8 L 344.5,291.9 L 345.9,290.7 L 345.8,289.0 L 348.1,288.5 L 351.4,290.9 L 355.4,290.0 L 357.3,287.8 L 357.1,290.9 L 358.6,295.4 L 361.1,295.2 L 361.1,299.1 L 359.4,303.2 L 362.2,304.6 L 366.5,314.3 L 371.4,319.8 L 370.1,332.0 L 366.4,334.1 L 365.1,333.0 L 362.6,333.5 L 358.5,330.3 L 356.3,331.8 L 350.3,332.0 L 349.1,334.6 L 349.5,337.1 L 344.0,336.7 L 340.7,339.0 L 340.4,341.1 L 337.3,343.9 L 329.3,344.3 L 327.0,346.4 L 323.2,344.7 L 319.8,347.2 L 313.6,344.3 L 313.3,340.5 L 307.8,339.5 L 306.1,341.3 L 305.2,339.7 L 303.7,339.7 L 305.4,333.0 L 308.1,333.0 L 308.5,328.4 L 310.2,328.4 L 309.5,324.6 L 305.0,325.4 L 303.2,324.5 L 301.3,330.3 L 298.6,331.5 L 291.2,330.2 L 287.7,328.3 L 286.6,331.5 L 283.9,328.4 L 285.5,327.2 L 283.2,325.5 L 282.8,327.7 L 281.2,327.6 L 280.8,330.1 L 278.1,331.0 L 278.1,333.2 L 274.2,333.4 L 270.6,335.9 L 269.9,334.9 L 271.4,333.1 L 270.8,329.8 L 264.7,325.9 L 260.0,337.6 L 246.0,323.0 L 248.4,319.8 L 249.8,314.6 L 247.8,312.0 L 248.6,311.4 L 248.2,308.6 L 246.0,308.7 L 243.4,312.0 L 240.5,311.4 L 240.2,306.8 L 241.8,304.0 L 239.6,302.0 L 235.1,303.0 L 237.4,295.5 L 236.9,290.1 L 237.7,286.6 L 245.5,286.6 L 246.2,288.4 L 247.9,288.3 L 253.6,283.6 L 256.3,283.0 L 256.5,286.4 L 259.8,285.7 L 261.3,284.6 L 261.4,282.2 L 267.8,277.5 L 267.2,276.2 L 268.0,274.7 L 270.3,275.7 L 273.7,274.2 L 274.3,279.2 L 276.1,280.2 L 280.2,278.8 L 283.0,280.1 L 288.0,277.4 L 288.1,275.8 L 290.9,273.7 L 291.4,271.9 Z"/>
+        <path id="prov-tarragona" data-name="Tarragona" class="province province-gallu" d="M 608.5,182.0 L 609.3,182.5 L 608.1,183.5 L 609.0,184.8 L 606.8,184.9 L 606.2,186.5 L 611.0,189.2 L 610.1,191.4 L 611.6,192.0 L 610.5,192.5 L 611.3,194.5 L 610.3,195.9 L 613.8,195.6 L 616.1,197.2 L 615.0,198.6 L 617.0,201.1 L 616.6,202.1 L 619.3,202.0 L 618.3,205.0 L 615.6,204.5 L 616.4,206.2 L 618.6,207.2 L 619.5,206.3 L 619.7,209.3 L 612.5,210.4 L 606.1,213.7 L 600.8,214.0 L 596.6,217.1 L 598.1,215.3 L 596.3,215.6 L 593.8,219.2 L 591.3,217.7 L 582.7,221.0 L 570.4,235.7 L 568.2,237.0 L 569.8,239.5 L 572.6,239.6 L 569.8,238.1 L 571.8,237.9 L 575.2,242.0 L 577.6,241.9 L 578.0,243.1 L 577.1,245.2 L 571.4,248.6 L 566.1,254.6 L 563.7,254.9 L 562.5,253.1 L 568.7,252.2 L 570.6,249.0 L 562.8,250.0 L 558.1,257.0 L 553.9,255.3 L 554.2,253.1 L 551.9,251.4 L 545.4,249.6 L 544.6,247.4 L 545.9,245.3 L 542.9,244.3 L 542.3,242.1 L 540.8,242.7 L 539.0,241.6 L 542.5,239.6 L 545.2,235.8 L 543.0,231.3 L 546.0,225.2 L 544.1,222.0 L 545.3,221.6 L 541.9,220.0 L 542.6,219.1 L 542.0,217.2 L 541.0,217.0 L 541.0,214.0 L 543.5,213.8 L 543.8,212.4 L 546.5,211.4 L 547.6,207.0 L 550.8,206.2 L 551.0,203.2 L 553.6,203.4 L 554.1,199.9 L 555.6,199.5 L 557.5,202.4 L 558.7,202.4 L 560.2,199.8 L 564.3,202.3 L 571.0,200.4 L 571.6,199.2 L 574.7,199.6 L 576.1,197.2 L 577.1,199.0 L 581.6,198.1 L 588.6,190.4 L 586.6,188.9 L 586.7,187.4 L 590.7,189.8 L 594.4,188.3 L 593.5,185.0 L 596.0,184.0 L 596.5,182.5 L 605.9,183.4 L 606.1,181.9 L 608.5,182.0 Z"/>
+        <path id="prov-teruel" data-name="Teruel" class="province province-gallu" d="M 502.6,197.8 L 504.4,200.4 L 507.0,200.9 L 506.6,202.1 L 507.9,203.7 L 511.6,205.9 L 512.7,204.7 L 517.8,209.6 L 529.1,214.3 L 532.0,219.7 L 534.3,217.3 L 538.0,218.6 L 542.0,218.0 L 541.9,220.0 L 545.3,221.6 L 544.1,222.0 L 546.0,225.2 L 543.0,231.3 L 545.2,235.8 L 542.5,239.6 L 539.6,240.5 L 539.6,241.5 L 538.7,240.8 L 538.9,242.8 L 536.1,242.5 L 532.3,245.1 L 530.9,242.4 L 526.5,242.5 L 523.1,240.6 L 522.1,238.3 L 519.2,238.4 L 517.8,240.6 L 517.1,245.1 L 513.3,247.3 L 512.1,245.8 L 509.4,246.8 L 509.8,250.6 L 514.0,250.8 L 513.5,257.6 L 515.1,260.6 L 511.1,262.7 L 514.6,268.3 L 511.4,270.1 L 510.0,272.6 L 508.8,272.4 L 508.2,273.3 L 509.1,275.4 L 506.7,276.9 L 503.0,278.0 L 500.3,276.4 L 498.4,284.5 L 495.7,287.0 L 496.5,289.3 L 492.7,291.2 L 488.9,291.0 L 487.6,294.4 L 484.3,296.0 L 484.2,299.7 L 486.5,302.8 L 482.9,305.2 L 480.2,303.4 L 480.8,299.2 L 479.8,296.8 L 476.0,295.6 L 468.8,297.1 L 467.7,296.3 L 466.4,293.6 L 470.9,291.7 L 471.5,290.0 L 467.4,286.2 L 462.1,286.1 L 462.1,283.9 L 459.9,282.1 L 459.2,279.2 L 457.8,281.1 L 458.0,283.9 L 456.0,285.1 L 451.8,284.4 L 451.0,284.0 L 451.5,280.3 L 446.0,280.7 L 437.8,272.2 L 436.1,274.5 L 435.7,272.7 L 437.4,271.4 L 431.5,265.9 L 431.8,264.8 L 437.7,259.6 L 437.2,255.8 L 438.5,252.2 L 442.8,254.3 L 445.7,251.9 L 444.6,250.5 L 446.2,245.4 L 444.8,241.6 L 446.0,240.1 L 445.9,236.5 L 441.6,231.6 L 441.8,227.1 L 444.8,227.4 L 447.9,225.6 L 449.7,226.7 L 451.1,224.2 L 449.5,222.0 L 452.7,220.9 L 453.4,218.3 L 456.0,216.8 L 456.1,219.0 L 459.8,219.6 L 461.6,217.6 L 460.7,215.7 L 461.6,214.3 L 468.8,213.4 L 469.7,211.1 L 473.3,213.5 L 477.0,212.1 L 475.5,216.3 L 478.0,217.7 L 480.2,216.4 L 481.8,212.5 L 483.1,215.4 L 486.8,215.5 L 488.5,211.0 L 492.1,215.1 L 496.7,209.4 L 493.5,206.2 L 495.9,205.4 L 495.7,200.8 L 497.3,200.3 L 501.0,206.8 L 502.3,204.8 L 501.2,202.5 L 498.5,200.7 L 498.3,198.3 L 502.6,197.8 Z"/>
+        <path id="prov-valencia" data-name="Valencia" class="province province-gallu" d="M 476.2,295.7 L 479.9,297.0 L 480.8,299.2 L 480.2,303.4 L 481.5,304.8 L 486.7,302.8 L 490.2,307.5 L 492.3,304.8 L 494.2,306.0 L 494.4,311.8 L 495.3,312.3 L 497.9,312.7 L 498.5,310.5 L 501.1,308.8 L 505.1,314.6 L 508.4,311.5 L 509.4,308.6 L 512.1,308.5 L 515.6,312.4 L 519.7,314.1 L 518.6,319.7 L 518.2,318.9 L 516.1,321.3 L 512.8,328.3 L 512.5,332.5 L 513.5,334.6 L 512.0,332.7 L 512.7,334.0 L 511.8,334.7 L 513.1,335.1 L 511.7,335.3 L 514.8,345.7 L 518.2,352.3 L 517.0,353.0 L 516.9,355.1 L 518.9,360.9 L 522.1,365.9 L 521.2,366.1 L 528.5,375.4 L 526.1,373.7 L 521.9,375.6 L 521.2,373.6 L 517.4,376.0 L 513.0,374.0 L 504.8,379.3 L 497.5,380.2 L 499.1,383.0 L 501.1,382.2 L 502.3,383.9 L 495.7,387.9 L 494.9,385.0 L 491.4,384.5 L 489.9,382.7 L 484.5,384.6 L 483.0,381.9 L 480.2,382.0 L 479.1,380.2 L 479.6,373.3 L 477.7,369.5 L 467.5,370.6 L 461.1,362.3 L 461.5,358.0 L 465.6,350.5 L 466.6,343.8 L 464.1,342.3 L 457.1,341.8 L 452.8,338.5 L 450.6,339.9 L 451.0,338.6 L 449.9,338.3 L 450.8,337.2 L 449.6,337.7 L 449.1,335.5 L 447.0,334.7 L 446.6,333.1 L 448.2,329.9 L 448.0,326.7 L 447.1,326.4 L 450.3,324.5 L 452.7,318.9 L 455.4,316.4 L 458.4,317.8 L 460.8,316.3 L 460.4,312.9 L 463.7,307.9 L 464.5,304.4 L 464.3,297.9 L 467.7,296.3 L 468.8,297.1 L 476.2,295.7 Z M 459.5,279.6 L 459.9,282.1 L 462.1,283.9 L 462.1,286.1 L 467.4,286.2 L 471.5,290.7 L 468.1,293.2 L 462.0,294.7 L 454.9,293.1 L 452.5,287.6 L 453.2,287.1 L 450.5,284.7 L 456.1,285.1 L 458.2,283.6 L 457.8,281.1 L 459.5,279.6 Z"/>
+        <path id="prov-valladolid" data-name="Valladolid" class="province province-gallu" d="M 251.2,129.6 L 254.3,133.5 L 255.2,130.6 L 257.2,131.2 L 255.8,140.8 L 261.2,141.1 L 262.5,146.2 L 260.1,147.9 L 260.8,150.5 L 259.2,151.3 L 257.0,155.6 L 258.1,158.2 L 260.0,156.5 L 261.2,157.9 L 264.4,156.7 L 268.8,164.8 L 275.6,159.0 L 280.9,165.2 L 281.9,163.9 L 283.9,164.4 L 286.0,163.0 L 286.7,164.6 L 285.2,164.6 L 284.5,168.1 L 287.3,169.0 L 290.6,166.9 L 294.5,168.7 L 298.9,165.1 L 300.1,166.1 L 305.1,165.5 L 306.3,167.9 L 309.6,168.3 L 307.7,171.3 L 310.4,173.7 L 309.9,178.8 L 312.7,180.5 L 312.0,185.9 L 304.0,189.6 L 303.2,188.7 L 297.6,191.0 L 292.1,191.0 L 291.9,192.0 L 289.4,191.6 L 283.7,193.9 L 285.4,196.9 L 284.3,198.3 L 286.2,200.4 L 286.1,202.3 L 283.0,200.2 L 281.3,201.5 L 279.3,200.2 L 279.0,201.5 L 280.5,203.5 L 276.3,207.3 L 277.6,210.9 L 274.7,209.8 L 272.4,212.4 L 267.9,213.4 L 266.7,216.0 L 264.7,216.4 L 257.8,211.6 L 250.5,213.7 L 247.5,211.1 L 245.4,211.7 L 243.5,208.8 L 239.1,210.4 L 238.7,209.2 L 241.3,206.9 L 241.4,203.9 L 239.0,196.7 L 240.5,193.6 L 238.8,192.7 L 239.6,190.6 L 238.5,188.9 L 244.8,185.4 L 241.3,182.1 L 242.5,180.2 L 239.3,179.2 L 239.4,174.6 L 236.0,169.4 L 237.1,167.6 L 242.1,165.0 L 239.2,163.8 L 240.6,161.9 L 241.3,157.5 L 239.0,156.3 L 243.4,153.2 L 242.0,153.3 L 236.7,149.0 L 236.1,136.3 L 237.6,135.8 L 240.5,137.6 L 241.6,135.4 L 244.1,136.5 L 244.9,135.7 L 243.4,134.7 L 244.4,132.3 L 247.3,133.0 L 251.2,129.6 Z M 229.1,145.2 L 231.0,148.1 L 234.3,149.6 L 232.9,150.8 L 233.7,151.5 L 233.4,154.1 L 230.8,152.9 L 231.6,151.1 L 229.1,145.2 Z M 239.7,132.7 L 240.8,132.6 L 240.7,133.9 L 238.7,135.2 L 238.4,132.7 L 239.7,132.7 Z"/>
+        <path id="prov-bizkaia" data-name="Bizkaia" class="province province-gallu" d="M 379.9,48.0 L 383.0,51.6 L 385.7,50.9 L 387.2,52.6 L 393.1,53.7 L 398.4,57.7 L 397.0,59.6 L 398.1,61.5 L 397.1,63.2 L 393.7,64.9 L 394.5,68.4 L 393.1,69.1 L 393.6,73.7 L 384.8,75.3 L 386.3,79.1 L 372.1,77.3 L 367.7,73.5 L 369.9,70.9 L 369.3,68.4 L 364.9,65.1 L 364.2,65.6 L 365.5,66.1 L 364.9,69.1 L 362.3,70.1 L 360.3,70.3 L 357.7,67.9 L 354.1,68.4 L 352.5,66.4 L 343.6,71.1 L 341.9,63.8 L 347.8,60.8 L 348.2,59.1 L 351.1,59.9 L 354.1,58.6 L 355.0,60.4 L 358.1,58.7 L 358.0,55.4 L 360.1,55.6 L 361.8,53.6 L 360.7,54.6 L 363.8,55.0 L 362.3,55.3 L 364.6,55.9 L 364.0,56.4 L 365.2,57.4 L 365.8,56.5 L 364.8,56.2 L 365.7,55.8 L 364.2,54.0 L 369.3,51.2 L 369.3,49.5 L 376.9,49.9 L 379.9,48.0 Z M 363.7,77.3 L 365.4,77.9 L 364.6,79.1 L 367.1,79.7 L 367.1,81.1 L 368.8,80.6 L 364.3,81.9 L 363.1,80.3 L 361.5,80.4 L 363.7,77.3 Z"/>
+        <path id="prov-zamora" data-name="Zamora" class="province province-gallu" d="M 161.2,134.7 L 164.3,136.9 L 174.0,137.3 L 175.6,138.8 L 185.7,137.1 L 186.7,139.1 L 191.1,141.3 L 194.0,140.0 L 200.0,140.4 L 205.3,143.0 L 205.6,141.7 L 208.3,140.7 L 211.2,143.9 L 214.9,142.1 L 216.1,142.1 L 216.7,143.7 L 220.4,143.2 L 219.8,142.0 L 220.9,141.7 L 223.4,144.2 L 222.6,146.0 L 225.2,146.3 L 225.3,148.2 L 225.8,147.1 L 226.7,147.8 L 228.6,144.4 L 231.6,151.1 L 230.8,152.8 L 232.0,153.6 L 233.4,154.1 L 233.7,151.5 L 232.9,150.8 L 236.3,148.8 L 239.5,150.4 L 242.0,153.3 L 243.4,153.1 L 239.0,156.3 L 241.3,157.5 L 240.6,161.9 L 239.2,163.8 L 242.1,165.0 L 235.9,168.9 L 236.8,171.8 L 237.5,171.1 L 237.7,173.2 L 239.4,174.6 L 239.3,179.2 L 242.5,180.2 L 241.3,182.1 L 244.8,185.4 L 238.5,188.9 L 239.6,190.6 L 238.8,192.7 L 240.5,193.6 L 239.0,196.7 L 241.4,203.9 L 241.3,206.9 L 238.7,209.2 L 239.3,210.4 L 241.5,210.1 L 241.0,214.1 L 239.3,214.7 L 237.8,213.0 L 236.2,213.4 L 234.5,209.7 L 231.3,210.4 L 230.9,212.7 L 230.8,210.3 L 226.5,207.6 L 225.2,208.6 L 223.0,207.8 L 221.1,205.5 L 215.4,207.7 L 208.3,206.1 L 207.0,207.5 L 207.5,210.4 L 205.3,213.1 L 203.9,210.6 L 201.5,212.0 L 201.2,210.3 L 202.2,208.8 L 199.3,207.3 L 195.4,209.5 L 185.4,203.8 L 176.6,202.5 L 178.9,201.3 L 180.0,198.3 L 182.0,197.6 L 181.5,195.6 L 185.4,195.6 L 184.6,193.7 L 186.5,192.3 L 186.0,191.0 L 187.2,189.0 L 192.4,182.1 L 186.2,175.8 L 178.5,174.3 L 175.5,176.2 L 172.8,174.2 L 172.8,171.4 L 171.7,170.1 L 174.6,161.0 L 171.6,160.1 L 173.0,156.4 L 171.4,154.6 L 164.6,156.6 L 161.8,155.8 L 159.9,152.6 L 158.5,152.3 L 157.9,155.6 L 156.7,155.9 L 151.4,155.8 L 149.0,153.7 L 150.3,149.8 L 149.6,147.9 L 147.5,148.1 L 146.3,146.5 L 148.0,145.8 L 148.7,143.2 L 151.0,142.1 L 151.3,139.5 L 154.4,136.5 L 156.7,135.5 L 159.3,136.9 L 159.6,133.8 L 161.2,134.7 Z"/>
+        <path id="prov-zaragoza" data-name="Zaragoza" class="province province-gallu" d="M 480.4,98.8 L 481.1,99.4 L 479.7,101.9 L 482.0,102.8 L 481.3,104.6 L 479.4,105.1 L 480.7,109.1 L 479.0,111.0 L 481.2,112.7 L 479.1,115.8 L 481.3,115.5 L 481.1,117.7 L 482.1,118.9 L 480.7,119.5 L 480.7,120.8 L 485.5,123.7 L 484.0,124.4 L 483.3,127.6 L 479.9,133.5 L 481.4,134.7 L 482.2,131.7 L 486.0,132.5 L 487.9,127.1 L 487.6,123.9 L 489.8,125.5 L 490.2,130.7 L 488.6,133.0 L 489.2,140.7 L 488.4,147.0 L 486.7,147.9 L 485.7,145.2 L 483.3,148.2 L 483.6,149.9 L 481.7,151.6 L 487.6,154.8 L 494.1,154.8 L 495.6,158.0 L 497.5,159.0 L 497.1,160.2 L 499.7,161.0 L 501.8,163.4 L 502.7,168.8 L 501.7,171.1 L 509.6,174.0 L 510.4,177.8 L 512.9,178.6 L 516.6,182.2 L 518.8,180.2 L 521.5,181.0 L 521.5,184.9 L 524.3,188.5 L 526.0,196.2 L 527.3,197.4 L 529.6,198.3 L 528.7,194.8 L 530.5,197.4 L 535.1,198.1 L 538.9,194.1 L 542.0,194.3 L 543.1,192.5 L 548.2,193.9 L 547.5,195.0 L 550.4,198.0 L 549.0,199.6 L 551.0,203.2 L 550.8,206.2 L 547.6,207.0 L 545.9,211.9 L 541.0,214.0 L 541.0,217.0 L 542.0,218.0 L 538.0,218.6 L 534.3,217.3 L 532.0,219.7 L 529.1,214.3 L 517.8,209.6 L 512.7,204.7 L 511.6,205.9 L 507.9,203.7 L 506.6,202.1 L 507.0,200.9 L 504.4,200.4 L 502.6,197.8 L 498.3,198.3 L 498.5,200.7 L 501.2,202.5 L 502.3,204.8 L 501.0,206.8 L 497.3,200.3 L 495.7,200.8 L 495.9,205.4 L 493.5,206.2 L 496.7,209.4 L 492.1,215.1 L 488.5,211.0 L 486.8,215.5 L 483.1,215.4 L 481.8,212.5 L 480.2,216.4 L 478.0,217.7 L 475.5,216.3 L 477.0,212.1 L 473.3,213.5 L 469.7,211.1 L 468.8,213.4 L 461.6,214.3 L 460.7,215.7 L 461.6,217.6 L 459.8,219.6 L 456.1,219.0 L 456.0,216.8 L 453.4,218.3 L 452.7,220.9 L 449.5,222.0 L 451.1,224.2 L 449.7,226.7 L 447.9,225.6 L 444.8,227.4 L 441.0,226.6 L 431.6,216.7 L 424.6,213.2 L 423.1,210.8 L 418.1,212.6 L 416.6,210.9 L 412.9,209.9 L 411.6,200.3 L 412.0,197.7 L 414.6,195.8 L 414.8,192.1 L 418.3,192.1 L 419.3,195.7 L 424.3,194.0 L 423.5,190.1 L 421.9,188.4 L 422.7,184.2 L 421.3,180.3 L 425.1,180.4 L 428.6,175.9 L 431.5,175.7 L 431.2,174.2 L 433.2,171.4 L 431.3,170.6 L 431.5,169.3 L 428.9,166.8 L 430.9,162.3 L 428.7,158.3 L 428.3,153.4 L 429.4,152.7 L 429.2,151.2 L 433.6,152.1 L 436.4,154.9 L 439.8,154.3 L 444.9,157.9 L 453.0,157.6 L 458.8,148.8 L 458.5,146.7 L 456.2,146.6 L 453.7,142.8 L 454.1,138.9 L 452.7,136.7 L 453.7,131.1 L 457.5,126.5 L 455.8,124.9 L 456.8,121.6 L 460.6,117.5 L 459.7,114.6 L 461.0,112.1 L 464.4,112.6 L 464.4,110.6 L 466.8,109.1 L 465.6,108.3 L 466.9,108.3 L 467.2,105.7 L 472.6,106.0 L 473.9,101.9 L 477.1,101.7 L 480.4,98.8 Z"/>
+        <!-- Canarias inset — background FIRST so provinces draw on top -->
+        <rect x="614" y="453" width="178" height="95" fill="rgba(7,4,10,0.9)" stroke="rgba(201,168,76,0.3)" stroke-width="1" rx="2" pointer-events="none"/>
+        <text x="703" y="465" text-anchor="middle" font-family="Cinzel,serif" font-size="8" fill="rgba(201,168,76,0.5)" letter-spacing="2" pointer-events="none">CANARIAS</text>
+        <path id="prov-laspalmas" data-name="Las Palmas" class="province province-gallu" d="M 771.9,494.3 L 773.8,496.1 L 774.3,502.4 L 772.7,505.3 L 773.4,508.4 L 771.0,514.3 L 767.5,516.0 L 760.2,517.7 L 756.2,522.4 L 750.9,521.2 L 749.9,521.7 L 750.4,519.8 L 751.9,520.3 L 754.7,519.6 L 760.1,515.7 L 760.7,511.2 L 762.2,509.7 L 762.7,506.9 L 764.4,505.4 L 766.8,500.8 L 766.6,499.9 L 767.7,497.5 L 767.2,496.3 L 768.8,495.2 L 771.9,494.3 Z M 717.3,517.1 L 718.0,517.6 L 717.7,519.0 L 717.8,518.0 L 717.4,519.1 L 717.4,518.4 L 717.0,518.4 L 717.6,520.2 L 717.3,521.9 L 719.0,523.8 L 719.2,524.6 L 718.6,525.5 L 719.5,526.9 L 718.6,527.1 L 718.5,529.8 L 717.4,530.4 L 717.1,531.8 L 713.6,532.9 L 712.1,533.7 L 711.9,534.6 L 710.9,534.7 L 708.7,533.8 L 708.2,534.1 L 704.2,530.7 L 702.5,527.7 L 702.5,525.4 L 702.9,523.7 L 704.2,523.4 L 706.9,520.9 L 707.4,518.2 L 707.0,517.7 L 708.5,518.0 L 709.5,517.4 L 710.9,518.5 L 713.5,518.1 L 715.6,519.2 L 716.7,518.8 L 716.9,518.2 L 716.5,517.6 L 717.3,517.1 Z M 787.0,475.7 L 788.6,476.5 L 788.7,477.5 L 788.4,478.6 L 787.1,479.7 L 787.7,481.2 L 786.4,485.0 L 780.8,487.9 L 777.4,488.4 L 775.6,491.1 L 775.1,490.3 L 772.4,490.3 L 772.2,489.2 L 774.1,487.5 L 773.9,485.2 L 774.6,483.4 L 776.7,481.7 L 778.5,481.6 L 780.4,480.2 L 780.2,479.9 L 781.1,480.2 L 782.2,479.4 L 784.2,480.1 L 785.0,479.2 L 786.0,476.1 L 787.0,475.7 Z M 785.7,468.3 L 786.3,468.7 L 786.2,469.1 L 784.8,469.5 L 785.0,468.5 L 785.7,468.3 Z"/>
+        <path id="prov-sctenerife" data-name="S.C. Tenerife" class="province province-gallu" d="M 690.9,501.0 L 692.0,501.7 L 692.1,503.2 L 688.1,505.1 L 687.7,506.2 L 687.9,505.7 L 683.7,509.2 L 683.7,512.2 L 681.4,516.1 L 681.4,518.3 L 677.0,523.2 L 675.3,523.1 L 673.6,524.1 L 671.5,524.0 L 671.2,522.4 L 670.2,522.0 L 670.2,520.8 L 668.8,519.6 L 667.7,517.3 L 666.7,516.0 L 666.5,513.8 L 664.5,511.1 L 663.5,510.7 L 663.8,510.0 L 666.9,508.7 L 667.7,509.4 L 669.7,509.6 L 672.5,508.3 L 675.0,508.6 L 676.8,507.7 L 678.2,507.7 L 680.3,506.0 L 681.9,503.4 L 684.6,502.2 L 684.8,501.4 L 688.6,501.9 L 690.9,501.0 Z M 628.3,490.4 L 630.2,491.3 L 632.0,490.8 L 633.1,491.0 L 635.0,494.9 L 633.4,497.5 L 634.1,499.6 L 633.7,501.7 L 630.8,506.3 L 629.8,505.5 L 629.4,502.9 L 627.8,500.7 L 624.9,494.3 L 624.9,493.2 L 626.3,491.6 L 628.3,490.4 Z M 651.5,515.6 L 652.1,516.3 L 653.9,516.3 L 654.3,517.1 L 656.6,518.1 L 657.2,519.1 L 657.3,520.4 L 654.9,522.8 L 651.2,523.2 L 648.4,520.3 L 648.5,518.2 L 649.4,516.2 L 651.5,515.6 Z M 627.8,530.2 L 628.7,530.4 L 629.3,532.0 L 627.8,534.8 L 626.7,535.3 L 625.9,538.4 L 624.8,538.0 L 623.3,536.3 L 619.4,535.5 L 619.7,533.7 L 620.4,533.2 L 622.2,534.0 L 623.8,533.6 L 625.5,532.1 L 625.4,531.2 L 627.8,530.2 Z"/>
+      </svg>
+      <div id="player-pins" class="player-pins-overlay"></div>
+      </div>
+
+      <div class="map-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:rgba(139,26,26,0.75)"></div> Imperio de Gallu</div>
+        <div class="legend-item"><div class="legend-dot" style="background:rgba(46,204,113,0.4)"></div> Territorio Libre</div>
+        <div class="legend-item"><div class="legend-dot" style="background:rgba(224,64,160,0.5)"></div> Tu posición</div>
+        <div class="legend-item"><div class="legend-dot" style="background:rgba(201,168,76,0.5)"></div> Movimiento posible</div>
+      </div>
+    </div>
+
+    <div class="map-sidebar">
+      <div class="sidebar-section">
+        <span class="sidebar-label">Estado del día</span>
+        <div id="player-positions"></div>
+      </div>
+
+      <div class="sidebar-section">
+        <span class="sidebar-label">Control territorial</span>
+        <div class="territory-stats">
+          <div class="terr-stat">
+            <div class="terr-stat-val free-color" id="stat-free">1</div>
+            <div class="terr-stat-lbl">Liberadas</div>
+          </div>
+          <div class="terr-stat">
+            <div class="terr-stat-val gallu-color" id="stat-gallu">49</div>
+            <div class="terr-stat-lbl">Gallu</div>
+          </div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-label">
+            <span>Reconquista</span>
+            <span id="progress-pct">2%</span>
+          </div>
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="progress-fill" style="width:2%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <span class="sidebar-label">Crónica de la campaña</span>
+        <div class="expansion-log" id="expansion-log">
+          <div class="log-entry-empty">La campaña acaba de comenzar…</div>
+        </div>
+      </div>
+
+      <div class="daily-action" id="daily-action">
+        <!-- filled by JS -->
+      </div>
+    </div>
+  </div>
+
+  <div class="map-tooltip" id="map-tooltip">
+    <div class="map-tooltip-name" id="tooltip-name"></div>
+    <div class="map-tooltip-status" id="tooltip-status"></div>
+  </div>
+</div>
+
+<!-- SCREEN: GAME (Wordle) -->
+<div class="screen" id="screen-game">
+  <div class="game-nav">
+    <div class="game-nav-left">
+      <button class="game-back-btn" onclick="goToMapFromGame()">← Mapa</button>
+      <div class="game-nav-province" id="game-nav-province"></div>
+    </div>
+    <div class="game-nav-right">
+      <div class="game-nav-player" id="game-nav-player"></div>
+    </div>
+  </div>
+  <div class="game-inner">
+    <div class="game-narrative" id="game-narrative">
+      <div class="game-narrative-title">⚔ Misión del día</div>
+      <div class="game-narrative-text" id="game-narrative-text"></div>
+    </div>
+    <div id="wordle-grid"></div>
+    <div id="keyboard"></div>
+    <div class="game-rules-hint">
+      🟩 Correcta en su sitio &nbsp;·&nbsp; 🟨 Presente, mal posición &nbsp;·&nbsp; ⬛ No existe
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN: RESULT -->
+<div class="screen" id="screen-result">
+  <!-- filled by JS -->
+</div>
+
+<!-- SCREEN: VICTORY -->
+<div class="screen" id="screen-victory">
+  <div class="victory-bg-glow"></div>
+  <div class="victory-content">
+    <div class="victory-eyebrow">🏆 España ha sido liberada</div>
+    <h1 class="victory-title">VICTORIA</h1>
+    <div class="victory-title-sub">El Imperio Asturiano ha caído</div>
+
+    <div class="victory-img-wrap">
+      <img src="victoria-final.jpg" alt="Tolerancia 0'1 derrota a Gallu" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="victory-img-placeholder">
+        <span>🛡️</span>
+        <p>Aquí irá la imagen de Tolerancia 0'1 victoriosa</p>
+      </div>
+      <div class="victory-img-border-glow"></div>
+    </div>
+
+    <p class="victory-flavor">
+      Pablo, Lorenzo y Nacho han llegado a Asturias. Las espadas de la Virgen Inés brillan con una luz dorada
+      mientras el Imperio de Gallu se desmorona. España es libre de nuevo.
+    </p>
+    <div class="victory-cta">
+      <button class="btn-main" onclick="resetGame()">⚔ Nueva Campaña</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN: GAME OVER -->
+<div class="screen" id="screen-gameover">
+  <div class="gameover-bg"></div>
+  <div class="gameover-content">
+    <div class="gameover-eyebrow">💀 España ha caído</div>
+    <h1 class="gameover-title">DERROTA</h1>
+    <div class="gameover-title-sub">El Imperio Asturiano ha conquistado todo</div>
+
+    <div class="gameover-img-wrap">
+      <img src="derrota-final.jpg" alt="Gallu victorioso" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="gameover-img-placeholder">
+        <span>👑</span>
+        <p>Aquí irá la imagen de Gallu victorioso</p>
+      </div>
+    </div>
+
+    <p class="gameover-flavor">
+      El último bastión ha caído. Gallu alza su corona sobre Madrid y declara el Imperio Asturiano.
+      La resistencia de Tolerancia 0'1 no fue suficiente… esta vez.
+    </p>
+    <div style="animation: fadeUp .8s 2s ease both">
+      <button class="btn-main" onclick="resetGame()" style="background:linear-gradient(135deg,#c0392b,#8b1a1a);color:var(--white);box-shadow:0 4px 30px rgba(139,26,26,0.4)">
+        ⚔ Intentar de nuevo
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════
+   CONFIG
+═══════════════════════════════════════════════════ */
+const SUPABASE_URL = 'https://nrgsgdhuabsgyqqrjzfp.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_BeGHC7EEH1TwYLxIgkJzdA_2i61LJ1w';
+
+const PROVINCE_CENTROIDS = {
+  'prov-albacete': [426.3,378.0],
+  'prov-alicante': [505.4,396.9],
+  'prov-almeria': [401.3,489.7],
+  'prov-araba': [377.0,92.2],
+  'prov-asturias': [194.9,56.8],
+  'prov-avila': [260.4,254.5],
+  'prov-badajoz': [198.8,379.6],
+  'prov-baleares': [689.7,320.8],
+  'prov-barcelona': [633.2,163.8],
+  'prov-bizkaia': [370.4,60.7],
+  'prov-burgos': [331.9,121.1],
+  'prov-caceres': [190.6,314.6],
+  'prov-cadiz': [216.6,537.3],
+  'prov-cantabria': [313.2,68.3],
+  'prov-castellon': [517.3,274.1],
+  'prov-ciudadreal': [321.3,364.1],
+  'prov-cordoba': [266.7,446.7],
+  'prov-coruna': [63.8,68.8],
+  'prov-cuenca': [407.9,292.8],
+  'prov-gipuzkoa': [413.4,69.5],
+  'prov-girona': [674.9,142.0],
+  'prov-granada': [358.4,482.3],
+  'prov-guadalajara': [380.7,238.7],
+  'prov-huelva': [162.9,464.9],
+  'prov-huesca': [522.2,137.0],
+  'prov-jaen': [339.1,434.2],
+  'prov-larioja': [396.2,130.6],
+  'prov-laspalmas': [711.0,530.3],
+  'prov-leon': [210.8,107.8],
+  'prov-lleida': [589.9,148.6],
+  'prov-lugo': [126.2,73.4],
+  'prov-madrid': [324.2,267.2],
+  'prov-malaga': [270.4,516.8],
+  'prov-murcia': [460.1,439.8],
+  'prov-navarra': [439.0,103.1],
+  'prov-ourense': [117.3,136.8],
+  'prov-palencia': [286.0,126.6],
+  'prov-pontevedra': [61.5,122.0],
+  'prov-salamanca': [201.9,239.3],
+  'prov-sctenerife': [676.4,513.7],
+  'prov-segovia': [312.5,205.3],
+  'prov-sevilla': [228.0,474.2],
+  'prov-soria': [392.3,180.2],
+  'prov-tarragona': [576.6,217.0],
+  'prov-teruel': [487.1,245.7],
+  'prov-toledo': [304.2,304.6],
+  'prov-valencia': [485.5,338.8],
+  'prov-valladolid': [264.2,171.8],
+  'prov-zamora': [202.2,169.8],
+  'prov-zaragoza': [478.3,172.8],
+};
+
+const PLAYERS = [
+  { id:'pablo',   name:'PABLO COUSO',    nick:'"Cousinho"',  num:'01', photo:'reconquista-pablo.jpg',   color:'#E040A0' },
+  { id:'lorenzo', name:'LORENZO GARCIA', nick:'"La Oruga"',  num:'02', photo:'reconquista-lorenzo.jpg', color:'#C9A84C' },
+  { id:'nacho',   name:'IGNACIO PUENTE', nick:'"GatoPija"',  num:'03', photo:'reconquista-nacho.jpg',   color:'#7B68EE' },
+];
+
+// The word list (same as wordle.html, normalized)
+const WORD_LIST = [
+  "raza","negro","blanco","mestizo","etnia","tribu","clan","paria","pobre","rico",
+  "odio","amor","paz","bien","mal","dios","fe","alma","culto","misa",
+  "rezo","santo","papa","obispo","monje","monja","cura","imam","rabbi","islam",
+  "budha","karma","yoga","sufi","laico","ateo","pagano","hereje","cisma","secta",
+  "bulo","sesgos","homo","gay","lesbos","trans","queer","bisex","genero","sexo",
+  "pene","vulva","cuerpo","deseo","beso","pareja","boda","celos","ritual","taboo",
+  "norma","ley","moral","etica","valor","dogma","credo","rito","mito","culpa",
+  "pecado","gracia","bendito","heroe","villano","victima","agresor","pandilla","banda","ghetto",
+  "barrio","pueblo","aldea","ciudad","nacion","patria","exilio","asilo","migrante","refugio",
+  "frontera","visa","ilegal","preso","celda","juicio","jurado","juez","cargo","delito",
+  "crimen","droga","alcohol","vicio","fiesta","baile","musica","ritmo","canto","himno",
+  "bandera","escudo","rey","reina","noble","siervo","esclavo","amo","poder","trono",
+  "corona","guerra","arma","soldado","capitan","general","tropa","milicia","policia","guardia",
+  "pena","carcel","muro","valla","puerta","acceso","orden","caos","revuelta","marcha",
+  "huelga","voto","urna","fraude","partido","lider","masa","clase","obrero","patron",
+  "sueldo","empleo","paro","mendigo","hambre","miseria","pobreza","riqueza","lujo","palacio",
+  "feudo","tierra","campo","faena","cosecha","siembra","labrador","pastor","rebano","ganado",
+  "caza","pesca","bosque","rio","lago","mar","isla","desierto","selva","cumbre",
+  "valle","llanura","sabana","tundra","glaciar","volcan","sequia","tormenta","nieve","hielo",
+  "fuego","vida","muerte","nacer","morir","crecer","sanar","enfermar","dolor","alivio",
+  "medicina","virus","plaga","vacuna","sangre","hueso","carne","nervio","mente","razon",
+  "locura","memoria","olvido","sueno","verdad","mentira","engano","trampa","fuga","escape",
+  "prision","jaula","libertad","cadena","yugo","ira","furia","rabia","calma","miedo",
+  "terror","panico","valentia","cobarde","martir","idolo","guru","maestro","alumno","saber",
+  "leer","escribir","hablar","callar","gritar","llorar","reir","sufrir","gozar","vivir",
+  "sonar","buscar","hallar","perder","ganar","triunfar","caer","luchar","rendir","defender",
+  "atacar","huir","resistir","vencer","gol","tiro","pase","falta","penal","tarjeta",
+  "roja","amarilla","portero","defensa","lateral","pivote","delantero","ariete","winger","club",
+  "estadio","cancha","cesped","balon","arco","red","silbato","arbitro","capitan","equipo",
+  "liga","copa","titulo","trofeo","final","derby","hincha","ultras","barra","coro",
+  "fanatic","tifo","grito","insulto","bofeton","punetazo","patada","empujon","acoso","burla",
+  "mofa","desprecio","rechazo","marginar","excluir","incluir","acoger","apoyar","respetar","tolerar",
+  "unir","dividir","aislar","desterrar","perdonar","castigar","juzgar","condenar","absolver","salvar",
+  "reparar","honrar","dignidad","derechos","deberes","igualdad","justicia","equidad","diversidad","inclusion",
+  "racismo","fascismo","nazismo","extremismo","sectarismo","prejuicio","estigma","discriminar","segregar","homofobia",
+  "transfobia","xenofobia","islamofobia","antisemitismo","tolerancia","maricon","moro","gallu",
+].map(w => w.toUpperCase().replace(/Á/g,'A').replace(/É/g,'E').replace(/Í/g,'I').replace(/Ó/g,'O').replace(/Ú/g,'U').replace(/Ñ/g,'N'));
+const WORDS = [...new Set(WORD_LIST.filter(w => w.length >= 3 && w.length <= 8))];
+
+// Province adjacency map
+const ADJACENCY = {
+  // ── ANDALUCÍA ──
+  'prov-cadiz':        ['prov-malaga','prov-sevilla','prov-huelva','prov-laspalmas','prov-sctenerife'],
+  'prov-huelva':       ['prov-cadiz','prov-sevilla','prov-badajoz'],
+  'prov-sevilla':      ['prov-cadiz','prov-huelva','prov-badajoz','prov-cordoba','prov-malaga'],
+  'prov-malaga':       ['prov-cadiz','prov-sevilla','prov-cordoba','prov-granada'],           // fix1: removed jaen
+  'prov-cordoba':      ['prov-sevilla','prov-malaga','prov-jaen','prov-ciudadreal','prov-badajoz'],
+  'prov-jaen':         ['prov-cordoba','prov-granada','prov-albacete','prov-ciudadreal'],     // fix1: removed malaga
+  'prov-granada':      ['prov-malaga','prov-jaen','prov-almeria','prov-murcia'],
+  'prov-almeria':      ['prov-granada','prov-murcia'],
+  'prov-murcia':       ['prov-almeria','prov-granada','prov-albacete','prov-alicante'],
+  // ── EXTREMADURA ──
+  'prov-badajoz':      ['prov-huelva','prov-sevilla','prov-cordoba','prov-ciudadreal','prov-toledo','prov-caceres'],
+  'prov-caceres':      ['prov-badajoz','prov-toledo','prov-avila','prov-salamanca'],
+  // ── CASTILLA-LA MANCHA ──
+  'prov-ciudadreal':   ['prov-badajoz','prov-cordoba','prov-jaen','prov-albacete','prov-toledo','prov-cuenca'],
+  'prov-toledo':       ['prov-caceres','prov-badajoz','prov-ciudadreal','prov-cuenca','prov-guadalajara','prov-madrid','prov-avila'],
+  'prov-guadalajara':  ['prov-madrid','prov-segovia','prov-soria','prov-zaragoza','prov-cuenca','prov-teruel'],  // fix3: added teruel
+  'prov-cuenca':       ['prov-toledo','prov-ciudadreal','prov-albacete','prov-guadalajara','prov-teruel','prov-valencia'],
+  'prov-albacete':     ['prov-ciudadreal','prov-jaen','prov-murcia','prov-alicante','prov-valencia','prov-cuenca'],
+  // ── MADRID ──
+  'prov-madrid':       ['prov-avila','prov-segovia','prov-guadalajara','prov-toledo','prov-cuenca'],
+  // ── CASTILLA Y LEÓN ──
+  'prov-avila':        ['prov-caceres','prov-toledo','prov-madrid','prov-segovia','prov-salamanca','prov-valladolid'], // fix2: added valladolid
+  'prov-salamanca':    ['prov-caceres','prov-avila','prov-zamora','prov-valladolid'],
+  'prov-zamora':       ['prov-salamanca','prov-valladolid','prov-leon','prov-ourense'],
+  'prov-leon':         ['prov-zamora','prov-valladolid','prov-palencia','prov-asturias','prov-lugo','prov-ourense'],
+  'prov-valladolid':   ['prov-salamanca','prov-zamora','prov-leon','prov-palencia','prov-burgos','prov-segovia','prov-avila'], // fix2: added avila
+  'prov-segovia':      ['prov-valladolid','prov-avila','prov-madrid','prov-guadalajara','prov-soria','prov-burgos'],
+  'prov-palencia':     ['prov-cantabria','prov-burgos','prov-valladolid','prov-leon'],
+  'prov-burgos':       ['prov-larioja','prov-araba','prov-bizkaia','prov-cantabria','prov-palencia','prov-valladolid','prov-soria'],
+  'prov-soria':        ['prov-burgos','prov-larioja','prov-zaragoza','prov-guadalajara','prov-segovia'],
+  // ── COMUNIDAD VALENCIANA ──
+  'prov-alicante':     ['prov-murcia','prov-albacete','prov-valencia'],
+  'prov-valencia':     ['prov-alicante','prov-albacete','prov-cuenca','prov-teruel','prov-castellon','prov-baleares'],
+  'prov-castellon':    ['prov-valencia','prov-teruel','prov-tarragona'],
+  // ── ARAGÓN ──
+  'prov-teruel':       ['prov-cuenca','prov-valencia','prov-castellon','prov-zaragoza','prov-tarragona','prov-guadalajara'], // fix3: added guadalajara
+  'prov-zaragoza':     ['prov-guadalajara','prov-soria','prov-larioja','prov-navarra','prov-huesca','prov-lleida','prov-teruel','prov-tarragona'], // fix6: added tarragona
+  'prov-huesca':       ['prov-zaragoza','prov-lleida','prov-navarra'],
+  // ── CATALUÑA ──
+  'prov-tarragona':    ['prov-castellon','prov-teruel','prov-lleida','prov-barcelona','prov-baleares','prov-zaragoza'], // fix6: added zaragoza
+  'prov-barcelona':    ['prov-tarragona','prov-lleida','prov-girona'],
+  'prov-girona':       ['prov-barcelona','prov-lleida'],
+  'prov-lleida':       ['prov-tarragona','prov-barcelona','prov-girona','prov-huesca','prov-zaragoza'],
+  // ── PAIS VASCO / NAVARRA / RIOJA ──
+  'prov-navarra':      ['prov-larioja','prov-zaragoza','prov-huesca','prov-araba','prov-gipuzkoa'],
+  'prov-larioja':      ['prov-burgos','prov-soria','prov-zaragoza','prov-navarra','prov-araba'],
+  'prov-araba':        ['prov-larioja','prov-navarra','prov-gipuzkoa','prov-bizkaia','prov-burgos'],
+  'prov-bizkaia':      ['prov-araba','prov-gipuzkoa','prov-cantabria','prov-burgos'],
+  'prov-gipuzkoa':     ['prov-araba','prov-bizkaia','prov-navarra'],
+  // ── CANTABRIA / ASTURIAS ──
+  'prov-cantabria':    ['prov-bizkaia','prov-burgos','prov-palencia','prov-leon','prov-asturias'],
+  'prov-asturias':     ['prov-cantabria','prov-leon','prov-lugo'],
+  // ── GALICIA ──
+  'prov-lugo':         ['prov-asturias','prov-coruna','prov-pontevedra','prov-ourense','prov-leon'],
+  'prov-coruna':       ['prov-lugo','prov-pontevedra'],         // fix5: removed asturias
+  'prov-pontevedra':   ['prov-coruna','prov-lugo','prov-ourense'],
+  'prov-ourense':      ['prov-pontevedra','prov-lugo','prov-leon','prov-zamora'],
+  // ── ISLAS ──
+  'prov-baleares':     ['prov-valencia','prov-tarragona','prov-alicante'],
+  'prov-laspalmas':    ['prov-sctenerife','prov-cadiz'],
+  'prov-sctenerife':   ['prov-laspalmas','prov-cadiz'],
+};
+
+const PROVINCE_NAMES = {};
+document.querySelectorAll('#spain-map path, #spain-map g path').forEach(p => {
+  if (p.id) PROVINCE_NAMES[p.id] = p.dataset.name || p.id;
+});
+
+/* ═══════════════════════════════════════════════════
+   SUPABASE
+═══════════════════════════════════════════════════ */
+async function sbFetch(path, opts = {}) {
+  const url = SUPABASE_URL + '/rest/v1/' + path;
+  const headers = {
+    'apikey': SUPABASE_KEY,
+    'Authorization': 'Bearer ' + SUPABASE_KEY,
+    'Content-Type': 'application/json',
+    'Prefer': opts.prefer || 'return=representation',
+    ...opts.headers
+  };
+  const res = await fetch(url, { method: opts.method || 'GET', headers, body: opts.body });
+  if (res.status === 204) return [];
+  return res.json();
+}
+
+async function getMapState() {
+  try {
+    const rows = await sbFetch('reconquista_map?select=*&limit=1');
+    if (rows && rows.length > 0) return rows[0];
+  } catch(e) {}
+  return null;
+}
+
+async function saveMapState(state) {
+  try {
+    const existing = await getMapState();
+    if (existing) {
+      await sbFetch('reconquista_map?id=eq.' + existing.id, {
+        method: 'PATCH',
+        body: JSON.stringify(state),
+        prefer: 'return=minimal'
+      });
+    } else {
+      await sbFetch('reconquista_map', { method: 'POST', body: JSON.stringify(state) });
+    }
+  } catch(e) { console.error('saveMapState error', e); }
+}
+
+async function getTodayScores() {
+  try {
+    return await sbFetch(`reconquista_scores?date=eq.${gameDayStr()}&select=*`);
+  } catch(e) { return []; }
+}
+
+async function saveScore(data) {
+  try {
+    await sbFetch('reconquista_scores', { method: 'POST', body: JSON.stringify(data), prefer: 'return=minimal' });
+  } catch(e) {}
+}
+
+async function getAllScores() {
+  try {
+    return await sbFetch('reconquista_scores?select=*');
+  } catch(e) { return []; }
+}
+
+/* ═══════════════════════════════════════════════════
+   DATE / WORD HELPERS
+═══════════════════════════════════════════════════ */
+function todayStr() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+// Game day string — includes dev offset so "next day" creates new keys
+function gameDayStr() {
+  const offset = parseInt(localStorage.getItem('reconquista_day_offset') || '0', 10);
+  if (offset === 0) return todayStr();
+  // Shift the date by offset days
+  const d = new Date();
+  d.setDate(d.getDate() + offset);
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function seededShuffle(arr, seed) {
+  const a = [...arr]; let s = seed;
+  for (let i = a.length - 1; i > 0; i--) {
+    s = (s * 1664525 + 1013904223) & 0xffffffff;
+    const j = Math.abs(s) % (i + 1);
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function getDayIndex(dateStr) {
+  const d = new Date(dateStr + 'T12:00:00');
+  const epoch = new Date('2024-01-01T12:00:00');
+  return Math.floor((d - epoch) / 86400000);
+}
+
+function getTodayWord() {
+  const offset  = parseInt(localStorage.getItem('reconquista_day_offset') || '0', 10);
+  const dayIdx  = getDayIndex(todayStr()) + offset;
+  const shuffled = seededShuffle(WORDS, 42424242);
+  return shuffled[dayIdx % shuffled.length];
+}
+
+function timeUntilMidnight() {
+  const now = new Date();
+  const midnight = new Date(now); midnight.setHours(24,0,0,0);
+  let diff = Math.floor((midnight - now) / 1000);
+  const h = Math.floor(diff / 3600); diff %= 3600;
+  const m = Math.floor(diff / 60); const s = diff % 60;
+  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+
+/* ═══════════════════════════════════════════════════
+   GLOBAL STATE
+═══════════════════════════════════════════════════ */
+let currentPlayer = null;
+let targetWord    = '';
+let currentRow    = 0;
+let currentCol    = 0;
+let guesses       = [];
+let gameOver      = false;
+let keyStates     = {};
+let mapState      = null; // { provinces: {id: 'gallu'|'free'}, playerPositions: {pablo:'prov-cadiz',...}, log:[], date:'' }
+let selectedProvince = null;
+const MAX_ROWS    = 6;
+
+const defaultMapState = () => ({
+  provinces: Object.fromEntries(
+    Object.keys(ADJACENCY).map(id => [id, id === 'prov-cadiz' ? 'free' : 'gallu'])
+  ),
+  playerPositions: { pablo: 'prov-cadiz', lorenzo: 'prov-cadiz', nacho: 'prov-cadiz' },
+  log: ['⚔ La Reconquista comienza. Cádiz, el último bastión libre.'],
+  date: todayStr(),
+});
+
+/* ═══════════════════════════════════════════════════
+   EMBER PARTICLES (intro screen)
+═══════════════════════════════════════════════════ */
+function spawnEmbers() {
+  const wrap = document.getElementById('embers-wrap');
+  for (let i = 0; i < 28; i++) {
+    const ember = document.createElement('div');
+    ember.className = 'ember';
+    const left = Math.random() * 100;
+    const dur  = 4 + Math.random() * 8;
+    const delay = Math.random() * 10;
+    const drift = (Math.random() - 0.5) * 120;
+    ember.style.cssText = `left:${left}%;--drift:${drift}px;animation-duration:${dur}s;animation-delay:${delay}s`;
+    wrap.appendChild(ember);
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   SCREEN MANAGER
+═══════════════════════════════════════════════════ */
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById(id);
+  if (el) { el.classList.add('active'); el.scrollTop = 0; }
+}
+
+/* ═══════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════ */
+async function init() {
+  showScreen('screen-loading');
+  spawnEmbers();
+  targetWord = getTodayWord();
+
+  // Load or create map state
+  let saved = await getMapState();
+  if (saved && saved.state) {
+    mapState = JSON.parse(saved.state);
+    // Always ensure Cádiz starts as free (safety)
+    if (!mapState.provinces) mapState = defaultMapState();
+  } else {
+    mapState = defaultMapState();
+  }
+  // Check victory/defeat
+  if (checkVictory()) { showScreen('screen-victory'); return; }
+  if (checkDefeat())  { showScreen('screen-gameover'); return; }
+
+  // Restore player selection
+  const savedPlayer = localStorage.getItem('reconquista_player');
+  if (savedPlayer && PLAYERS.find(p => p.id === savedPlayer)) {
+    currentPlayer = PLAYERS.find(p => p.id === savedPlayer);
+    showScreen('screen-map');
+    renderMap();
+  } else {
+    showScreen('screen-intro');
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════════════ */
+function goToPick()  { showScreen('screen-pick'); renderPickCards(); }
+function goToIntro() { showScreen('screen-intro'); }
+function goToMapFromGame() {
+  const moveKey   = `reconquista_move_${currentPlayer?.id}_${gameDayStr()}`;
+  const lsKey     = `reconquista_${currentPlayer?.id}_${gameDayStr()}`;
+  const movedProv = localStorage.getItem(moveKey);
+  const cached    = localStorage.getItem(lsKey);
+
+  if (!cached && movedProv) {
+    // Already moved but wordle not done — just go back, renderDailyAction will lock
+    goToMap();
+    return;
+  }
+  if (!cached && selectedProvince && !movedProv) {
+    // Moved in this session but moveKey not saved yet (shouldn't happen, but safety)
+    localStorage.setItem(moveKey, selectedProvince);
+    goToMap();
+    return;
+  }
+  goToMap();
+}
+
+function goToMap()   { showScreen('screen-map'); renderMap(); requestAnimationFrame(() => requestAnimationFrame(() => renderPlayerPins())); }
+
+async function selectPlayer(id) {
+  currentPlayer = PLAYERS.find(p => p.id === id);
+  localStorage.setItem('reconquista_player', id);
+  // Check if already played today (uses game day, respects dev offset)
+  const today   = todayStr();
+  const gameDay = gameDayStr();
+  const lsKey   = `reconquista_${id}_${gameDay}`;
+  const cached  = localStorage.getItem(lsKey);
+  const moveKey = `reconquista_move_${currentPlayer.id}_${gameDay}`;
+  const movedProv = localStorage.getItem(moveKey);
+
+  // If they've moved but haven't finished wordle yet (navigated back mid-game)
+  if (movedProv && !cached) {
+    // Resume the wordle they abandoned
+    wrap.innerHTML = `
+      <div class="action-state-text" style="color:var(--gold)">
+        ⚔️ Tienes un combate en curso en <strong>${PROVINCE_NAMES[movedProv] || movedProv}</strong>.
+      </div>
+      <button class="btn-action" onclick="resumeGame('${movedProv}')">
+        ⚔ Continuar combate
+      </button>`;
+    return;
+  }
+
+  if (cached) {
+    showScreen('screen-map');
+    renderMap();
+    return;
+  }
+  try {
+    const rows = await sbFetch(`reconquista_scores?player_id=eq.${id}&date=eq.${gameDay}&select=*`);
+    if (rows && rows.length > 0) {
+      localStorage.setItem(lsKey, JSON.stringify(rows[0]));
+    }
+  } catch(e) {}
+  showScreen('screen-map');
+  renderMap();
+}
+
+/* ═══════════════════════════════════════════════════
+   PICK CARDS RENDER
+═══════════════════════════════════════════════════ */
+function renderPickCards() {
+  const wrap = document.getElementById('pick-cards');
+  wrap.innerHTML = PLAYERS.map(p => `
+    <div class="pick-card" onclick="selectPlayer('${p.id}')" style="--card-color:${p.color}40">
+      <div class="pick-card-aura"></div>
+      <div class="pick-card-particles">
+        <div class="pick-particle"></div><div class="pick-particle"></div>
+        <div class="pick-particle"></div><div class="pick-particle"></div>
+        <div class="pick-particle"></div>
+      </div>
+      <img class="pick-card-img" src="${p.photo}" alt="${p.name}"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="pick-card-img-placeholder" style="display:none">
+        <div class="pick-card-ini">${p.num}</div>
+      </div>
+      <div class="pick-card-info">
+        <span class="pick-card-num">Guerrero ${p.num}</span>
+        <div class="pick-card-name">${p.name.split(' ')[0]}</div>
+        <div class="pick-card-nick">${p.nick}</div>
+        <div class="pick-card-cta">Entrar al combate →</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ═══════════════════════════════════════════════════
+   MAP RENDER
+═══════════════════════════════════════════════════ */
+function renderMap() {
+  if (!mapState) return;
+  const today   = todayStr();
+  const gameDay = gameDayStr();
+
+  document.getElementById('map-nav-name').textContent =
+    currentPlayer ? currentPlayer.name.split(' ')[0] : '';
+
+  // Color provinces — reset all, then apply state
+  document.querySelectorAll('#spain-map path').forEach(el => {
+    el.classList.remove('province-gallu','province-free','province-player','province-selectable');
+  });
+  Object.entries(mapState.provinces).forEach(([id, status]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.add('province-' + status);
+  });
+
+  // Highlight current player's position
+  if (currentPlayer && mapState.playerPositions) {
+    const myPos = mapState.playerPositions[currentPlayer.id];
+    if (myPos) {
+      const el = document.getElementById(myPos);
+      if (el) {
+        el.classList.remove('province-gallu','province-free');
+        el.classList.add('province-player');
+      }
+    }
+  }
+
+  // Territory stats
+  const freeCount  = Object.values(mapState.provinces).filter(v => v === 'free').length;
+  const galluCount = Object.values(mapState.provinces).filter(v => v === 'gallu').length;
+  const total      = Object.keys(mapState.provinces).length;
+  document.getElementById('stat-free').textContent  = freeCount;
+  document.getElementById('stat-gallu').textContent = galluCount;
+  const pct = Math.round((freeCount / total) * 100);
+  document.getElementById('progress-pct').textContent = pct + '%';
+  document.getElementById('progress-fill').style.width = pct + '%';
+
+  // Player positions sidebar
+  const posWrap = document.getElementById('player-positions');
+  posWrap.innerHTML = PLAYERS.map(p => {
+    const pos = mapState.playerPositions?.[p.id] || 'prov-cadiz';
+    const lsKey = `reconquista_${p.id}_${gameDay}`;
+    const cached = localStorage.getItem(lsKey);
+    let statusHtml = '<span class="player-pos-status pending">Pendiente</span>';
+    if (cached) {
+      const d = JSON.parse(cached);
+      statusHtml = d.won
+        ? `<span class="player-pos-status won">${d.attempts}/${MAX_ROWS}</span>`
+        : `<span class="player-pos-status lost">X/${MAX_ROWS}</span>`;
+    }
+    return `<div class="player-position-row">
+      <div class="player-pos-dot" style="background:${p.color}"></div>
+      <div class="player-pos-info">
+        <div class="player-pos-name">${p.name.split(' ')[0]}</div>
+        <div class="player-pos-province">${PROVINCE_NAMES[pos] || pos}</div>
+      </div>
+      ${statusHtml}
+    </div>`;
+  }).join('');
+
+  // Log
+  const logWrap = document.getElementById('expansion-log');
+  const logEntries = (mapState.log || []).slice(-5).reverse();
+  logWrap.innerHTML = logEntries.length
+    ? logEntries.map(e => `<div class="log-entry">${e}</div>`).join('')
+    : '<div class="log-entry-empty">Sin eventos aún.</div>';
+
+  // Daily action
+  renderDailyAction();
+
+  // Tooltip
+  setupMapTooltips();
+}
+
+function renderDailyAction() {
+  const today   = todayStr();
+  const gameDay = gameDayStr();
+  const lsKey   = `reconquista_${currentPlayer.id}_${gameDay}`;
+  const moveKey = `reconquista_move_${currentPlayer.id}_${gameDay}`;
+  const cached    = localStorage.getItem(lsKey);
+  const movedProv = localStorage.getItem(moveKey);
+  const wrap    = document.getElementById('daily-action');
+
+  // Case 1: fully completed today
+  if (cached) {
+    const d = JSON.parse(cached);
+    wrap.innerHTML = `
+      <div class="action-state-text">
+        ${d.won
+          ? `⚔ <strong style="color:var(--green)">${PROVINCE_NAMES[d.province]}</strong> ha sido liberada hoy.`
+          : `💀 La batalla de <strong style="color:var(--blood-light)">${PROVINCE_NAMES[d.province]||'?'}</strong> se ha perdido.`
+        }
+      </div>
+      <div class="btn-action-done">✓ Turno completado — Vuelve mañana</div>`;
+    return;
+  }
+
+  // Case 2: moved but abandoned the wordle mid-game
+  if (movedProv) {
+    wrap.innerHTML = `
+      <div class="action-state-text" style="color:var(--gold)">
+        ⚔️ Combate pendiente en <strong>${PROVINCE_NAMES[movedProv] || movedProv}</strong>.<br>
+        <span style="color:var(--gray-mid);font-size:12px">Ya has elegido provincia hoy — debes combatir aquí.</span>
+      </div>
+      <button class="btn-action" onclick="resumeGame('${movedProv}')">
+        ⚔ Continuar combate
+      </button>`;
+    return;
+  }
+
+  // Case 3: hasn't moved yet
+  const myPos     = mapState.playerPositions?.[currentPlayer.id] || 'prov-cadiz';
+  wrap.innerHTML = `
+    <div class="action-state-text">
+      Estás en <strong style="color:var(--gold)">${PROVINCE_NAMES[myPos]}</strong>.<br>
+      Elige una provincia colindante para atacar, luego combate con el Wordle.
+    </div>
+    <button class="btn-action" onclick="startProvincePick()" id="btn-attack">
+      ⚔ Elegir objetivo y combatir
+    </button>`;
+}
+
+/* ═══════════════════════════════════════════════════
+   PROVINCE SELECTION (before wordle)
+═══════════════════════════════════════════════════ */
+function startProvincePick() {
+  const myPos     = mapState.playerPositions?.[currentPlayer.id] || 'prov-cadiz';
+  const neighbors = ADJACENCY[myPos] || [];
+
+  // Build selectable list: neighbors + current province (stay option), excluding Asturias if not all free
+  const othersFree = Object.entries(mapState.provinces)
+    .filter(([id]) => id !== 'prov-asturias')
+    .every(([, v]) => v === 'free');
+
+  // Filter out Asturias from neighbors if conditions not met
+  const selectableNeighbors = neighbors.filter(id => {
+    if (id === 'prov-asturias' && !othersFree) return false;
+    return true;
+  });
+
+  // Always include current province as "stay here" option
+  const selectable = [...new Set([myPos, ...selectableNeighbors])];
+
+  // Highlight selectable provinces on map
+  selectable.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.classList.add('province-selectable');
+      el.style.cursor = 'pointer';
+      el.onclick = () => {
+        // If clicking Asturias and not all free, warn and abort
+        if (id === 'prov-asturias' && !othersFree) {
+          showToast('Para enfrentarte a Gallu, primero debes liberar toda España', 3000);
+          return;
+        }
+        confirmProvinceAttack(id);
+      };
+    }
+  });
+
+  const stayName = PROVINCE_NAMES[myPos] || myPos;
+  document.getElementById('daily-action').innerHTML = `
+    <div class="action-state-text" style="color:var(--gold)">
+      🗡 Haz clic en una provincia para atacarla<br>
+      <span style="color:var(--gray-mid);font-size:11px">También puedes quedarte en <strong style="color:var(--gold)">${stayName}</strong> y defenderte aquí.</span>
+    </div>
+    <button class="btn-action" style="background:rgba(255,255,255,0.08);color:var(--gray-light);border:1px solid rgba(255,255,255,0.15)" onclick="cancelProvincePick()">
+      Cancelar
+    </button>`;
+}
+
+function resumeGame(provId) {
+  selectedProvince = provId;
+  mapState.playerPositions[currentPlayer.id] = provId;
+  renderPlayerPins();
+  startGame(provId);
+}
+
+function cancelProvincePick() {
+  // Remove all selectable classes
+  document.querySelectorAll('.province-selectable').forEach(el => {
+    el.classList.remove('province-selectable');
+    el.onclick = null;
+  });
+  renderDailyAction();
+}
+
+function confirmProvinceAttack(provId) {
+  selectedProvince = provId;
+
+  // Remove selectable states
+  document.querySelectorAll('.province-selectable').forEach(el => {
+    el.classList.remove('province-selectable');
+    el.onclick = null;
+  });
+
+  // Move player
+  mapState.playerPositions[currentPlayer.id] = provId;
+  // Lock this move in localStorage so can't re-pick today
+  const moveKey = `reconquista_move_${currentPlayer.id}_${todayStr()}`;
+  localStorage.setItem(moveKey, provId);
+  renderPlayerPins();
+
+  // Start wordle
+  startGame(provId);
+}
+
+/* ═══════════════════════════════════════════════════
+   WORDLE GAME
+═══════════════════════════════════════════════════ */
+function startGame(provId) {
+  guesses = []; currentRow = 0; currentCol = 0; gameOver = false; keyStates = {};
+
+  const provName = PROVINCE_NAMES[provId] || provId;
+  const provStatus = mapState.provinces[provId] || 'gallu';
+
+  document.getElementById('game-nav-province').textContent = provName;
+  document.getElementById('game-nav-player').textContent =
+    currentPlayer.name.split(' ')[0] + ' · ' + currentPlayer.nick;
+
+  const narrativeText = provStatus === 'gallu'
+    ? `Has llegado a <strong>${provName}</strong>. El ejército de Gallu la controla. Descifra la palabra de la Virgen Inés para activar tu espada y liberar la ciudad.`
+    : `Estás en <strong>${provName}</strong>, territorio libre. Descifra la palabra para fortalecer las defensas.`;
+  document.getElementById('game-narrative-text').innerHTML = narrativeText;
+
+  buildGrid(); buildKeyboard();
+  showScreen('screen-game');
+  document.addEventListener('keydown', handleKeyDown);
+}
+
+function buildGrid() {
+  const grid = document.getElementById('wordle-grid'); grid.innerHTML = '';
+  const wLen = targetWord.length;
+  let cs = 58; if (wLen >= 7) cs = 48; if (wLen >= 9) cs = 40;
+  for (let r = 0; r < MAX_ROWS; r++) {
+    const row = document.createElement('div'); row.className = 'wordle-row'; row.id = 'row-' + r;
+    for (let c = 0; c < wLen; c++) {
+      const cell = document.createElement('div'); cell.className = 'wordle-cell'; cell.id = `cell-${r}-${c}`;
+      cell.style.width = cs + 'px'; cell.style.height = cs + 'px';
+      cell.style.fontSize = Math.max(16, cs * 0.5) + 'px';
+      row.appendChild(cell);
+    }
+    grid.appendChild(row);
+  }
+}
+
+const KB_ROWS = [
+  ['Q','W','E','R','T','Y','U','I','O','P'],
+  ['A','S','D','F','G','H','J','K','L','Ñ'],
+  ['ENTER','Z','X','C','V','B','N','M','⌫'],
+];
+
+function buildKeyboard() {
+  const kb = document.getElementById('keyboard'); kb.innerHTML = '';
+  KB_ROWS.forEach(row => {
+    const rowEl = document.createElement('div'); rowEl.className = 'kb-row';
+    row.forEach(key => {
+      const btn = document.createElement('button');
+      btn.className = 'kb-key' + (['ENTER','⌫'].includes(key) ? ' wide' : '');
+      btn.textContent = key; btn.dataset.key = key;
+      btn.addEventListener('click', () => handleInput(key));
+      rowEl.appendChild(btn);
+    });
+    kb.appendChild(rowEl);
+  });
+}
+
+function handleKeyDown(e) {
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  const key = e.key.toUpperCase();
+  if (key === 'ENTER') handleInput('ENTER');
+  else if (key === 'BACKSPACE') handleInput('⌫');
+  else if (/^[A-ZÑ]$/.test(key)) handleInput(key);
+}
+
+function handleInput(key) {
+  if (gameOver) return;
+  const wLen = targetWord.length;
+  if (key === '⌫') {
+    if (currentCol > 0) {
+      currentCol--;
+      const cell = document.getElementById(`cell-${currentRow}-${currentCol}`);
+      cell.textContent = ''; cell.classList.remove('filled');
+    }
+    return;
+  }
+  if (key === 'ENTER') {
+    if (currentCol < wLen) { shakeRow(currentRow); showToast('Completa la palabra'); return; }
+    submitGuess(); return;
+  }
+  if (currentCol < wLen) {
+    const cell = document.getElementById(`cell-${currentRow}-${currentCol}`);
+    cell.textContent = key; cell.classList.add('filled'); currentCol++;
+  }
+}
+
+function submitGuess() {
+  const wLen = targetWord.length;
+  let guess = '';
+  for (let c = 0; c < wLen; c++) {
+    guess += document.getElementById(`cell-${currentRow}-${c}`).textContent;
+  }
+  const guessNorm = guess.replace(/Ñ/g,'N');
+  const result = evaluateGuess(guessNorm, targetWord);
+  for (let c = 0; c < wLen; c++) {
+    const cell = document.getElementById(`cell-${currentRow}-${c}`);
+    const delay = c * 0.12;
+    setTimeout(() => { cell.classList.add(result[c]); }, delay * 1000 + 50);
+    setTimeout(() => { updateKeyboard(guessNorm[c], result[c]); }, delay * 1000 + 350);
+  }
+  guesses.push(guessNorm);
+  const won = result.every(r => r === 'correct');
+  setTimeout(() => {
+    if (won) endGame(true);
+    else if (currentRow + 1 >= MAX_ROWS) endGame(false);
+    else { currentRow++; currentCol = 0; }
+  }, wLen * 130 + 400);
+}
+
+function evaluateGuess(guess, target) {
+  const result = Array(target.length).fill('absent');
+  const targetArr = target.split(''); const guessArr = guess.split('');
+  const used = Array(target.length).fill(false);
+  for (let i = 0; i < target.length; i++) {
+    if (guessArr[i] === targetArr[i]) { result[i] = 'correct'; used[i] = true; }
+  }
+  for (let i = 0; i < target.length; i++) {
+    if (result[i] === 'correct') continue;
+    for (let j = 0; j < target.length; j++) {
+      if (!used[j] && guessArr[i] === targetArr[j]) { result[i] = 'present'; used[j] = true; break; }
+    }
+  }
+  return result;
+}
+
+function updateKeyboard(letter, state) {
+  const priority = { correct:3, present:2, absent:1 };
+  if ((priority[state]||0) > (priority[keyStates[letter]]||0)) keyStates[letter] = state;
+  document.querySelectorAll('.kb-key').forEach(btn => {
+    if (btn.dataset.key === letter) {
+      btn.classList.remove('correct','present','absent');
+      btn.classList.add(keyStates[letter]);
+    }
+  });
+}
+
+/* ═══════════════════════════════════════════════════
+   END GAME
+═══════════════════════════════════════════════════ */
+async function endGame(won) {
+  gameOver = true;
+  document.removeEventListener('keydown', handleKeyDown);
+  const today    = todayStr();
+  const gameDay  = gameDayStr();
+  const attempts = won ? currentRow + 1 : null;
+  const provId   = selectedProvince || mapState.playerPositions?.[currentPlayer.id];
+  const scoreData = { player_id: currentPlayer.id, date: today, word: targetWord, won, attempts, guesses, province: provId };
+
+  // Save locally
+  localStorage.setItem(`reconquista_${currentPlayer.id}_${gameDay}`, JSON.stringify(scoreData));
+  saveScore(scoreData);
+
+  // Update map state
+  if (won && provId) {
+    if (provId === 'prov-asturias') {
+      // Asturias can only be freed if ALL other provinces are free AND all 3 players are here
+      const othersFree = Object.entries(mapState.provinces)
+        .filter(([id]) => id !== 'prov-asturias')
+        .every(([, v]) => v === 'free');
+      const allHere = Object.values(mapState.playerPositions).every(p => p === 'prov-asturias');
+      if (othersFree && allHere) {
+        mapState.provinces[provId] = 'free';
+        mapState.log.push(`🏆 ¡Asturias liberada! ¡España es libre!`);
+      } else {
+        // Victory condition not met — treat as normal move (no map change)
+        mapState.log.push(`⚠️ Asturias resiste — aún no se cumplen las condiciones finales.`);
+        if (!othersFree) showToast('Debes liberar toda España primero');
+        else showToast('Los 3 guerreros deben estar en Asturias');
+      }
+    } else {
+      mapState.provinces[provId] = 'free';
+      mapState.log.push(`✅ ${PROVINCE_NAMES[provId]} liberada por ${currentPlayer.name.split(' ')[0]}`);
+    }
+  } else if (!won) {
+    // Gallu expands
+    gallExpand(1, currentPlayer.name.split(' ')[0] + ' falló en ' + PROVINCE_NAMES[provId||'?']);
+  }
+
+  // Process no-shows for other players (if it's end of day and they haven't played)
+  // This would be handled server-side in a real scenario, but for simplicity we do it client-side when any player finishes
+  await saveMapState({ state: JSON.stringify(mapState) });
+
+  // Check victory/defeat — use else-if to ensure only ONE screen shows
+  const isVictory = checkVictory();
+  const isDefeat  = checkDefeat();
+  if (isVictory) {
+    setTimeout(() => showScreen('screen-victory'), 800);
+    return;
+  } else if (isDefeat) {
+    setTimeout(() => showScreen('screen-gameover'), 800);
+    return;
+  }
+
+  setTimeout(() => showResult(won, attempts, provId, scoreData), 500);
+}
+
+function gallExpand(times, reason) {
+  for (let i = 0; i < times; i++) {
+    // Gallu MUST conquer a FREE province that is adjacent to one of his own territories.
+    // Build list of free provinces that border at least one Gallu province.
+    const candidates = [];
+    Object.entries(mapState.provinces).forEach(([provId, status]) => {
+      if (status !== 'free') return;
+      if (provId === 'prov-asturias') return; // Asturias is immune
+      const borderesGallu = (ADJACENCY[provId] || []).some(adj => mapState.provinces[adj] === 'gallu');
+      if (borderesGallu) candidates.push(provId);
+    });
+
+    if (!candidates.length) {
+      // No free province borders Gallu — this shouldn't happen in normal gameplay
+      mapState.log.push(`⚠️ Gallu no puede expandirse — sin territorios colindantes libres.`);
+      break;
+    }
+
+    // Pick randomly among valid candidates
+    const target = candidates[Math.floor(Math.random() * candidates.length)];
+    mapState.provinces[target] = 'gallu';
+    const reasonStr = reason ? ` (${reason})` : '';
+    mapState.log.push(`⚔️ Gallu reconquista ${PROVINCE_NAMES[target]}${reasonStr}`);
+  }
+}
+
+function checkVictory() {
+  if (!mapState) return false;
+  // All provinces (including Asturias) must be free
+  return Object.values(mapState.provinces).every(v => v === 'free');
+}
+
+function checkDefeat() {
+  if (!mapState) return false;
+  return Object.values(mapState.provinces).every(v => v === 'gallu');
+}
+
+/* ═══════════════════════════════════════════════════
+   RESULT SCREEN
+═══════════════════════════════════════════════════ */
+async function showResult(won, attempts, provId, scoreData) {
+  showScreen('screen-result');
+  const today = todayStr();
+  let scores = [];
+  try { scores = await getTodayScores(); } catch(e) {}
+  // Merge with localStorage
+  const gameDay = gameDayStr();
+  PLAYERS.forEach(p => {
+    const cached = localStorage.getItem(`reconquista_${p.id}_${gameDay}`);
+    if (cached && !scores.find(s => s.player_id === p.id)) scores.push(JSON.parse(cached));
+  });
+
+  const provName = PROVINCE_NAMES[provId] || '?';
+  const galluAlertHTML = !won
+    ? `<div class="gallu-alert">
+        <div class="gallu-alert-title">⚔️ El Imperio Avanza</div>
+        <div class="gallu-alert-text">Has perdido la batalla de ${provName}. Las fuerzas de Gallu han conquistado un nuevo territorio.</div>
+       </div>`
+    : '';
+
+  // Mini grid
+  let miniGrid = '<div style="display:flex;flex-direction:column;gap:3px;margin-bottom:24px;align-items:center">';
+  guesses.forEach(g => {
+    const res = evaluateGuess(g, targetWord);
+    miniGrid += '<div style="display:flex;gap:3px">';
+    res.forEach(r => {
+      const c = r==='correct'?'#2ecc71':r==='present'?'#C9A84C':'#242424';
+      miniGrid += `<div style="width:20px;height:20px;background:${c};border-radius:2px;border:1px solid rgba(255,255,255,0.1)"></div>`;
+    });
+    miniGrid += '</div>';
+  });
+  miniGrid += '</div>';
+
+  // Leaderboard
+  const allScoresList = await getAllScores();
+  const lbHTML = buildLeaderboardHTML(scores, allScoresList);
+
+  const el = document.getElementById('screen-result');
+  el.innerHTML = `
+    <div class="result-wrap">
+      <div class="result-banner">
+        <div class="result-glow ${won?'win':'lose'}"></div>
+        <div class="result-icon">${won ? '⚔️' : '💀'}</div>
+        <div class="result-title ${won?'win':'lose'}">${won ? 'LIBERADA' : 'DERROTA'}</div>
+        <div class="result-province">${provName}</div>
+        <div class="result-word">${targetWord}</div>
+        <div class="result-narrative">${won
+          ? `Tu espada brilló con la palabra correcta. ${provName} es libre.`
+          : `Las fuerzas de Gallu han resistido. ${provName} sigue bajo el Imperio.`
+        }</div>
+      </div>
+      ${miniGrid}
+      ${galluAlertHTML}
+      ${lbHTML}
+      <div class="next-word-card">
+        <div class="next-word-label">Próxima palabra en</div>
+        <div class="next-word-time" id="countdown">--:--:--</div>
+      </div>
+      <button class="result-back-btn" onclick="goToMap()">← Volver al mapa</button>
+    </div>`;
+
+  // Countdown
+  const tick = () => { const el = document.getElementById('countdown'); if(el) el.textContent = timeUntilMidnight(); };
+  tick(); setInterval(tick, 1000);
+}
+
+function buildLeaderboardHTML(todayScores, allScores) {
+  const stats = {};
+  PLAYERS.forEach(p => {
+    const pAll = allScores.filter(s => s.player_id === p.id);
+    stats[p.id] = { wins: pAll.filter(s => s.won).length, total: pAll.length };
+  });
+  const sorted = [...PLAYERS].sort((a,b) => (stats[b.id]?.wins||0) - (stats[a.id]?.wins||0));
+  const medals = ['gold','silver','bronze'];
+  let html = `<div class="result-lb">
+    <div class="result-lb-header"><span>🏆</span><span class="result-lb-title">CLASIFICACIÓN</span></div>`;
+  sorted.forEach((p,i) => {
+    const s = stats[p.id]||{wins:0,total:0};
+    const ts = todayScores.find(x => x.player_id === p.id);
+    const isMe = p.id === currentPlayer?.id;
+    let todayBadge = `<span class="lb-today pending">Pendiente</span>`;
+    if (ts) todayBadge = ts.won
+      ? `<span class="lb-today won">${ts.attempts}/${MAX_ROWS}</span>`
+      : `<span class="lb-today lost">X/${MAX_ROWS}</span>`;
+    html += `<div class="lb-row${isMe?' me':''}">
+      <div class="lb-pos ${medals[i]}">${i+1}</div>
+      <div class="lb-name">
+        <div class="lb-name-main">${p.name.split(' ')[0]}</div>
+        <div class="lb-name-nick">${p.nick}</div>
+      </div>
+      <div class="lb-stats">
+        <div class="lb-stat"><div class="lb-stat-val">${s.wins}</div><div class="lb-stat-lbl">Victorias</div></div>
+        ${todayBadge}
+      </div>
+    </div>`;
+  });
+  return html + '</div>';
+}
+
+/* ═══════════════════════════════════════════════════
+   MAP TOOLTIPS
+═══════════════════════════════════════════════════ */
+function renderPlayerPins() {
+  const wrap = document.getElementById('player-pins');
+  if (!wrap || !mapState) return;
+  wrap.innerHTML = '';
+  const svg = document.getElementById('spain-map');
+  if (!svg) return;
+  const vb = svg.viewBox.baseVal;
+  // Use offsetWidth/offsetHeight — works even when getBoundingClientRect returns 0
+  const svgW = svg.offsetWidth  || svg.clientWidth  || svg.parentElement?.offsetWidth  || 700;
+  const svgH = svg.offsetHeight || svg.clientHeight || svg.parentElement?.offsetHeight || 530;
+  const scaleX = svgW / vb.width;
+  const scaleY = svgH / vb.height;
+  // Safety: if scales are 0 or NaN, retry after paint
+  if (!scaleX || !scaleY || isNaN(scaleX) || isNaN(scaleY)) {
+    requestAnimationFrame(() => renderPlayerPins());
+    return;
+  }
+
+  PLAYERS.forEach(p => {
+    const provId = mapState.playerPositions?.[p.id] || 'prov-cadiz';
+    const c = PROVINCE_CENTROIDS[provId];
+    if (!c) return;
+
+    // SVG coords → px relative to wrap
+    const px = c[0] * scaleX;
+    const py = c[1] * scaleY;
+
+    const pin = document.createElement('div');
+    pin.className = 'player-pin';
+    pin.style.setProperty('--pin-color', p.color);
+    pin.style.left = px + 'px';
+    pin.style.top  = py + 'px';
+
+    const av = document.createElement('div');
+    av.className = 'player-pin-avatar';
+    const img = document.createElement('img');
+    img.src = p.photo;
+    img.onerror = () => { av.textContent = p.name[0]; img.remove(); };
+    av.appendChild(img);
+
+    const tail = document.createElement('div');
+    tail.className = 'player-pin-tail';
+    const dot = document.createElement('div');
+    dot.className = 'player-pin-dot';
+    const lbl = document.createElement('div');
+    lbl.className = 'player-pin-label';
+    lbl.textContent = p.name.split(' ')[0];
+
+    pin.appendChild(av);
+    pin.appendChild(tail);
+    pin.appendChild(dot);
+    pin.appendChild(lbl);
+    wrap.appendChild(pin);
+  });
+}
+
+function setupMapTooltips() {
+  const tooltip = document.getElementById('map-tooltip');
+  const nameEl  = document.getElementById('tooltip-name');
+  const statEl  = document.getElementById('tooltip-status');
+
+  document.querySelectorAll('#spain-map path, #spain-map g path').forEach(path => {
+    path.addEventListener('mousemove', e => {
+      const name   = path.dataset.name || '';
+      const status = mapState.provinces[path.id] || 'gallu';
+      nameEl.textContent  = name;
+      statEl.textContent  = status === 'gallu' ? '⚔ Bajo el Imperio de Gallu' : '✓ Territorio Libre';
+      statEl.className    = 'map-tooltip-status ' + status;
+      tooltip.style.left  = (e.clientX + 14) + 'px';
+      tooltip.style.top   = (e.clientY - 14) + 'px';
+      tooltip.classList.add('visible');
+    });
+    path.addEventListener('mouseleave', () => tooltip.classList.remove('visible'));
+  });
+}
+
+/* ═══════════════════════════════════════════════════
+   MISC HELPERS
+═══════════════════════════════════════════════════ */
+let toastTimeout;
+function showToast(msg, duration = 1800) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => t.classList.remove('show'), duration);
+}
+
+function shakeRow(row) {
+  const el = document.getElementById('row-' + row);
+  el.querySelectorAll('.wordle-cell').forEach(c => {
+    c.classList.add('shake');
+    setTimeout(() => c.classList.remove('shake'), 500);
+  });
+}
+
+function openLore() { document.getElementById('lore-modal').classList.add('open'); }
+function closeLore() { document.getElementById('lore-modal').classList.remove('open'); }
+document.getElementById('lore-modal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeLore();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLore(); });
+
+async function resetGame() {
+  mapState = defaultMapState();
+  await saveMapState({ state: JSON.stringify(mapState) });
+  PLAYERS.forEach(p => {
+    Object.keys(localStorage).filter(k => k.startsWith(`reconquista_${p.id}_`)).forEach(k => localStorage.removeItem(k));
+    Object.keys(localStorage).filter(k => k.startsWith(`reconquista_move_${p.id}_`)).forEach(k => localStorage.removeItem(k));
+  });
+  localStorage.removeItem('reconquista_player');
+  currentPlayer = null;
+  selectedProvince = null;
+  gameOver = false;
+  showScreen('screen-intro');
+}
+
+async function devNextDay() {
+  if (!confirm('⏭ SIGUIENTE DÍA\n\nEsto simulará que ha pasado un día real:\n• Jugadores que no jugaron hoy → Gallu expande\n• Se limpian todos los registros del día\n• La palabra cambia\n\n¿Confirmar?')) return;
+
+  // 1. Compute current game day FIRST (before any changes)
+  const gameDay = gameDayStr();
+
+  // 2. For each player who didn't complete today → Gallu expands once
+  PLAYERS.forEach(p => {
+    const lsKey = `reconquista_${p.id}_${gameDay}`;
+    const cached = localStorage.getItem(lsKey);
+    if (!cached) {
+      gallExpand(1, `${p.name.split(' ')[0]} no jugó`);
+    }
+  });
+
+  // 3. Save updated map to Supabase (includes any Gallu expansions)
+  await saveMapState({ state: JSON.stringify(mapState) });
+
+  // 4. Clear ALL records for the current game day for every player
+  PLAYERS.forEach(p => {
+    localStorage.removeItem(`reconquista_${p.id}_${gameDay}`);
+    localStorage.removeItem(`reconquista_move_${p.id}_${gameDay}`);
+  });
+
+  // 5. Advance the day offset so tomorrow's word is different
+  const currentOffset = parseInt(localStorage.getItem('reconquista_day_offset') || '0', 10);
+  localStorage.setItem('reconquista_day_offset', String(currentOffset + 1));
+
+  // 6. Reset all in-memory game state
+  selectedProvince = null;
+  gameOver         = false;
+  guesses          = [];
+  currentRow       = 0;
+  currentCol       = 0;
+  keyStates        = {};
+
+  // 7. Pick new word for the new day
+  targetWord = getTodayWord();
+
+  showToast(`⏭ Día avanzado — nueva palabra: ${targetWord}`, 3000);
+  setTimeout(() => renderMap(), 600);
+}
+
+async function devReset() {
+  if (!confirm('⚠️ DEV RESET\n\nEsto borrará TODO: mapa, puntuaciones, movimientos de hoy y selección de jugador.\n\n¿Confirmar?')) return;
+
+  // Clear map state in Supabase
+  mapState = defaultMapState();
+  try { await saveMapState({ state: JSON.stringify(mapState) }); } catch(e) {}
+
+  // Clear ALL reconquista keys from localStorage
+  const keysToRemove = Object.keys(localStorage).filter(k => k.startsWith('reconquista'));
+  keysToRemove.forEach(k => localStorage.removeItem(k));
+
+  // Reset globals
+  currentPlayer    = null;
+  selectedProvince = null;
+  gameOver         = false;
+  guesses          = [];
+  currentRow       = 0;
+  currentCol       = 0;
+  keyStates        = {};
+
+  showToast('✓ Reset completo — volviendo al inicio', 2500);
+  setTimeout(() => showScreen('screen-intro'), 800);
+}
+
+/* ═══════════════════════════════════════════════════
+   BOOT
+═══════════════════════════════════════════════════ */
+init();
+window.addEventListener('resize', () => renderPlayerPins());
+
+/*
+  ════════════════════════════════════════════════════
+  SQL — Ejecutar en Supabase SQL Editor (solo una vez)
+  ════════════════════════════════════════════════════
+
+  CREATE TABLE IF NOT EXISTS reconquista_map (
+    id         BIGSERIAL PRIMARY KEY,
+    state      TEXT NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+  );
+  ALTER TABLE reconquista_map ENABLE ROW LEVEL SECURITY;
+  CREATE POLICY "Allow all" ON reconquista_map FOR ALL USING (true) WITH CHECK (true);
+
+  CREATE TABLE IF NOT EXISTS reconquista_scores (
+    id         BIGSERIAL PRIMARY KEY,
+    player_id  TEXT NOT NULL,
+    date       DATE NOT NULL,
+    word       TEXT NOT NULL,
+    won        BOOLEAN NOT NULL DEFAULT false,
+    attempts   INTEGER,
+    guesses    TEXT[] DEFAULT '{}',
+    province   TEXT,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+  );
+  ALTER TABLE reconquista_scores ENABLE ROW LEVEL SECURITY;
+  CREATE POLICY "Allow all" ON reconquista_scores FOR ALL USING (true) WITH CHECK (true);
+*/
+</script>
+</body>
+</html>

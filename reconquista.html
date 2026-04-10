@@ -1966,6 +1966,49 @@ body::before {
 /* ══════════════════════════════════════════════
    MOBILE
 ══════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════
+   BACK BUTTON
+══════════════════════════════════════════════ */
+.back-btn {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 999;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  background: rgba(7,4,10,0.80);
+  border: 1px solid rgba(201,168,76,0.45);
+  backdrop-filter: blur(10px);
+  padding: 8px 14px;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: color .2s, border-color .2s, background .2s;
+  white-space: nowrap;
+}
+.back-btn:hover {
+  color: #fff;
+  border-color: var(--gold);
+  background: rgba(201,168,76,0.10);
+}
+.back-btn svg {
+  width: 12px; height: 12px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+  transition: transform .2s;
+}
+.back-btn:hover svg { transform: translateX(-3px); }
+
 @media (max-width: 900px) {
   .map-layout { grid-template-columns: 1fr; }
   .map-sidebar {
@@ -1982,36 +2025,60 @@ body::before {
   .kb-key.wide { min-width: 52px; font-size: 10px; }
   .map-nav { padding: 0 16px; }
   .game-nav { padding: 0 16px; }
+
+  /* ── INTRO MOBILE ── */
+  #screen-intro {
+    justify-content: flex-start;
+    overflow-y: auto;
+  }
+  .intro-content {
+    padding: 80px 20px 48px;
+    width: 100%;
+  }
+  .intro-title {
+    font-size: clamp(42px, 18vw, 80px);
+    letter-spacing: 2px;
+    word-break: break-word;
+  }
+  .intro-eyebrow {
+    font-size: 9px;
+    letter-spacing: 4px;
+  }
+  .intro-subtitle {
+    font-size: clamp(11px, 3.5vw, 14px);
+    letter-spacing: 2px;
+  }
+  .intro-divider {
+    width: 100%;
+    max-width: 260px;
+  }
+  .intro-tagline {
+    font-size: 14px;
+    margin-bottom: 36px;
+    padding: 0 8px;
+  }
+  .btn-main {
+    width: 100%;
+    max-width: 320px;
+    padding: 15px 24px;
+    font-size: 13px;
+    letter-spacing: 3px;
+  }
+  .btn-lore {
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 10px 20px;
+  }
+  .intro-scroll { display: none; }
 }
 </style>
 </head>
 <body>
 
 <!-- BACK BUTTON -->
-<a href="index.html" style="
-  position: fixed;
-  top: 18px;
-  left: 18px;
-  z-index: 999;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-ui);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--gold-light);
-  background: rgba(7,4,10,0.82);
-  border: 1px solid var(--border-bright);
-  backdrop-filter: blur(10px);
-  padding: 9px 18px;
-  border-radius: 2px;
-  text-decoration: none;
-  transition: color .2s, border-color .2s, background .2s;
-" onmouseover="this.style.color='#fff';this.style.borderColor='var(--gold)';this.style.background='rgba(201,168,76,0.12)'"
-   onmouseout="this.style.color='var(--gold-light)';this.style.borderColor='var(--border-bright)';this.style.background='rgba(7,4,10,0.82)'">
-  ← Volver
+<a href="index.html" class="back-btn" aria-label="Volver al inicio">
+  <svg viewBox="0 0 16 16"><polyline points="10,3 5,8 10,13"/></svg>
+  Volver
 </a>
 
 <!-- TOAST -->

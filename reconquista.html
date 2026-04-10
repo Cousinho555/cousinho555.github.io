@@ -2417,15 +2417,15 @@ const ADJACENCY = {
   // ── COMUNIDAD VALENCIANA ──
   'prov-alicante':     ['prov-murcia','prov-albacete','prov-valencia'],
   'prov-valencia':     ['prov-alicante','prov-albacete','prov-cuenca','prov-teruel','prov-castellon','prov-baleares'],
-  'prov-castellon':    ['prov-valencia','prov-teruel','prov-tarragona'],
+  'prov-castellon':    ['prov-valencia','prov-teruel','prov-tarragona','prov-baleares'],
   // ── ARAGÓN ──
   'prov-teruel':       ['prov-cuenca','prov-valencia','prov-castellon','prov-zaragoza','prov-tarragona','prov-guadalajara'], // fix3: added guadalajara
   'prov-zaragoza':     ['prov-guadalajara','prov-soria','prov-larioja','prov-navarra','prov-huesca','prov-lleida','prov-teruel','prov-tarragona'], // fix6: added tarragona
   'prov-huesca':       ['prov-zaragoza','prov-lleida','prov-navarra'],
   // ── CATALUÑA ──
   'prov-tarragona':    ['prov-castellon','prov-teruel','prov-lleida','prov-barcelona','prov-baleares','prov-zaragoza'], // fix6: added zaragoza
-  'prov-barcelona':    ['prov-tarragona','prov-lleida','prov-girona'],
-  'prov-girona':       ['prov-barcelona','prov-lleida'],
+  'prov-barcelona':    ['prov-tarragona','prov-lleida','prov-girona','prov-baleares'],
+  'prov-girona':       ['prov-barcelona','prov-lleida','prov-baleares'],
   'prov-lleida':       ['prov-tarragona','prov-barcelona','prov-girona','prov-huesca','prov-zaragoza'],
   // ── PAIS VASCO / NAVARRA / RIOJA ──
   'prov-navarra':      ['prov-larioja','prov-zaragoza','prov-huesca','prov-araba','prov-gipuzkoa'],
@@ -2442,7 +2442,7 @@ const ADJACENCY = {
   'prov-pontevedra':   ['prov-coruna','prov-lugo','prov-ourense'],
   'prov-ourense':      ['prov-pontevedra','prov-lugo','prov-leon','prov-zamora'],
   // ── ISLAS ──
-  'prov-baleares':     ['prov-valencia','prov-tarragona','prov-alicante'],
+  'prov-baleares':     ['prov-valencia','prov-tarragona','prov-alicante','prov-castellon','prov-girona','prov-barcelona'],
   'prov-laspalmas':    ['prov-sctenerife','prov-cadiz'],
   'prov-sctenerife':   ['prov-laspalmas','prov-cadiz'],
 };

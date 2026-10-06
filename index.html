@@ -687,6 +687,207 @@
   0%, 100% { border-color: rgba(224,64,160,0.35); }
   50%       { border-color: rgba(224,64,160,0.75); }
 }
+
+/* ════════════════════════════
+   EN VIVO — ROCKET LEAGUE
+════════════════════════════ */
+#envivo{background:var(--dark);border-top:1px solid var(--dark4)}
+.rl-stage{position:relative;background:var(--dark2);border:1px solid var(--dark4);border-radius:4px;overflow:hidden;isolation:isolate}
+.rl-stage::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(224,64,160,0.10),transparent 70%);pointer-events:none;z-index:0}
+.rl-stage::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.08) 2px,rgba(0,0,0,0.08) 4px);pointer-events:none;z-index:5}
+#rl-view{position:relative;z-index:1}
+.rl-stage[data-mode="live"]{border-color:rgba(224,64,160,0.45);box-shadow:0 0 0 1px rgba(224,64,160,0.12),0 0 60px rgba(224,64,160,0.10)}
+
+/* barra superior */
+.rl-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 20px;border-bottom:1px solid var(--dark4);background:rgba(9,9,9,0.55)}
+.rl-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-ui);font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:5px 12px;border-radius:2px}
+.rl-badge i{width:8px;height:8px;border-radius:50%;background:currentColor;display:block}
+.rl-badge.live{color:var(--white);background:var(--pink)}
+.rl-badge.live i{background:var(--white);animation:rlDotPulse 1.2s ease-in-out infinite}
+.rl-badge.fin{color:var(--pink-light);border:1px solid rgba(224,64,160,0.4);background:rgba(224,64,160,0.08)}
+.rl-badge.off{color:var(--gray);border:1px solid var(--dark4)}
+.rl-badge.off i{animation:rlDotPulse 2.4s ease-in-out infinite}
+@keyframes rlDotPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
+.rl-meta{font-family:var(--font-body);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gray-mid)}
+.rl-meta b{color:var(--pink-light);font-weight:600}
+.rl-fs-btn{margin-left:auto;display:inline-flex;align-items:center;gap:8px;font-family:var(--font-ui);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gray-light);background:none;border:1px solid var(--dark4);padding:7px 14px;border-radius:2px;cursor:pointer;transition:color .2s,border-color .2s}
+.rl-fs-btn:hover{color:var(--pink);border-color:var(--pink)}
+.rl-fs-btn svg{width:14px;height:14px}
+
+/* marcador */
+.rl-score{display:grid;grid-template-columns:1fr auto auto auto 1fr;align-items:center;gap:clamp(10px,3vw,36px);padding:clamp(22px,4vw,44px) clamp(16px,3vw,36px) clamp(14px,2vw,24px)}
+.rl-team{display:flex;flex-direction:column;gap:8px;min-width:0}
+.rl-team.us{align-items:flex-end;text-align:right}
+.rl-team.them{align-items:flex-start;text-align:left}
+.rl-team-name{font-family:var(--font-display);font-size:clamp(22px,3.6vw,44px);letter-spacing:2px;line-height:.95;color:var(--white)}
+.rl-team-name span{color:var(--pink)}
+.rl-team.them .rl-team-name{color:var(--gray-light)}
+.rl-chip{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-body);font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray)}
+.rl-chip::before{content:'';width:10px;height:10px;border-radius:2px;background:var(--c,#555)}
+.rl-goals{font-family:var(--font-display);font-size:clamp(72px,12vw,150px);line-height:.85;letter-spacing:2px;min-width:1ch;text-align:center}
+.rl-goals.us{color:var(--white);text-shadow:0 0 34px rgba(224,64,160,0.55)}
+.rl-goals.them{color:var(--gray-light)}
+.rl-goals.bump{animation:rlScoreBump .6s ease}
+@keyframes rlScoreBump{0%{transform:scale(1)}35%{transform:scale(1.25);color:var(--pink)}100%{transform:scale(1)}}
+.rl-clock-wrap{display:flex;flex-direction:column;align-items:center;gap:6px}
+.rl-clock{font-family:var(--font-display);font-size:clamp(34px,5vw,60px);letter-spacing:3px;line-height:1;color:var(--white);padding:6px 18px;border:1px solid rgba(224,64,160,0.35);background:rgba(9,9,9,0.6);border-radius:2px;font-variant-numeric:tabular-nums}
+.rl-clock.ot{color:var(--pink-light);border-color:var(--pink)}
+.rl-tag{font-family:var(--font-body);font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;padding:3px 10px;border-radius:2px;display:none}
+.rl-tag.show{display:inline-block}
+.rl-tag.ot{color:var(--white);background:var(--pink)}
+.rl-tag.rep{color:var(--pink-light);border:1px solid rgba(224,64,160,0.4);animation:rlDotPulse 1.6s ease-in-out infinite}
+
+/* balón */
+.rl-ball{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;margin:0 clamp(16px,3vw,36px) 22px;padding:14px 20px;background:var(--dark3);border:1px solid var(--dark4);border-radius:3px}
+.rl-ball-speed{font-family:var(--font-body);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);white-space:nowrap}
+.rl-ball-speed b{font-family:var(--font-display);font-size:34px;font-weight:400;letter-spacing:1px;color:var(--white);margin-right:4px;vertical-align:-4px}
+.rl-poss-l{font-family:var(--font-body);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-bottom:8px;display:flex;justify-content:space-between}
+.rl-poss-bar{display:grid;grid-template-columns:1fr 1fr;gap:4px;height:6px}
+.rl-poss-bar span{background:var(--dark4);border-radius:1px;transition:background .3s,box-shadow .3s}
+.rl-poss-bar[data-side="us"] .us{background:var(--pink);box-shadow:0 0 12px rgba(224,64,160,0.7)}
+.rl-poss-bar[data-side="them"] .them{background:var(--gray-light)}
+
+/* jugadores y crónica */
+.rl-grid{display:grid;grid-template-columns:1fr 1fr 0.9fr;gap:14px;padding:0 clamp(16px,3vw,36px) clamp(18px,3vw,32px)}
+.rl-panel{background:var(--dark3);border:1px solid var(--dark4);border-radius:3px;overflow:hidden;min-width:0}
+.rl-panel.us{border-top:2px solid var(--pink)}
+.rl-panel.them{border-top:2px solid var(--gray)}
+.rl-panel-h{font-family:var(--font-ui);font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gray);padding:12px 16px;border-bottom:1px solid var(--dark4)}
+.rl-panel.us .rl-panel-h{color:var(--pink-light)}
+.rl-table{width:100%;border-collapse:collapse;font-family:var(--font-ui)}
+.rl-table th{font-family:var(--font-body);font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--gray);padding:8px 4px;text-align:center}
+.rl-table th:first-child{text-align:left;padding-left:16px}
+.rl-table td{font-size:15px;font-weight:600;color:var(--gray-light);padding:10px 4px;text-align:center;border-top:1px solid rgba(255,255,255,0.04);font-variant-numeric:tabular-nums}
+.rl-table td.pts{color:var(--white);font-family:var(--font-display);font-size:19px;font-weight:400;letter-spacing:1px}
+.rl-pname{text-align:left!important;padding-left:16px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px}
+.rl-pname img{width:24px;height:24px;border-radius:2px;object-fit:cover;object-position:top;vertical-align:middle;margin-right:8px;border:1px solid rgba(224,64,160,0.5)}
+.rl-table tr.club .rl-pname{color:var(--pink-light)}
+.rl-table tr.guest .rl-pname{color:var(--gray)}
+.rl-top{color:var(--pink);margin-left:6px;font-size:11px}
+.rl-empty{font-family:var(--font-body);font-size:12px;color:var(--gray);padding:16px;font-style:italic}
+.rl-feed{list-style:none;max-height:300px;overflow-y:auto}
+.rl-ev{display:grid;grid-template-columns:42px 22px 1fr;gap:8px;align-items:start;padding:10px 14px;border-top:1px solid rgba(255,255,255,0.04);border-left:2px solid transparent;font-family:var(--font-body);font-size:12px;color:var(--gray-light);line-height:1.45}
+.rl-ev:first-child{animation:rlEvIn .4s ease both}
+.rl-ev:first-child{border-top:none}
+.rl-ev.us{border-left-color:var(--pink)}
+.rl-ev.gol{background:rgba(224,64,160,0.05)}
+.rl-ev.gol.them{background:rgba(255,255,255,0.03)}
+.rl-ev-t{font-family:var(--font-display);font-size:16px;letter-spacing:1px;color:var(--gray)}
+.rl-ev b{color:var(--white);font-weight:600}
+.rl-ev.us b{color:var(--pink-light)}
+.rl-ev em{display:block;font-style:normal;font-size:11px;color:var(--gray)}
+@keyframes rlEvIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+
+/* destello de gol */
+.rl-flash{position:absolute;inset:0;z-index:20;display:none;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(ellipse at center,rgba(224,64,160,0.35),rgba(9,9,9,0.92) 70%);pointer-events:none}
+.rl-flash.show{display:flex;animation:rlFlashLife 3s ease forwards}
+.rl-flash.them{background:radial-gradient(ellipse at center,rgba(120,120,120,0.25),rgba(9,9,9,0.92) 70%)}
+.rl-flash-word{position:relative;font-family:var(--font-display);font-size:clamp(80px,16vw,220px);letter-spacing:8px;line-height:.9;color:var(--white)}
+.rl-flash-word::before,.rl-flash-word::after{content:attr(data-t);position:absolute;inset:0}
+.rl-flash-word::before{color:var(--pink);transform:translate(-4px,2px);mix-blend-mode:screen;animation:rlGlitchA .35s steps(2) infinite}
+.rl-flash-word::after{color:#3ff0ff;transform:translate(4px,-2px);mix-blend-mode:screen;opacity:.7;animation:rlGlitchB .4s steps(2) infinite}
+.rl-flash.them .rl-flash-word{color:var(--gray-light)}
+.rl-flash.them .rl-flash-word::before,.rl-flash.them .rl-flash-word::after{display:none}
+.rl-flash-who{font-family:var(--font-ui);font-size:clamp(14px,2vw,22px);font-weight:700;letter-spacing:5px;text-transform:uppercase;color:var(--pink-light);margin-top:14px}
+.rl-flash.them .rl-flash-who{color:var(--gray)}
+@keyframes rlFlashLife{0%{opacity:0;transform:scale(1.15)}8%{opacity:1;transform:scale(1)}85%{opacity:1}100%{opacity:0}}
+@keyframes rlGlitchA{0%{clip-path:inset(0 0 60% 0)}50%{clip-path:inset(40% 0 10% 0)}100%{clip-path:inset(70% 0 0 0)}}
+@keyframes rlGlitchB{0%{clip-path:inset(55% 0 0 0)}50%{clip-path:inset(0 0 70% 0)}100%{clip-path:inset(20% 0 45% 0)}}
+
+/* sin partido */
+.rl-off{display:flex;flex-direction:column;align-items:center;text-align:center;padding:clamp(48px,8vw,90px) 24px}
+.rl-radar{position:relative;width:120px;height:120px;margin-bottom:30px}
+.rl-radar img{position:absolute;inset:22px;width:76px;height:76px;object-fit:contain;opacity:.35;filter:grayscale(.4)}
+.rl-radar span{position:absolute;inset:0;border:1px solid rgba(224,64,160,0.5);border-radius:50%;animation:rlRadar 3s ease-out infinite}
+.rl-radar span:nth-child(2){animation-delay:1s}
+.rl-radar span:nth-child(3){animation-delay:2s}
+@keyframes rlRadar{from{transform:scale(.55);opacity:.9}to{transform:scale(1.5);opacity:0}}
+.rl-off-title{font-family:var(--font-display);font-size:clamp(30px,4.6vw,52px);letter-spacing:2px;line-height:.95;color:var(--white);max-width:720px}
+.rl-off-title span{color:var(--pink)}
+.rl-off-sub{font-family:var(--font-body);font-size:14px;color:var(--gray-mid);line-height:1.75;max-width:460px;margin-top:16px}
+.rl-off-last{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:28px;font-family:var(--font-body);font-size:12px;color:var(--gray);letter-spacing:1px;padding:10px 18px;border:1px solid var(--dark4);border-radius:2px;background:var(--dark3)}
+.rl-off-last b{font-family:var(--font-display);font-size:20px;font-weight:400;letter-spacing:2px;color:var(--white)}
+
+/* sala de fin de partido */
+.rl-end{display:flex;flex-direction:column;align-items:center;padding:clamp(28px,5vw,52px) clamp(16px,3vw,36px) clamp(22px,3vw,34px);text-align:center}
+.rl-end-result{position:relative;font-family:var(--font-display);font-size:clamp(70px,13vw,170px);letter-spacing:8px;line-height:.85}
+.rl-end-result.w{color:var(--white);text-shadow:0 0 40px rgba(224,64,160,0.6)}
+.rl-end-result.w::before{content:attr(data-t);position:absolute;inset:0;color:var(--pink);mix-blend-mode:screen;animation:rlGlitchA 2.2s steps(2) infinite;transform:translate(-3px,1px)}
+.rl-end-result.l{color:var(--gray-light)}
+.rl-end-result.d{color:var(--gray-light)}
+.rl-end-score{display:flex;align-items:center;gap:clamp(10px,2vw,22px);margin-top:16px;font-family:var(--font-ui);font-size:clamp(12px,1.6vw,16px);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gray-light);flex-wrap:wrap;justify-content:center}
+.rl-end-score .us{color:var(--pink-light)}
+.rl-end-score b{font-family:var(--font-display);font-size:clamp(34px,4.5vw,54px);font-weight:400;color:var(--white);letter-spacing:4px}
+.rl-end-meta{font-family:var(--font-body);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-top:8px}
+
+.rl-mvp{width:100%;max-width:880px;margin-top:36px;text-align:left}
+.rl-mvp.club{display:grid;grid-template-columns:minmax(200px,0.9fr) 1.1fr;background:linear-gradient(120deg,#16050f,#0c0710 60%,#0a0a0a);border:1px solid rgba(224,64,160,0.45);border-radius:4px;overflow:hidden;box-shadow:0 0 60px rgba(224,64,160,0.18)}
+.rl-mvp-photo{position:relative;min-height:320px;overflow:hidden;background:#100510}
+.rl-mvp-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+.rl-mvp-photo img.g1{mix-blend-mode:screen;opacity:.55;filter:hue-rotate(-40deg) saturate(3);animation:rlPhotoGlitch 3.2s steps(1) infinite}
+.rl-mvp-photo img.g2{mix-blend-mode:screen;opacity:.4;filter:hue-rotate(140deg) saturate(3);animation:rlPhotoGlitch 2.7s steps(1) infinite reverse}
+.rl-mvp-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 55%,#0c0710 100%),linear-gradient(0deg,rgba(9,9,9,0.85) 0%,transparent 40%)}
+@keyframes rlPhotoGlitch{0%,86%,100%{clip-path:inset(0 0 100% 0);transform:none}88%{clip-path:inset(12% 0 70% 0);transform:translateX(-8px)}91%{clip-path:inset(55% 0 25% 0);transform:translateX(7px)}94%{clip-path:inset(30% 0 52% 0);transform:translateX(-4px)}}
+.rl-mvp-stamp{position:absolute;left:18px;bottom:16px;z-index:2;font-family:var(--font-display);font-size:58px;letter-spacing:4px;line-height:1;color:var(--white);text-shadow:0 0 24px rgba(224,64,160,0.9);transform:rotate(-4deg)}
+.rl-mvp-stamp span{display:block;font-family:var(--font-body);font-size:10px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--pink-light);text-shadow:none}
+.rl-mvp-body{padding:30px 32px;display:flex;flex-direction:column;justify-content:center}
+.rl-mvp-tag{font-family:var(--font-body);font-size:10px;font-weight:500;letter-spacing:5px;text-transform:uppercase;color:var(--pink);margin-bottom:10px}
+.rl-mvp-nick{font-family:var(--font-display);font-size:clamp(46px,6vw,78px);letter-spacing:2px;line-height:.88;color:var(--white)}
+.rl-mvp-clase{display:inline-block;align-self:flex-start;font-family:var(--font-ui);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border:1px solid rgba(224,64,160,0.4);color:var(--pink-light);background:rgba(224,64,160,0.08);border-radius:2px;margin-top:14px}
+.rl-mvp-lema{margin-top:18px;padding:12px 16px;border-left:3px solid var(--pink);background:rgba(224,64,160,0.05);font-family:var(--font-body);font-size:14px;font-style:italic;color:var(--gray-light);line-height:1.6}
+.rl-mvp-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:20px}
+.rl-mvp-stat{background:rgba(9,9,9,0.6);border:1px solid var(--dark4);border-radius:3px;padding:10px 6px;text-align:center}
+.rl-mvp-stat b{display:block;font-family:var(--font-display);font-size:30px;font-weight:400;letter-spacing:1px;color:var(--pink);line-height:1}
+.rl-mvp-stat span{font-family:var(--font-body);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gray)}
+.rl-mvp.other{display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding:20px 24px;background:var(--dark3);border:1px solid var(--dark4);border-radius:4px}
+.rl-mvp.other .rl-mvp-nick{font-size:clamp(32px,4vw,46px);color:var(--gray-light)}
+.rl-mvp.other .rl-mvp-stats{margin-top:0;flex:1;min-width:260px}
+.rl-mvp.other .rl-mvp-stat b{color:var(--white)}
+.rl-end-teams{width:100%;max-width:880px;display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px;text-align:left}
+.rl-end-wait{margin-top:26px;font-family:var(--font-body);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gray)}
+.rl-end-wait b{color:var(--pink-light);font-weight:600}
+.rl-dots::after{content:'';animation:rlDots 1.5s steps(4) infinite}
+@keyframes rlDots{0%{content:''}25%{content:'.'}50%{content:'..'}75%{content:'...'}}
+
+/* enlace del menú con punto en directo */
+.nav-live-dot{display:none;width:7px;height:7px;border-radius:50%;background:var(--pink);margin-left:6px;vertical-align:2px;box-shadow:0 0 8px var(--pink);animation:rlDotPulse 1.2s ease-in-out infinite}
+body.rl-is-live .nav-live-dot{display:inline-block}
+
+/* pantalla completa (nativa o simulada en iPhone) */
+.rl-stage:fullscreen,.rl-stage.rl-pfs{border:none;border-radius:0;background:var(--dark);overflow-y:auto;display:flex;flex-direction:column;justify-content:center}
+.rl-stage.rl-pfs{position:fixed;inset:0;z-index:9000}
+.rl-stage:fullscreen #rl-view,.rl-stage.rl-pfs #rl-view{width:100%;max-width:1500px;margin:0 auto}
+.rl-stage:fullscreen .rl-bar,.rl-stage.rl-pfs .rl-bar{position:sticky;top:0;z-index:6}
+.rl-stage:fullscreen .rl-feed,.rl-stage.rl-pfs .rl-feed{max-height:42vh}
+body.rl-noscroll{overflow:hidden}
+body.rl-noscroll #envivo{z-index:9000}
+
+@media(max-width:900px){
+  .rl-grid{grid-template-columns:1fr 1fr}
+  .rl-grid .rl-feed-panel{grid-column:1/-1}
+}
+@media(max-width:760px){
+  .rl-bar{padding:12px 14px;gap:10px}
+  .rl-fs-btn .rl-fs-txt{display:none}
+  .rl-score{grid-template-columns:1fr auto 1fr;grid-template-areas:"us clock them" "gus clock gthem";row-gap:6px}
+  .rl-team.us{grid-area:us;align-items:center;text-align:center}
+  .rl-team.them{grid-area:them;align-items:center;text-align:center}
+  .rl-goals.us{grid-area:gus}
+  .rl-goals.them{grid-area:gthem}
+  .rl-clock-wrap{grid-area:clock}
+  .rl-team-name{font-size:20px}
+  .rl-clock{font-size:30px;padding:4px 10px}
+  .rl-ball{grid-template-columns:1fr;gap:12px}
+  .rl-grid{grid-template-columns:1fr}
+  .rl-table td{font-size:14px}
+  .rl-hide-sm{display:none}
+  .rl-mvp.club{grid-template-columns:1fr}
+  .rl-mvp-photo{min-height:300px}
+  .rl-mvp-photo::after{background:linear-gradient(0deg,#0c0710 0%,transparent 50%)}
+  .rl-mvp-body{padding:22px 20px}
+  .rl-mvp-stats{grid-template-columns:repeat(2,1fr)}
+  .rl-end-teams{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -712,6 +913,7 @@
   </a>
   <ul class="nav-links" id="navLinks">
     <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#envivo">En vivo<i class="nav-live-dot"></i></a></li>
     <li><a href="#equipo">Equipo</a></li>
     <li><a href="#palmares">Palmarés</a></li>
     <li><a href="#resultados">Resultados</a></li>
@@ -747,6 +949,15 @@
     </div>
   </div>
   <div class="scroll-hint"><span> </span><div class="scroll-bar"></div></div>
+</section>
+
+<!-- EN VIVO — ROCKET LEAGUE -->
+<section id="envivo">
+  <div class="wrap">
+    <span class="s-tag">Rocket League · Directo</span>
+    <h2 class="s-title reveal">EN VIVO</h2>
+    <div class="rl-stage" id="rl-stage" data-mode="off"><div id="rl-view"></div></div>
+  </div>
 </section>
 
 <!-- SOBRE -->
@@ -2579,6 +2790,357 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
+</script>
+<!-- EN VIVO — Supabase Realtime -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+// ══════════════════════════════════════════════════
+// EN VIVO — DASHBOARD DE ROCKET LEAGUE
+// Lee la fila única de rl_live (la rellena rl-puente.js desde el PC de Cousinho).
+// Vista previa sin partida real: añade ?rl=live, ?rl=fin, ?rl=mvp o ?rl=off a la URL.
+// ══════════════════════════════════════════════════
+const RL_STALE_MS = 15000;   // sin datos durante 15 s → "no está compitiendo"
+const RL_SALA_MIN = 15;      // la sala de fin de partido se quita a los 15 min si no empieza otra
+const RL_PLAYLISTS = { 1: 'Casual 1v1', 2: 'Casual 2v2', 3: 'Casual 3v3', 4: 'Caos', 6: 'Partida privada',
+  10: 'Competitivo 1v1', 11: 'Competitivo 2v2', 12: 'Competitivo Solo 3v3', 13: 'Competitivo 3v3',
+  22: 'Torneo', 27: 'Hoops', 28: 'Rumble', 29: 'Dropshot', 30: 'Snow Day' };
+const RL_ARENAS = { stadium: 'DFH Stadium', eurostadium: 'Mannfield', park: 'Beckwith Park', trainstation: 'Urban Central',
+  utopiastadium: 'Utopia Coliseum', wasteland: 'Wasteland', neotokyo: 'Neo Tokyo', cs: 'Champions Field',
+  arc: 'Starbase ARC', beach: 'Salty Shores', farm: 'Farmstead', chinatown: 'Forbidden Temple',
+  underwater: 'AquaDome', outlaw: 'Deadeye Canyon', hoopsstadium: 'Dunk House', labs: 'Rocket Labs',
+  street: 'Sovereign Heights', throwbackstadium: 'Throwback Stadium', music: 'Neon Fields', woods: 'Drift Woods' };
+
+let rlRow = null, rlMode = null, rlRealtimeOk = false;
+let rlClock = { t: 0, at: 0, running: false };
+let rlPrevGoals = null, rlPrevGoalKey = null, rlLastMatch = null;
+
+const rlEsc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+const rlClub = nombre => players.find(p => p.nick.replace(/"/g, '') === nombre);
+const rlFmt = sec => { sec = Math.max(0, Math.round(sec)); return Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0'); };
+const rlMode2Txt = s => [RL_PLAYLISTS[s.playlist] || 'Online', rlArena(s.arena)].filter(Boolean).join(' · ');
+function rlArena(a) {
+  if (!a) return '';
+  const k = a.toLowerCase().split('_')[0];
+  return RL_ARENAS[k] || a.replace(/_(p|s|day|night|dusk|standard|stormy|snowy)\b/gi, '').replace(/_/g, ' ');
+}
+function rlSides(s) {
+  const us = s.equipos.find(e => e.num === s.nuestroEquipo) || { goles: 0, color: '#E040A0' };
+  const them = s.equipos.find(e => e.num !== s.nuestroEquipo) || { goles: 0, color: '#777' };
+  return { us, them };
+}
+const rlColorName = num => num === 0 ? 'Azul' : 'Naranja';
+
+const RL_FS_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
+function rlBar(badge, meta) {
+  const fs = document.fullscreenElement || document.getElementById('rl-stage').classList.contains('rl-pfs');
+  return `<div class="rl-bar">${badge}${meta}
+    <button class="rl-fs-btn" onclick="rlToggleFS()">${RL_FS_ICON}<span class="rl-fs-txt">${fs ? 'Salir' : 'Pantalla completa'}</span></button></div>`;
+}
+
+// ── qué se muestra ──
+function rlComputeMode(row) {
+  const s = row && row.state;
+  if (!s) return 'off';
+  const age = Date.now() - new Date(row.updated_at).getTime();
+  if (s.terminado) {
+    const fin = new Date(s.terminadoEn || row.updated_at).getTime();
+    return Date.now() - fin < RL_SALA_MIN * 60000 ? 'fin' : 'off';
+  }
+  return row.active && age < RL_STALE_MS ? 'live' : 'off';
+}
+
+function rlApply(row) {
+  const prev = rlRow && rlRow.state;
+  rlRow = row;
+  const s = row && row.state;
+  if (s && !s.terminado) {
+    // El reloj solo avanza solo si el dato anterior mostraba que el tiempo corría.
+    const running = !!(prev && prev.guid === s.guid && prev.tiempo !== s.tiempo && !s.repeticion);
+    rlClock = { t: s.tiempo, at: Date.now(), running, ot: s.prorroga };
+  }
+  rlRender(true);
+}
+
+function rlRender(nuevoDato) {
+  const mode = rlComputeMode(rlRow);
+  const stage = document.getElementById('rl-stage');
+  const guid = rlRow && rlRow.state && rlRow.state.guid;
+  if (mode !== rlMode || (mode === 'fin' && guid !== rlRender.finGuid)) {
+    rlRender.finGuid = mode === 'fin' ? guid : null;
+    nuevoDato = true;
+    rlMode = mode;
+    stage.dataset.mode = mode;
+    document.body.classList.toggle('rl-is-live', mode === 'live');
+    rlPrevGoals = null; rlPrevGoalKey = null;
+    if (mode === 'live') rlSkeletonLive();
+    else if (mode === 'fin') rlRenderFin(rlRow.state);
+    else rlRenderOff();
+  }
+  if (mode === 'live' && nuevoDato) rlUpdateLive(rlRow.state);
+  if (mode === 'fin') rlUpdateWait();
+}
+
+// ── sin partido ──
+function rlRenderOff() {
+  document.getElementById('rl-view').innerHTML = rlBar('<span class="rl-badge off"><i></i>Sin señal</span>', '') + `
+    <div class="rl-off">
+      <div class="rl-radar"><span></span><span></span><span></span><img src="logo.png" alt=""></div>
+      <div class="rl-off-title">Ahora mismo Tolerancia <span>0'1</span> no está compitiendo</div>
+      <p class="rl-off-sub">Cuando empiece una partida online de Rocket League, el marcador aparecerá aquí en directo. No hace falta recargar la página.</p>
+      <div id="rl-off-last"></div>
+    </div>`;
+  rlShowLastMatch();
+}
+async function rlShowLastMatch() {
+  if (!rlLastMatch) {
+    try { rlLastMatch = (await sbFetch('rl_partidas?order=fecha.desc&limit=1&select=fecha,goles_nuestros,goles_rival,resultado,playlist'))[0] || null; }
+    catch (e) { rlLastMatch = null; }
+  }
+  const el = document.getElementById('rl-off-last');
+  if (!el || !rlLastMatch) return;
+  const m = rlLastMatch, mins = Math.round((Date.now() - new Date(m.fecha).getTime()) / 60000);
+  const hace = mins < 60 ? `hace ${mins} min` : mins < 1440 ? `hace ${Math.round(mins / 60)} h` : `hace ${Math.round(mins / 1440)} d`;
+  el.innerHTML = `<div class="rl-off-last">Última partida <span class="badge badge-${m.resultado}">${m.resultado === 'w' ? 'W' : m.resultado === 'l' ? 'L' : 'E'}</span>
+    <b>${m.goles_nuestros}–${m.goles_rival}</b> ${rlEsc(RL_PLAYLISTS[m.playlist] || 'Online')} · ${hace}</div>`;
+}
+
+// ── en directo ──
+function rlSkeletonLive() {
+  document.getElementById('rl-view').innerHTML =
+    rlBar('<span class="rl-badge live"><i></i>En directo</span>', '<span class="rl-meta" id="rl-meta"></span><span class="rl-meta" id="rl-jugando"></span>') + `
+    <div class="rl-score">
+      <div class="rl-team us"><div class="rl-team-name">Tolerancia <span>0'1</span></div><div class="rl-chip" id="rl-chip-us"></div></div>
+      <div class="rl-goals us" id="rl-g-us">0</div>
+      <div class="rl-clock-wrap"><div class="rl-clock" id="rl-clock">5:00</div><span class="rl-tag ot" id="rl-ot">Prórroga</span><span class="rl-tag rep" id="rl-rep">Repetición</span></div>
+      <div class="rl-goals them" id="rl-g-them">0</div>
+      <div class="rl-team them"><div class="rl-team-name">Rival</div><div class="rl-chip" id="rl-chip-them"></div></div>
+    </div>
+    <div class="rl-ball">
+      <div class="rl-ball-speed"><b id="rl-kmh">0</b>km/h · balón</div>
+      <div><div class="rl-poss-l"><span>Nosotros</span><span>Último toque</span><span>Rival</span></div>
+        <div class="rl-poss-bar" id="rl-poss" data-side="none"><span class="us"></span><span class="them"></span></div></div>
+    </div>
+    <div class="rl-grid">
+      <div class="rl-panel us"><div class="rl-panel-h">Tolerancia 0'1</div><div id="rl-tbl-us"></div></div>
+      <div class="rl-panel them"><div class="rl-panel-h">Rival</div><div id="rl-tbl-them"></div></div>
+      <div class="rl-panel rl-feed-panel"><div class="rl-panel-h">Crónica</div><ul class="rl-feed" id="rl-feed"></ul></div>
+    </div>
+    <div class="rl-flash" id="rl-flash"><div class="rl-flash-word" id="rl-flash-word"></div><div class="rl-flash-who" id="rl-flash-who"></div></div>`;
+}
+
+function rlTable(list, us) {
+  if (!list.length) return '<div class="rl-empty">Esperando jugadores...</div>';
+  const top = Math.max(...list.map(p => p.pts));
+  return `<table class="rl-table"><thead><tr><th>Jugador</th><th title="Puntos">Pts</th><th title="Goles">G</th><th title="Asistencias">A</th><th title="Paradas">P</th><th class="rl-hide-sm" title="Tiros">T</th><th class="rl-hide-sm" title="Demoliciones">D</th></tr></thead><tbody>` +
+    list.map(p => {
+      const c = p.club && rlClub(p.nombre);
+      return `<tr class="${p.club ? 'club' : us ? 'guest' : ''}"><td class="rl-pname">${c ? `<img src="${c.photo}" alt="">` : ''}${rlEsc(p.nombre)}${p.pts === top && top > 0 ? '<span class="rl-top">★</span>' : ''}</td>
+        <td class="pts">${p.pts}</td><td>${p.goles}</td><td>${p.asist}</td><td>${p.paradas}</td><td class="rl-hide-sm">${p.tiros}</td><td class="rl-hide-sm">${p.demos}</td></tr>`;
+    }).join('') + '</tbody></table>';
+}
+
+function rlFeedItem(e, nuestro) {
+  const side = e.equipo === nuestro ? 'us' : 'them';
+  const t = `<span class="rl-ev-t">${rlFmt(e.t)}</span>`;
+  if (e.tipo === 'gol') return `<li class="rl-ev gol ${side}">${t}<span>⚽</span><span>Gol de <b>${rlEsc(e.quien)}</b><em>${e.asist ? 'Asist. ' + rlEsc(e.asist) + ' · ' : ''}${e.kmh} km/h</em></span></li>`;
+  if (e.tipo === 'parada') return `<li class="rl-ev ${side}">${t}<span>🧤</span><span>Parada de <b>${rlEsc(e.quien)}</b></span></li>`;
+  if (e.tipo === 'demo') return `<li class="rl-ev ${side}">${t}<span>💥</span><span><b>${rlEsc(e.quien)}</b> destroza a ${rlEsc(e.contra || 'un rival')}</span></li>`;
+  return '';
+}
+
+function rlUpdateLive(s) {
+  const { us, them } = rlSides(s);
+  const club = s.jugadores.filter(p => p.club).map(p => `<b>${rlEsc(p.nombre)}</b>`);
+  document.getElementById('rl-meta').textContent = rlMode2Txt(s);
+  document.getElementById('rl-jugando').innerHTML = club.length ? 'Jugando: ' + club.join(' + ') : '';
+  const chipUs = document.getElementById('rl-chip-us'), chipThem = document.getElementById('rl-chip-them');
+  chipUs.textContent = rlColorName(us.num); chipUs.style.setProperty('--c', us.color);
+  chipThem.textContent = rlColorName(them.num); chipThem.style.setProperty('--c', them.color);
+
+  // marcador, con animación cuando cambia
+  [['rl-g-us', us.goles], ['rl-g-them', them.goles]].forEach(([id, g]) => {
+    const el = document.getElementById(id);
+    if (el.textContent !== String(g)) {
+      el.textContent = g;
+      if (rlPrevGoals !== null) { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
+    }
+  });
+  rlPrevGoals = us.goles + them.goles;
+
+  document.getElementById('rl-ot').classList.toggle('show', !!s.prorroga);
+  document.getElementById('rl-rep').classList.toggle('show', !!s.repeticion);
+  document.getElementById('rl-clock').classList.toggle('ot', !!s.prorroga);
+  document.getElementById('rl-kmh').textContent = s.balon ? s.balon.kmh : 0;
+  const last = s.balon ? s.balon.ultimoEquipo : 255;
+  document.getElementById('rl-poss').dataset.side = last === 255 ? 'none' : last === s.nuestroEquipo ? 'us' : 'them';
+
+  const byPts = (a, b) => b.pts - a.pts;
+  document.getElementById('rl-tbl-us').innerHTML = rlTable(s.jugadores.filter(p => p.equipo === s.nuestroEquipo).sort(byPts), true);
+  document.getElementById('rl-tbl-them').innerHTML = rlTable(s.jugadores.filter(p => p.equipo !== s.nuestroEquipo).sort(byPts), false);
+
+  const feed = s.feed || [];
+  const feedEl = document.getElementById('rl-feed');
+  const feedHtml = feed.length ? feed.map(e => rlFeedItem(e, s.nuestroEquipo)).join('') : '<li class="rl-empty">Aún no ha pasado nada. Saque inicial...</li>';
+  if (feedEl.dataset.h !== feedHtml) { feedEl.innerHTML = feedHtml; feedEl.dataset.h = feedHtml; }
+
+  // destello de gol: solo con goles nuevos, no al abrir la página a mitad de partido
+  const gol = feed.find(e => e.tipo === 'gol');
+  const key = gol ? [gol.t, gol.quien, gol.equipo].join('|') : null;
+  if (rlPrevGoalKey !== null && key && key !== rlPrevGoalKey) rlGoalFlash(gol, gol.equipo === s.nuestroEquipo);
+  rlPrevGoalKey = key || '';
+  rlTickClock();
+}
+
+function rlGoalFlash(gol, ours) {
+  const f = document.getElementById('rl-flash');
+  const w = document.getElementById('rl-flash-word');
+  w.textContent = ours ? '¡GOOOL!' : 'GOL RIVAL';
+  w.dataset.t = w.textContent;
+  document.getElementById('rl-flash-who').textContent = gol.quien + (gol.kmh ? ' · ' + gol.kmh + ' km/h' : '');
+  f.className = 'rl-flash ' + (ours ? 'us' : 'them');
+  void f.offsetWidth; f.classList.add('show');
+  clearTimeout(rlGoalFlash.tm); rlGoalFlash.tm = setTimeout(() => f.classList.remove('show'), 3000);
+}
+
+function rlTickClock() {
+  const el = document.getElementById('rl-clock');
+  if (!el) return;
+  // Entre datos el reloj sigue contando, como máximo 1,5 s por si el juego se ha parado.
+  const extra = rlClock.running ? Math.min((Date.now() - rlClock.at) / 1000, 1.5) : 0;
+  const t = rlClock.ot ? rlClock.t + extra : rlClock.t - extra;
+  el.textContent = (rlClock.ot ? '+' : '') + rlFmt(rlClock.ot ? Math.floor(t) : Math.ceil(t));
+}
+
+// ── sala de fin de partido ──
+function rlRenderFin(s) {
+  const { us, them } = rlSides(s);
+  const ganador = s.ganadorEquipo ?? (us.goles > them.goles ? us.num : us.goles < them.goles ? them.num : null);
+  const res = ganador === null ? 'd' : ganador === s.nuestroEquipo ? 'w' : 'l';
+  const word = { w: 'VICTORIA', l: 'DERROTA', d: 'EMPATE' }[res];
+  // MVP: como en el juego, el jugador con más puntos del equipo ganador.
+  const pool = s.jugadores.filter(p => ganador === null || p.equipo === ganador);
+  const mvp = pool.sort((a, b) => b.pts - a.pts)[0];
+  const byPts = (a, b) => b.pts - a.pts;
+
+  document.getElementById('rl-view').innerHTML =
+    rlBar('<span class="rl-badge fin"><i></i>Final</span>', `<span class="rl-meta">${rlEsc(rlMode2Txt(s))}</span>`) + `
+    <div class="rl-end">
+      <div class="rl-end-result ${res}" data-t="${word}">${word}</div>
+      <div class="rl-end-score"><span class="us">Tolerancia 0'1</span><b>${us.goles}</b><span>–</span><b>${them.goles}</b><span>Rival</span></div>
+      ${s.prorroga ? '<div class="rl-end-meta">Decidido en la prórroga</div>' : ''}
+      ${mvp ? rlMvpCard(mvp, s) : ''}
+      <div class="rl-end-teams">
+        <div class="rl-panel us"><div class="rl-panel-h">Tolerancia 0'1</div>${rlTable(s.jugadores.filter(p => p.equipo === s.nuestroEquipo).sort(byPts), true)}</div>
+        <div class="rl-panel them"><div class="rl-panel-h">Rival</div>${rlTable(s.jugadores.filter(p => p.equipo !== s.nuestroEquipo).sort(byPts), false)}</div>
+      </div>
+      <div class="rl-end-wait" id="rl-wait"></div>
+    </div>`;
+  rlUpdateWait();
+}
+
+function rlMvpCard(p, s) {
+  const stats = `<div class="rl-mvp-stats">
+    <div class="rl-mvp-stat"><b>${p.pts}</b><span>Puntos</span></div><div class="rl-mvp-stat"><b>${p.goles}</b><span>Goles</span></div>
+    <div class="rl-mvp-stat"><b>${p.asist}</b><span>Asist.</span></div><div class="rl-mvp-stat"><b>${p.paradas}</b><span>Paradas</span></div></div>`;
+  const c = p.club && rlClub(p.nombre);
+  if (c) return `<div class="rl-mvp club">
+      <div class="rl-mvp-photo"><img src="${c.photo}" alt="${rlEsc(p.nombre)}"><img class="g1" src="${c.photo}" alt=""><img class="g2" src="${c.photo}" alt="">
+        <div class="rl-mvp-stamp"><span>Jugador del partido</span>MVP</div></div>
+      <div class="rl-mvp-body"><div class="rl-mvp-tag">MVP · ${rlEsc(c.name)}</div>
+        <div class="rl-mvp-nick">${rlEsc(p.nombre)}</div>
+        <span class="rl-mvp-clase">${rlEsc(c.clase)} · Nv. ${c.nivel}</span>
+        <div class="rl-mvp-lema">“${rlEsc(c.lema)}”</div>${stats}</div></div>`;
+  const side = p.equipo === s.nuestroEquipo ? 'Invitado de Tolerancia 0\'1' : 'Equipo rival';
+  return `<div class="rl-mvp other"><div><div class="rl-mvp-tag">MVP · ${side}</div><div class="rl-mvp-nick">${rlEsc(p.nombre)}</div></div>${stats}</div>`;
+}
+
+function rlUpdateWait() {
+  const el = document.getElementById('rl-wait');
+  if (!el || !rlRow || !rlRow.state) return;
+  const fin = new Date(rlRow.state.terminadoEn || rlRow.updated_at).getTime();
+  const left = (fin + RL_SALA_MIN * 60000 - Date.now()) / 1000;
+  el.innerHTML = `<span class="rl-dots">Esperando la siguiente partida</span> · la sala se cierra en <b>${rlFmt(left)}</b>`;
+}
+
+// ── pantalla completa ──
+function rlToggleFS() {
+  const stage = document.getElementById('rl-stage');
+  if (document.fullscreenElement) { document.exitFullscreen(); return; }
+  if (stage.classList.contains('rl-pfs')) { stage.classList.remove('rl-pfs'); document.body.classList.remove('rl-noscroll'); rlRefreshFSLabel(); return; }
+  if (stage.requestFullscreen) stage.requestFullscreen().catch(() => rlPseudoFS(stage));
+  else rlPseudoFS(stage);   // iPhone no deja poner un elemento en pantalla completa
+}
+function rlPseudoFS(stage) { stage.classList.add('rl-pfs'); document.body.classList.add('rl-noscroll'); rlRefreshFSLabel(); }
+function rlRefreshFSLabel() {
+  const fs = document.fullscreenElement || document.getElementById('rl-stage').classList.contains('rl-pfs');
+  document.querySelectorAll('#rl-stage .rl-fs-txt').forEach(el => el.textContent = fs ? 'Salir' : 'Pantalla completa');
+}
+document.addEventListener('fullscreenchange', rlRefreshFSLabel);
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.getElementById('rl-stage').classList.contains('rl-pfs')) rlToggleFS(); });
+
+// ── datos ──
+async function rlFetch() {
+  try { const r = await sbFetch('rl_live?id=eq.1&select=*'); rlApply(r[0] || null); }
+  catch (e) { if (rlMode === null) rlRender(true); }
+}
+function rlConnect() {
+  rlFetch();
+  if (window.supabase && window.supabase.createClient) {
+    const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    client.channel('rl_live')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'rl_live' }, p => { if (p.new && p.new.id === 1) rlApply(p.new); })
+      .subscribe(status => { rlRealtimeOk = status === 'SUBSCRIBED'; if (rlRealtimeOk) rlFetch(); });
+  }
+  // Plan B si Realtime falla: consultar cada 2 s mientras la página esté visible.
+  setInterval(() => { if (!document.hidden && !rlRealtimeOk) rlFetch(); }, 2000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) rlFetch(); });
+}
+
+// ── vista previa con datos de ejemplo ──
+function rlDemo(kind) {
+  const J = (nombre, club, equipo, pts, goles, asist, paradas, tiros, demos) => ({ nombre, club, equipo, pts, goles, asist, paradas, tiros, toques: 20, demos });
+  const s = {
+    guid: 'DEMO', playlist: 13, arena: 'EuroStadium_P', tiempo: 187, prorroga: false, repeticion: false,
+    nuestroEquipo: 0, terminado: false, terminadoEn: null, ganadorEquipo: null,
+    equipos: [{ num: 0, goles: 2, color: '#1873FF' }, { num: 1, goles: 1, color: '#C26418' }],
+    jugadores: [J('Cousinho', true, 0, 412, 2, 0, 1, 4, 1), J('GatoPija', true, 0, 286, 0, 2, 2, 2, 0), J('Invitado 1', false, 0, 140, 0, 0, 1, 1, 0),
+                J('Rival 1', false, 1, 305, 1, 0, 3, 3, 2), J('Rival 2', false, 1, 198, 0, 1, 1, 2, 0), J('Rival 3', false, 1, 96, 0, 0, 0, 1, 1)],
+    balon: { kmh: 87, ultimoEquipo: 0 },
+    feed: [{ tipo: 'gol', t: 201, quien: 'Cousinho', equipo: 0, asist: 'GatoPija', kmh: 112 }, { tipo: 'parada', t: 233, quien: 'Rival 1', equipo: 1 },
+           { tipo: 'demo', t: 245, quien: 'Rival 1', equipo: 1, contra: 'GatoPija' }, { tipo: 'gol', t: 262, quien: 'Rival 1', equipo: 1, asist: 'Rival 2', kmh: 94 },
+           { tipo: 'gol', t: 281, quien: 'Cousinho', equipo: 0, asist: 'GatoPija', kmh: 128 }],
+  };
+  const now = () => new Date().toISOString();
+  if (kind === 'off') { rlApply({ id: 1, active: false, state: null, updated_at: now() }); return; }
+  if (kind === 'fin' || kind === 'mvp') {
+    Object.assign(s, { terminado: true, terminadoEn: now(), tiempo: 0, ganadorEquipo: kind === 'mvp' ? 0 : 1 });
+    if (kind === 'fin') { s.equipos = [{ num: 0, goles: 2, color: '#1873FF' }, { num: 1, goles: 3, color: '#C26418' }]; s.jugadores[3].pts = 520; s.jugadores[3].goles = 2; }
+    rlApply({ id: 1, active: false, state: s, updated_at: now() }); return;
+  }
+  // en directo: el reloj corre y de vez en cuando pasa algo
+  rlApply({ id: 1, active: true, state: JSON.parse(JSON.stringify(s)), updated_at: now() });
+  let n = 0;
+  setInterval(() => {
+    n++; s.tiempo = Math.max(0, s.tiempo - 1); s.balon.kmh = 20 + Math.floor(Math.random() * 110); s.balon.ultimoEquipo = Math.random() < .5 ? 0 : 1;
+    if (n % 9 === 0) {
+      const ours = Math.random() < .6, who = ours ? (Math.random() < .5 ? 'Cousinho' : 'GatoPija') : 'Rival 2';
+      const p = s.jugadores.find(j => j.nombre === who); p.goles++; p.pts += 100;
+      s.equipos[ours ? 0 : 1].goles++;
+      s.feed = [{ tipo: 'gol', t: s.tiempo, quien: who, equipo: ours ? 0 : 1, asist: null, kmh: s.balon.kmh }, ...s.feed].slice(0, 10);
+    } else if (n % 5 === 0) {
+      s.feed = [{ tipo: 'parada', t: s.tiempo, quien: 'GatoPija', equipo: 0 }, ...s.feed].slice(0, 10);
+      s.jugadores[1].paradas++; s.jugadores[1].pts += 50;
+    }
+    rlApply({ id: 1, active: true, state: JSON.parse(JSON.stringify(s)), updated_at: now() });
+  }, 1000);
+}
+
+(function rlInit() {
+  if (!document.getElementById('rl-stage')) return;
+  const demo = new URLSearchParams(location.search).get('rl');
+  if (demo) rlDemo(demo); else rlConnect();
+  setInterval(() => { rlRender(false); rlTickClock(); }, 250);
+})();
 </script>
 </body>
 </html>

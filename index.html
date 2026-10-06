@@ -2996,7 +2996,7 @@ const RL_ARENAS = { stadium: 'DFH Stadium', eurostadium: 'Mannfield', park: 'Bec
 
 let rlRow = null, rlMode = null, rlRealtimeOk = false;
 let rlClock = { t: 0, at: 0, running: false };
-let rlPrevGoals = null, rlPrevGoalKey = null, rlLastMatch = null;
+let rlPrevGoals = null, rlPrevScore = null, rlLastMatch = null;
 
 const rlEsc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
 const rlClub = nombre => players.find(p => p.nick.replace(/"/g, '') === nombre);
@@ -3055,7 +3055,7 @@ function rlRender(nuevoDato) {
     rlMode = mode;
     stage.dataset.mode = mode;
     document.body.classList.toggle('rl-is-live', mode === 'live');
-    rlPrevGoals = null; rlPrevGoalKey = null;
+    rlPrevGoals = null; rlPrevScore = null;
     if (mode === 'live') rlSkeletonLive();
     else if (mode === 'fin') rlRenderFin(rlRow.state);
     else rlRenderOff();
@@ -3167,11 +3167,13 @@ function rlUpdateLive(s) {
   const feedHtml = feed.length ? feed.map(e => rlFeedItem(e, s.nuestroEquipo)).join('') : '<li class="rl-empty">Aún no ha pasado nada. Saque inicial...</li>';
   if (feedEl.dataset.h !== feedHtml) { feedEl.innerHTML = feedHtml; feedEl.dataset.h = feedHtml; }
 
-  // destello de gol: solo con goles nuevos, no al abrir la página a mitad de partido
-  const gol = feed.find(e => e.tipo === 'gol');
-  const key = gol ? [gol.t, gol.quien, gol.equipo].join('|') : null;
-  if (rlPrevGoalKey !== null && key && key !== rlPrevGoalKey) rlGoalFlash(gol, gol.equipo === s.nuestroEquipo);
-  rlPrevGoalKey = key || '';
+  // destello de gol: solo cuando sube el marcador, así una repetición o un evento
+  // repetido no cuenta como gol nuevo (ni al abrir la página a mitad de partido)
+  if (rlPrevScore && rlPrevScore.guid === s.guid) {
+    const nuestro = us.goles > rlPrevScore.us, suyo = them.goles > rlPrevScore.them;
+    if (nuestro || suyo) rlGoalFlash(feed.find(e => e.tipo === 'gol' && (e.equipo === s.nuestroEquipo) === nuestro), nuestro);
+  }
+  rlPrevScore = { guid: s.guid, us: us.goles, them: them.goles };
   rlTickClock();
 }
 
@@ -3180,7 +3182,7 @@ function rlGoalFlash(gol, ours) {
   const w = document.getElementById('rl-flash-word');
   w.textContent = ours ? '¡GOOOL!' : 'GOL RIVAL';
   w.dataset.t = w.textContent;
-  document.getElementById('rl-flash-who').textContent = gol.quien + (gol.kmh ? ' · ' + gol.kmh + ' km/h' : '');
+  document.getElementById('rl-flash-who').textContent = gol ? gol.quien + (gol.kmh ? ' · ' + gol.kmh + ' km/h' : '') : '';
   f.className = 'rl-flash ' + (ours ? 'us' : 'them');
   void f.offsetWidth; f.classList.add('show');
   clearTimeout(rlGoalFlash.tm); rlGoalFlash.tm = setTimeout(() => f.classList.remove('show'), 3000);
@@ -3217,7 +3219,7 @@ function rlRenderFin(s) {
         <div class="rl-panel us"><div class="rl-panel-h">Tolerancia 0'1</div>${rlTable(s.jugadores.filter(p => p.equipo === s.nuestroEquipo).sort(byPts), true)}</div>
         <div class="rl-panel them"><div class="rl-panel-h">Rival</div>${rlTable(s.jugadores.filter(p => p.equipo !== s.nuestroEquipo).sort(byPts), false)}</div>
       </div>
-      <div class="rl-end-wait" id="rl-wait"></div>
+      <div class="rl-end-wait"><span class="rl-dots">Esperando la siguiente partida</span> · la sala se cierra en <b id="rl-wait"></b></div>
     </div>`;
   rlUpdateWait();
 }
@@ -3243,7 +3245,7 @@ function rlUpdateWait() {
   if (!el || !rlRow || !rlRow.state) return;
   const fin = new Date(rlRow.state.terminadoEn || rlRow.updated_at).getTime();
   const left = (fin + RL_SALA_MIN * 60000 - Date.now()) / 1000;
-  el.innerHTML = `<span class="rl-dots">Esperando la siguiente partida</span> · la sala se cierra en <b>${rlFmt(left)}</b>`;
+  el.textContent = rlFmt(left);   // solo cambia la cuenta atrás, así los puntos no se reinician
 }
 
 // ── pantalla completa ──

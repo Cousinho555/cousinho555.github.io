@@ -488,23 +488,113 @@
     .admin-tab{flex:1 1 45%;font-size:11px;padding:10px 8px;text-align:center}
   }
   /* ════════════════════════════
-     GLITCH SPLASH SCREEN
+     INTRO — PANTALLA DE VERSUS
   ════════════════════════════ */
-  #splash{position:fixed;inset:0;z-index:9999;background:#090909;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;pointer-events:none}
-  #splash.hide{animation:splashFadeOut .5s ease forwards}
-  @keyframes splashFadeOut{to{opacity:0}}
-  #splash-canvas{position:absolute;inset:0;width:100%;height:100%}
-  .glitch-wrap{position:relative;display:flex;flex-direction:column;align-items:center;z-index:2}
-  /* Logo de fondo con transparencia */
-  .glitch-logo-bg{position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);width:320px;height:320px;object-fit:contain;opacity:0.18;z-index:1;pointer-events:none;filter:drop-shadow(0 0 30px rgba(224,64,160,0.3))}
-  /* Texto encima */
-  .glitch-title{font-family:'Bebas Neue',sans-serif;font-size:82px;letter-spacing:8px;color:#f0f0f0;position:relative;z-index:3;line-height:1}
-  .glitch-title span{color:#E040A0}
-  .glitch-sub{font-family:'Inter',sans-serif;font-size:11px;font-weight:500;letter-spacing:5px;text-transform:uppercase;color:var(--white,#f0f0f0);margin-top:10px;position:relative;z-index:3}
-  .glitch-sub em{color:#E040A0;font-style:normal}
-  .glitch-bar-wrap{width:140px;height:1px;background:rgba(255,255,255,0.06);margin-top:40px;position:relative;overflow:hidden;z-index:3}
-  .glitch-bar{position:absolute;inset:0;width:0%;background:#E040A0;animation:gBarFill 1.4s .3s ease forwards}
-  @keyframes gBarFill{to{width:100%}}
+  #splash{position:fixed;inset:0;z-index:9999;background:#090909;overflow:hidden;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background-color .55s ease}
+  #splash.tvs-out{background-color:rgba(9,9,9,0);pointer-events:none}
+  #splash-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none}
+  .tvs-stage{position:absolute;inset:0}
+  .tvs-impact .tvs-stage{animation:tvsShake .45s cubic-bezier(.36,.07,.19,.97)}
+  @keyframes tvsShake{10%,90%{transform:translate(-2px,1px)}20%,80%{transform:translate(5px,-3px)}30%,50%,70%{transform:translate(-9px,4px)}40%,60%{transform:translate(9px,-2px)}}
+  /* Fichas de jugador */
+  .tvs-cards{position:absolute;inset:-6% -5%;display:grid;grid-template-columns:repeat(3,1fr);transform:skewX(-9deg);transition:filter .4s ease,transform .5s ease}
+  .tvs-card{position:relative;overflow:hidden;border-right:4px solid #090909;opacity:0}
+  .tvs-card:last-child{border-right:0}
+  .tvs-card::after{content:'';position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+  .tvs-card-img{position:absolute;inset:0 -30%;transform:skewX(9deg);background:radial-gradient(ellipse 55% 45% at 50% 34%,rgba(224,64,160,.42),rgba(224,64,160,.08) 55%,transparent 75%),linear-gradient(180deg,#1a0612,#090909 80%)}
+  .tvs-card-img::before{content:'';position:absolute;inset:0;z-index:1;background:repeating-linear-gradient(-60deg,rgba(224,64,160,.07) 0 2px,transparent 2px 22px)}
+  .tvs-card-big{position:absolute;left:0;right:0;top:1%;z-index:1;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:clamp(220px,26vw,420px);line-height:1;color:rgba(224,64,160,.06);-webkit-text-stroke:2px rgba(224,64,160,.6)}
+  .tvs-card:first-child .tvs-card-big{padding-left:24%}
+  .tvs-card-fig{position:absolute;left:50%;top:15%;height:160%;transform:translateX(-50%);z-index:2;filter:drop-shadow(0 0 22px rgba(224,64,160,.45)) drop-shadow(0 12px 30px rgba(0,0,0,.6))}
+  .tvs-card-img::after{content:'';position:absolute;inset:0;z-index:3;background:linear-gradient(0deg,#090909 4%,rgba(9,9,9,.7) 24%,transparent 48%),repeating-linear-gradient(0deg,rgba(0,0,0,.14) 0 2px,transparent 2px 4px)}
+  .tvs-card-edge{position:absolute;top:0;bottom:0;right:0;width:2px;background:#E040A0;box-shadow:0 0 14px #E040A0;z-index:3}
+  .tvs-card:last-child .tvs-card-edge{display:none}
+  .tvs-card-info{position:absolute;left:22%;right:8%;bottom:11%;z-index:4;transform:skewX(9deg);text-align:left}
+  .tvs-card:first-child .tvs-card-info{left:36%}
+  .tvs-card-nick{font-family:'Bebas Neue',sans-serif;font-size:clamp(30px,3.6vw,54px);letter-spacing:2px;color:#f0f0f0;line-height:1;margin-top:6px;text-shadow:0 0 22px rgba(224,64,160,.55)}
+  .tvs-card-role{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;letter-spacing:5px;text-transform:uppercase;color:#E040A0;margin-top:4px}
+  .tvs-go .tvs-card{animation:tvsCardIn .55s cubic-bezier(.2,.9,.25,1.15) calc(var(--i)*.22s) both}
+  .tvs-go .tvs-card:nth-child(2){animation-name:tvsCardInUp}
+  .tvs-go .tvs-card::after{animation:tvsCardFlash .5s ease calc(var(--i)*.22s + .38s) both}
+  @keyframes tvsCardIn{from{opacity:0;transform:translateY(-110%)}to{opacity:1;transform:none}}
+  @keyframes tvsCardInUp{from{opacity:0;transform:translateY(110%)}to{opacity:1;transform:none}}
+  @keyframes tvsCardFlash{0%{opacity:0}15%{opacity:.55}100%{opacity:0}}
+  .tvs-impact .tvs-cards{filter:brightness(.32) saturate(.7);transform:skewX(-9deg) scale(1.04)}
+  .tvs-out .tvs-card{animation:tvsCardOut .5s cubic-bezier(.6,0,.8,.3) calc(var(--i)*.06s) forwards}
+  .tvs-out .tvs-card:nth-child(2){animation-name:tvsCardOutDown}
+  @keyframes tvsCardOut{from{opacity:1;transform:none}to{opacity:0;transform:translateY(-115%)}}
+  @keyframes tvsCardOutDown{from{opacity:1;transform:none}to{opacity:0;transform:translateY(115%)}}
+  /* HUD */
+  .tvs-hud{position:absolute;left:28px;right:28px;z-index:5;display:flex;align-items:center;gap:16px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:rgba(240,240,240,.75);transition:opacity .3s ease}
+  .tvs-hud-top{top:22px;justify-content:space-between}
+  .tvs-hud-top b{color:#E040A0;font-weight:700}
+  .tvs-hud-bot{bottom:22px}
+  .tvs-bar{flex:1;height:2px;background:rgba(255,255,255,.08);position:relative;overflow:hidden}
+  .tvs-bar i{position:absolute;inset:0;width:0;background:#E040A0;box-shadow:0 0 10px #E040A0}
+  .tvs-pct{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:#f0f0f0;min-width:52px;text-align:right}
+  .tvs-skip{color:rgba(240,240,240,.4);font-size:11px}
+  .tvs-out .tvs-hud{opacity:0}
+  /* Centro: escudo + título */
+  .tvs-center{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;text-align:center;padding:0 16px}
+  .tvs-shield-wrap{position:relative;width:150px;height:150px}
+  .tvs-ring{position:absolute;left:50%;top:50%;width:150px;height:150px;margin:-75px 0 0 -75px;border:3px solid #E040A0;border-radius:50%;opacity:0;box-shadow:0 0 30px #E040A0,inset 0 0 30px #E040A0}
+  .tvs-shield{width:150px;height:150px;object-fit:contain;opacity:0;filter:drop-shadow(0 0 26px rgba(224,64,160,.7));transform-origin:center}
+  .tvs-impact .tvs-shield{opacity:1;animation:tvsSlam .5s cubic-bezier(.5,0,.75,0) backwards}
+  .tvs-impact .tvs-ring{animation:tvsRing .7s ease-out .42s}
+  @keyframes tvsSlam{0%{opacity:0;transform:scale(3.4) rotate(-8deg);filter:blur(6px) drop-shadow(0 0 26px rgba(224,64,160,.7))}70%{opacity:1}100%{transform:scale(1);filter:blur(0) drop-shadow(0 0 26px rgba(224,64,160,.7))}}
+  @keyframes tvsRing{0%{opacity:.9;transform:scale(.6)}100%{opacity:0;transform:scale(4)}}
+  .tvs-title{position:relative;font-family:'Bebas Neue',sans-serif;font-size:clamp(46px,8vw,96px);letter-spacing:5px;line-height:.95;color:#f0f0f0;margin-top:18px;opacity:0}
+  .tvs-title span{color:#E040A0}
+  .tvs-title::before,.tvs-title::after{content:attr(data-t);position:absolute;inset:0;opacity:0}
+  .tvs-impact .tvs-title{animation:tvsTitleIn .35s steps(3) .45s both}
+  .tvs-impact .tvs-title::before{color:#E040A0;mix-blend-mode:screen;animation:tvsGlitchA .12s steps(2) .45s 5}
+  .tvs-impact .tvs-title::after{color:#3ff0ff;mix-blend-mode:screen;animation:tvsGlitchB .14s steps(2) .45s 4}
+  @keyframes tvsTitleIn{0%{opacity:0;transform:translateX(-14px) skewX(-12deg)}50%{opacity:1;transform:translateX(10px) skewX(8deg)}100%{opacity:1;transform:none}}
+  @keyframes tvsGlitchA{0%{opacity:1;clip-path:inset(0 0 62% 0);transform:translate(-6px,2px)}100%{opacity:1;clip-path:inset(58% 0 6% 0);transform:translate(5px,-1px)}}
+  @keyframes tvsGlitchB{0%{opacity:.8;clip-path:inset(48% 0 12% 0);transform:translate(6px,-2px)}100%{opacity:.8;clip-path:inset(4% 0 70% 0);transform:translate(-4px,1px)}}
+  .tvs-lema{font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,3.4vw,34px);letter-spacing:7px;color:#f0f0f0;margin-top:14px;padding:4px 18px 2px;border:2px solid #E040A0;box-shadow:0 0 18px rgba(224,64,160,.45),inset 0 0 12px rgba(224,64,160,.25);opacity:0}
+  .tvs-lema em{font-style:normal;color:#E040A0;text-shadow:0 0 12px rgba(224,64,160,.8)}
+  .tvs-impact .tvs-lema{animation:tvsStamp .4s cubic-bezier(.3,1.6,.6,1) .85s both}
+  @keyframes tvsStamp{0%{opacity:0;transform:scale(2.2) rotate(-4deg)}100%{opacity:1;transform:rotate(-2deg)}}
+  .tvs-out .tvs-title,.tvs-out .tvs-lema,.tvs-out .tvs-ring{animation:none;opacity:1;transition:opacity .3s ease,transform .3s ease}
+  .tvs-out .tvs-title,.tvs-out .tvs-lema{opacity:0;transform:translateY(10px)}
+  .tvs-out .tvs-ring{opacity:0}
+  .tvs-out .tvs-shield{animation:none;transition:transform .7s cubic-bezier(.65,0,.25,1),opacity .25s ease .6s}
+  /* La portada espera a que acabe la intro */
+  body.tvs-hold #inicio .hero-content>*{animation-play-state:paused}
+  @media(max-width:700px){
+    .tvs-cards{inset:-8% 0;grid-template-columns:1fr;grid-template-rows:repeat(3,1fr);transform:skewY(-7deg)}
+    .tvs-impact .tvs-cards{transform:skewY(-7deg) scale(1.04)}
+    .tvs-card{border-right:0;border-bottom:4px solid #090909}
+    .tvs-card:last-child{border-bottom:0}
+    .tvs-card-img{inset:-12% 0;transform:skewY(7deg)}
+    .tvs-card-fig{left:30%;top:14%;height:310%}
+    .tvs-card:first-child .tvs-card-fig{top:30%}
+    .tvs-card-big,.tvs-card:first-child .tvs-card-big{left:auto;right:4%;top:50%;transform:translateY(-50%);font-size:190px;padding:0}
+    .tvs-card-edge{top:auto;left:0;width:auto;height:2px}
+    .tvs-card:first-child .tvs-card-info,.tvs-card-info{left:auto;right:18px;bottom:auto;top:50%;transform:skewY(7deg) translateY(-50%);text-align:right}
+    .tvs-card-img::after{background:linear-gradient(270deg,rgba(9,9,9,.85) 6%,transparent 50%),linear-gradient(0deg,rgba(9,9,9,.6),transparent 35%),repeating-linear-gradient(0deg,rgba(0,0,0,.14) 0 2px,transparent 2px 4px)}
+    .tvs-card-nick{font-size:34px}
+    .tvs-card-role{font-size:11px;letter-spacing:4px}
+    .tvs-go .tvs-card{animation-name:tvsCardInL}
+    .tvs-go .tvs-card:nth-child(2){animation-name:tvsCardInR}
+    .tvs-out .tvs-card{animation-name:tvsCardOutL}
+    .tvs-out .tvs-card:nth-child(2){animation-name:tvsCardOutR}
+    .tvs-hud{left:16px;right:16px;font-size:10px;letter-spacing:3px}
+    .tvs-hud-top{top:16px}.tvs-hud-bot{bottom:16px}
+    .tvs-skip{display:none}
+    .tvs-shield-wrap,.tvs-shield{width:116px;height:116px}
+    .tvs-ring{width:116px;height:116px;margin:-58px 0 0 -58px}
+    .tvs-lema{letter-spacing:5px}
+  }
+  @keyframes tvsCardInL{from{opacity:0;transform:translateX(-110%)}to{opacity:1;transform:none}}
+  @keyframes tvsCardInR{from{opacity:0;transform:translateX(110%)}to{opacity:1;transform:none}}
+  @keyframes tvsCardOutL{from{opacity:1;transform:none}to{opacity:0;transform:translateX(-115%)}}
+  @keyframes tvsCardOutR{from{opacity:1;transform:none}to{opacity:0;transform:translateX(115%)}}
+  @media(prefers-reduced-motion:reduce){
+    .tvs-go .tvs-card,.tvs-out .tvs-card,.tvs-impact .tvs-shield,.tvs-impact .tvs-title,.tvs-impact .tvs-lema{animation-duration:.01s!important;animation-delay:0s!important}
+    .tvs-impact .tvs-stage,.tvs-impact .tvs-ring,.tvs-impact .tvs-title::before,.tvs-impact .tvs-title::after,.tvs-go .tvs-card::after{animation:none}
+  }
 
   /* ════════════════════════════
    MINI PLAYER FLOTANTE
@@ -892,18 +982,21 @@ body.rl-noscroll #envivo{z-index:9000}
 </head>
 <body>
 
-<!-- GLITCH SPLASH SCREEN -->
-<div id="splash">
-  <canvas id="splash-canvas"></canvas>
-  <!-- Logo de fondo con transparencia, sin glitch -->
-  <img src="logo.png" class="glitch-logo-bg" alt="" id="splash-logo-bg">
-  <!-- Contenido centrado encima -->
-  <div class="glitch-wrap">
-    <div class="glitch-title" id="splash-title">T<span>01</span></div>
-    <div class="glitch-sub"><em>Maricón</em>&nbsp;el último</div>
-    <div class="glitch-bar-wrap"><div class="glitch-bar"></div></div>
+<!-- INTRO — PANTALLA DE VERSUS (las fichas se rellenan desde `players`) -->
+<div id="splash" aria-hidden="true">
+  <div class="tvs-stage">
+    <div class="tvs-cards" id="tvs-cards"></div>
+    <div class="tvs-center">
+      <div class="tvs-shield-wrap"><div class="tvs-ring"></div><img src="logo.png" class="tvs-shield" id="tvs-shield" alt=""></div>
+      <div class="tvs-title" id="splash-title" data-t="TOLERANCIA 0'1">TOLERANCIA <span>0'1</span></div>
+      <div class="tvs-lema"><em>Maricón</em> el último</div>
+    </div>
   </div>
+  <canvas id="splash-canvas"></canvas>
+  <div class="tvs-hud tvs-hud-top"><span>Tolerancia <b>0'1</b> // El Pto</span></div>
+  <div class="tvs-hud tvs-hud-bot"><div class="tvs-bar"><i id="tvs-bar"></i></div><span class="tvs-skip">Toca para saltar</span><span class="tvs-pct" id="tvs-pct">000%</span></div>
 </div>
+<script>document.body.classList.add('tvs-hold')</script>
 
 <!-- NAV -->
 <nav>
@@ -1498,6 +1591,8 @@ const players = [
     photo:  'jugador1.jpg',
     ini:    'PC',
     num:    '01',
+    dorsal: '05',
+    intro:  'intro-cousinho.webp',
     stats: [
       { name: 'Creatividad',  val: 98 },
       { name: 'Farming',    val: 86 },
@@ -1518,6 +1613,8 @@ const players = [
     photo:  'jugador2.jpg',
     ini:    'LG',
     num:    '02',
+    dorsal: '23',
+    intro:  'intro-la-oruga.webp',
     stats: [
       { name: 'Barbacoa',       val: 100 },
       { name: 'Nevera',    val: 91 },
@@ -1538,6 +1635,8 @@ const players = [
     photo:  'jugador3.jpg',
     ini:    'IP',
     num:    '03',
+    dorsal: '14',
+    intro:  'intro-gatopija.webp',
     stats: [
       { name: 'PING',     val: 40 },
       { name: 'Historia',    val: 98 },
@@ -2067,7 +2166,7 @@ function renderTeam() {
       : `<div class="player-avatar-ini">${p.ini}</div>`;
     return `<div class="player-card reveal" onclick="openRPG(${p.num - 1})">
       <div class="player-avatar">
-        <div class="player-avatar-num">${p.num}</div>
+        <div class="player-avatar-num">${p.dorsal || p.num}</div>
         ${avatar}
       </div>
       <div class="player-stripe"></div>
@@ -2112,7 +2211,7 @@ function openRPG(idx) {
     <div class="rpg-photo-panel">
       ${photoHTML}
       <div class="rpg-photo-overlay"></div>
-      <div class="rpg-photo-num">${p.num}</div>
+      <div class="rpg-photo-num">${p.dorsal || p.num}</div>
     </div>
     <div class="rpg-stats-panel">
       <div class="rpg-corner tl"></div>
@@ -2676,98 +2775,119 @@ document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 </script>
 <!-- SPLASH + PWA -->
 <script>
-// ── GLITCH SPLASH ENGINE ──
+// ── INTRO: PANTALLA DE VERSUS ──
+// Primera visita de la sesión: versión completa (fichas + escudo). Recargas: versión corta.
+// ?intro=1 fuerza la versión completa. Un toque o una tecla la salta.
 (function() {
-  const splash  = document.getElementById('splash');
-  const canvas  = document.getElementById('splash-canvas');
-  const ctx     = canvas.getContext('2d');
-  const title   = document.getElementById('splash-title');
-  let   running = true;
-  let   frame   = 0;
+  const splash = document.getElementById('splash');
+  const canvas = document.getElementById('splash-canvas');
+  const ctx    = canvas.getContext('2d');
+  const shield = document.getElementById('tvs-shield');
+  const bar    = document.getElementById('tvs-bar');
+  const pct    = document.getElementById('tvs-pct');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let full = new URLSearchParams(location.search).get('intro') === '1';
+  try { if (!sessionStorage.getItem('tvsSeen')) full = true; sessionStorage.setItem('tvsSeen', '1'); } catch (e) { full = true; }
 
-  function resize() {
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
+  // Fichas de jugador desde el array del equipo
+  const cards = document.getElementById('tvs-cards');
+  (typeof players !== 'undefined' ? players : []).forEach((p, i) => {
+    const nick = (p.nick || p.name).replace(/"/g, '');
+    cards.insertAdjacentHTML('beforeend',
+      `<div class="tvs-card" style="--i:${i}"><div class="tvs-card-img"><span class="tvs-card-big">${p.dorsal || p.num}</span><img class="tvs-card-fig" src="${p.intro || p.photo}" alt=""></div><div class="tvs-card-edge"></div>` +
+      `<div class="tvs-card-info"><div class="tvs-card-nick">${nick}</div><div class="tvs-card-role">${p.role}</div></div></div>`);
+  });
+
+  // Fondo: scanlines, haz de luz, cortes de glitch y chispas en el impacto
+  let running = true, frame = 0, sparks = [];
+  function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
   resize();
-  window.addEventListener('resize', resize);
-
+  addEventListener('resize', resize);
+  function burst() {
+    if (reduce) return;
+    const cx = canvas.width / 2, cy = canvas.height / 2 - 40;
+    for (let i = 0; i < 70; i++) {
+      const a = Math.random() * Math.PI * 2, v = 4 + Math.random() * 11;
+      sparks.push({ x: cx, y: cy, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 1, c: Math.random() < .7 ? '224,64,160' : '255,255,255' });
+    }
+  }
   function drawFX() {
     if (!running) return;
     frame++;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Scanlines sutiles
-    ctx.fillStyle = 'rgba(224,64,160,0.025)';
-    for (let y = 0; y < canvas.height; y += 4) {
-      ctx.fillRect(0, y, canvas.width, 1);
-    }
-
-    // Haz de luz que recorre la pantalla de arriba a abajo
-    const beamY = ((frame * 2.5) % (canvas.height + 60)) - 30;
-    const beam = ctx.createLinearGradient(0, beamY - 30, 0, beamY + 30);
-    beam.addColorStop(0,   'rgba(224,64,160,0)');
-    beam.addColorStop(0.5, 'rgba(224,64,160,0.15)');
-    beam.addColorStop(1,   'rgba(224,64,160,0)');
+    ctx.fillStyle = 'rgba(224,64,160,0.03)';
+    for (let y = 0; y < canvas.height; y += 4) ctx.fillRect(0, y, canvas.width, 1);
+    const beamY = ((frame * 3) % (canvas.height + 80)) - 40;
+    const beam = ctx.createLinearGradient(0, beamY - 40, 0, beamY + 40);
+    beam.addColorStop(0, 'rgba(224,64,160,0)');
+    beam.addColorStop(.5, 'rgba(224,64,160,0.12)');
+    beam.addColorStop(1, 'rgba(224,64,160,0)');
     ctx.fillStyle = beam;
-    ctx.fillRect(0, beamY - 30, canvas.width, 60);
-
-    // Slices horizontales de glitch aleatorios
-    if (Math.random() < 0.07) {
-      const slices = Math.floor(Math.random() * 3) + 1;
-      for (let i = 0; i < slices; i++) {
-        const y  = Math.random() * canvas.height;
-        const h  = Math.random() * 5 + 1;
-        ctx.save();
-        ctx.globalAlpha = Math.random() * 0.3 + 0.08;
-        ctx.fillStyle = Math.random() > 0.5
-          ? 'rgba(0,255,255,0.2)'
-          : 'rgba(255,0,102,0.2)';
-        ctx.fillRect(0, y, canvas.width, h);
-        ctx.restore();
+    ctx.fillRect(0, beamY - 40, canvas.width, 80);
+    if (!reduce && Math.random() < .08) {
+      for (let i = 0, n = 1 + Math.random() * 3 | 0; i < n; i++) {
+        ctx.fillStyle = Math.random() > .5 ? 'rgba(63,240,255,0.10)' : 'rgba(224,64,160,0.14)';
+        ctx.fillRect(0, Math.random() * canvas.height, canvas.width, 1 + Math.random() * 5);
       }
     }
-
-    // Flash de color ocasional
-    if (Math.random() < 0.008) {
-      ctx.fillStyle = 'rgba(224,64,160,0.05)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-    }
-
-    // Glitch en el título T01 — desplazamiento + color shift
-    if (title && Math.random() < 0.05) {
-      const dx = (Math.random() - 0.5) * 12;
-      const dy = (Math.random() - 0.5) * 3;
-      title.style.transform = `translate(${dx}px,${dy}px) skewX(${(Math.random()-0.5)*4}deg)`;
-      title.style.textShadow = Math.random() > 0.5
-        ? '4px 0 #ff0066, -4px 0 #00ffff'
-        : '-3px 0 #00ffff, 3px 0 #ff0066';
-      setTimeout(() => {
-        if (title) {
-          title.style.transform = '';
-          title.style.textShadow = '';
-        }
-      }, 80);
-    }
-
+    sparks = sparks.filter(s => s.life > 0);
+    sparks.forEach(s => {
+      s.x += s.vx; s.y += s.vy; s.vx *= .95; s.vy *= .95; s.life -= .022;
+      ctx.strokeStyle = `rgba(${s.c},${s.life})`;
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(s.x - s.vx * 3, s.y - s.vy * 3); ctx.stroke();
+    });
     requestAnimationFrame(drawFX);
   }
-
   drawFX();
 
-  // Oculta tras 2.4s
-  function hideSplash() {
-    running = false;
-    splash.classList.add('hide');
-    setTimeout(() => { splash.style.display = 'none'; }, 520);
-  }
+  // Contador de carga
+  const t0 = performance.now(), loadMs = full ? 2900 : 1300;
+  (function tick() {
+    const k = Math.min(1, (performance.now() - t0) / loadMs);
+    bar.style.width = (k * 100) + '%';
+    pct.textContent = String(Math.round(k * 100)).padStart(3, '0') + '%';
+    if (k < 1 && running) requestAnimationFrame(tick);
+  })();
 
-  const minTime = new Promise(r => setTimeout(r, 2400));
+  // Línea de tiempo
+  const timers = [];
+  const at = (ms, fn) => timers.push(setTimeout(fn, ms));
+  function impact() { splash.classList.add('tvs-impact'); at(reduce ? 0 : 420, burst); }
+  if (full) { at(120, () => splash.classList.add('tvs-go')); at(1250, impact); }
+  else { cards.style.display = 'none'; at(60, impact); }
+
+  // Salida: las fichas se van y el escudo vuela a su sitio en la portada
+  let done = false;
+  function exit() {
+    if (done) return;
+    done = true;
+    timers.forEach(clearTimeout);
+    if (!splash.classList.contains('tvs-impact')) splash.classList.add('tvs-impact');
+    const target = document.querySelector('#inicio .hero-shield');
+    const from = shield.getBoundingClientRect();
+    splash.classList.add('tvs-out');
+    document.body.classList.remove('tvs-hold');
+    if (target && !reduce) {
+      const to = target.getBoundingClientRect();
+      const dx = (to.left + to.width / 2) - (from.left + from.width / 2);
+      const dy = (to.top + to.height / 2) - (from.top + from.height / 2);
+      requestAnimationFrame(() => {
+        shield.style.transform = `translate(${dx}px,${dy}px) scale(${to.width / from.width})`;
+        shield.style.opacity = '0';
+      });
+    } else shield.style.opacity = '0';
+    setTimeout(() => { running = false; splash.style.display = 'none'; }, 800);
+  }
+  splash.addEventListener('pointerdown', exit);
+  addEventListener('keydown', exit, { once: true });
+
+  const minTime = new Promise(r => setTimeout(r, full ? 3300 : 1500));
   const loaded  = new Promise(r => {
     if (document.readyState === 'complete') r();
-    else window.addEventListener('load', r);
+    else addEventListener('load', r);
   });
-  Promise.all([minTime, loaded]).then(hideSplash);
+  Promise.all([minTime, loaded]).then(exit);
 })();
 
 // Service Worker

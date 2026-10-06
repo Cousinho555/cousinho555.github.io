@@ -501,15 +501,16 @@
   .tvs-card{position:relative;overflow:hidden;border-right:4px solid #090909;opacity:0}
   .tvs-card:last-child{border-right:0}
   .tvs-card::after{content:'';position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
-  .tvs-card-img{position:absolute;inset:0 -30%;transform:skewX(9deg)}
-  .tvs-card-img img{width:100%;height:100%;object-fit:cover;object-position:28% 22%;filter:grayscale(1) contrast(1.2) brightness(.72)}
-  .tvs-card-img::before{content:'';position:absolute;inset:0;background:#E040A0;mix-blend-mode:color;opacity:.6;z-index:1}
-  .tvs-card-img::after{content:'';position:absolute;inset:0;z-index:2;background:linear-gradient(0deg,#090909 6%,rgba(9,9,9,.55) 34%,transparent 62%),repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 2px,transparent 2px 4px)}
+  .tvs-card-img{position:absolute;inset:0 -30%;transform:skewX(9deg);background:radial-gradient(ellipse 55% 45% at 50% 34%,rgba(224,64,160,.42),rgba(224,64,160,.08) 55%,transparent 75%),linear-gradient(180deg,#1a0612,#090909 80%)}
+  .tvs-card-img::before{content:'';position:absolute;inset:0;z-index:1;background:repeating-linear-gradient(-60deg,rgba(224,64,160,.07) 0 2px,transparent 2px 22px)}
+  .tvs-card-big{position:absolute;left:0;right:0;top:1%;z-index:1;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:clamp(220px,26vw,420px);line-height:1;color:rgba(224,64,160,.06);-webkit-text-stroke:2px rgba(224,64,160,.6)}
+  .tvs-card:first-child .tvs-card-big{padding-left:24%}
+  .tvs-card-fig{position:absolute;left:50%;top:15%;height:160%;transform:translateX(-50%);z-index:2;filter:drop-shadow(0 0 22px rgba(224,64,160,.45)) drop-shadow(0 12px 30px rgba(0,0,0,.6))}
+  .tvs-card-img::after{content:'';position:absolute;inset:0;z-index:3;background:linear-gradient(0deg,#090909 4%,rgba(9,9,9,.7) 24%,transparent 48%),repeating-linear-gradient(0deg,rgba(0,0,0,.14) 0 2px,transparent 2px 4px)}
   .tvs-card-edge{position:absolute;top:0;bottom:0;right:0;width:2px;background:#E040A0;box-shadow:0 0 14px #E040A0;z-index:3}
   .tvs-card:last-child .tvs-card-edge{display:none}
-  .tvs-card-info{position:absolute;left:22%;right:8%;bottom:13%;z-index:4;transform:skewX(9deg);text-align:left}
+  .tvs-card-info{position:absolute;left:22%;right:8%;bottom:11%;z-index:4;transform:skewX(9deg);text-align:left}
   .tvs-card:first-child .tvs-card-info{left:36%}
-  .tvs-card-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(54px,7vw,104px);line-height:.8;color:transparent;-webkit-text-stroke:1.5px rgba(240,240,240,.35)}
   .tvs-card-nick{font-family:'Bebas Neue',sans-serif;font-size:clamp(30px,3.6vw,54px);letter-spacing:2px;color:#f0f0f0;line-height:1;margin-top:6px;text-shadow:0 0 22px rgba(224,64,160,.55)}
   .tvs-card-role{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;letter-spacing:5px;text-transform:uppercase;color:#E040A0;margin-top:4px}
   .tvs-go .tvs-card{animation:tvsCardIn .55s cubic-bezier(.2,.9,.25,1.15) calc(var(--i)*.22s) both}
@@ -567,12 +568,12 @@
     .tvs-card{border-right:0;border-bottom:4px solid #090909}
     .tvs-card:last-child{border-bottom:0}
     .tvs-card-img{inset:-12% 0;transform:skewY(7deg)}
-    .tvs-card-img img{object-position:30% 16%}
-    .tvs-card:first-child .tvs-card-img{inset:6% 0 -30% 0}
+    .tvs-card-fig{left:30%;top:14%;height:310%}
+    .tvs-card:first-child .tvs-card-fig{top:30%}
+    .tvs-card-big,.tvs-card:first-child .tvs-card-big{left:auto;right:4%;top:50%;transform:translateY(-50%);font-size:190px;padding:0}
     .tvs-card-edge{top:auto;left:0;width:auto;height:2px}
     .tvs-card:first-child .tvs-card-info,.tvs-card-info{left:auto;right:18px;bottom:auto;top:50%;transform:skewY(7deg) translateY(-50%);text-align:right}
-    .tvs-card-img::after{background:linear-gradient(270deg,#090909 8%,rgba(9,9,9,.5) 45%,transparent 75%),repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 2px,transparent 2px 4px)}
-    .tvs-card-num{font-size:56px}
+    .tvs-card-img::after{background:linear-gradient(270deg,rgba(9,9,9,.85) 6%,transparent 50%),linear-gradient(0deg,rgba(9,9,9,.6),transparent 35%),repeating-linear-gradient(0deg,rgba(0,0,0,.14) 0 2px,transparent 2px 4px)}
     .tvs-card-nick{font-size:34px}
     .tvs-card-role{font-size:11px;letter-spacing:4px}
     .tvs-go .tvs-card{animation-name:tvsCardInL}
@@ -1591,6 +1592,7 @@ const players = [
     ini:    'PC',
     num:    '01',
     dorsal: '05',
+    intro:  'intro-cousinho.webp',
     stats: [
       { name: 'Creatividad',  val: 98 },
       { name: 'Farming',    val: 86 },
@@ -1612,6 +1614,7 @@ const players = [
     ini:    'LG',
     num:    '02',
     dorsal: '23',
+    intro:  'intro-la-oruga.webp',
     stats: [
       { name: 'Barbacoa',       val: 100 },
       { name: 'Nevera',    val: 91 },
@@ -1633,6 +1636,7 @@ const players = [
     ini:    'IP',
     num:    '03',
     dorsal: '14',
+    intro:  'intro-gatopija.webp',
     stats: [
       { name: 'PING',     val: 40 },
       { name: 'Historia',    val: 98 },
@@ -2162,7 +2166,7 @@ function renderTeam() {
       : `<div class="player-avatar-ini">${p.ini}</div>`;
     return `<div class="player-card reveal" onclick="openRPG(${p.num - 1})">
       <div class="player-avatar">
-        <div class="player-avatar-num">${p.num}</div>
+        <div class="player-avatar-num">${p.dorsal || p.num}</div>
         ${avatar}
       </div>
       <div class="player-stripe"></div>
@@ -2207,7 +2211,7 @@ function openRPG(idx) {
     <div class="rpg-photo-panel">
       ${photoHTML}
       <div class="rpg-photo-overlay"></div>
-      <div class="rpg-photo-num">${p.num}</div>
+      <div class="rpg-photo-num">${p.dorsal || p.num}</div>
     </div>
     <div class="rpg-stats-panel">
       <div class="rpg-corner tl"></div>
@@ -2790,8 +2794,8 @@ document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
   (typeof players !== 'undefined' ? players : []).forEach((p, i) => {
     const nick = (p.nick || p.name).replace(/"/g, '');
     cards.insertAdjacentHTML('beforeend',
-      `<div class="tvs-card" style="--i:${i}"><div class="tvs-card-img"><img src="${p.photo}" alt=""></div><div class="tvs-card-edge"></div>` +
-      `<div class="tvs-card-info"><div class="tvs-card-num">${p.dorsal || p.num}</div><div class="tvs-card-nick">${nick}</div><div class="tvs-card-role">${p.role}</div></div></div>`);
+      `<div class="tvs-card" style="--i:${i}"><div class="tvs-card-img"><span class="tvs-card-big">${p.dorsal || p.num}</span><img class="tvs-card-fig" src="${p.intro || p.photo}" alt=""></div><div class="tvs-card-edge"></div>` +
+      `<div class="tvs-card-info"><div class="tvs-card-nick">${nick}</div><div class="tvs-card-role">${p.role}</div></div></div>`);
   });
 
   // Fondo: scanlines, haz de luz, cortes de glitch y chispas en el impacto

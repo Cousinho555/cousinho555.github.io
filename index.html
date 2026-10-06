@@ -527,9 +527,6 @@
   .tvs-hud{position:absolute;left:28px;right:28px;z-index:5;display:flex;align-items:center;gap:16px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:rgba(240,240,240,.75);transition:opacity .3s ease}
   .tvs-hud-top{top:22px;justify-content:space-between}
   .tvs-hud-top b{color:#E040A0;font-weight:700}
-  .tvs-hud-live{display:inline-flex;align-items:center;gap:8px}
-  .tvs-hud-live::before{content:'';width:7px;height:7px;border-radius:50%;background:#E040A0;box-shadow:0 0 10px #E040A0;animation:tvsBlink 1s steps(2) infinite}
-  @keyframes tvsBlink{50%{opacity:.15}}
   .tvs-hud-bot{bottom:22px}
   .tvs-bar{flex:1;height:2px;background:rgba(255,255,255,.08);position:relative;overflow:hidden}
   .tvs-bar i{position:absolute;inset:0;width:0;background:#E040A0;box-shadow:0 0 10px #E040A0}
@@ -995,7 +992,7 @@ body.rl-noscroll #envivo{z-index:9000}
     </div>
   </div>
   <canvas id="splash-canvas"></canvas>
-  <div class="tvs-hud tvs-hud-top"><span>Tolerancia <b>0'1</b> // El Pto</span><span class="tvs-hud-live">Selección de equipo</span></div>
+  <div class="tvs-hud tvs-hud-top"><span>Tolerancia <b>0'1</b> // El Pto</span></div>
   <div class="tvs-hud tvs-hud-bot"><div class="tvs-bar"><i id="tvs-bar"></i></div><span class="tvs-skip">Toca para saltar</span><span class="tvs-pct" id="tvs-pct">000%</span></div>
 </div>
 <script>document.body.classList.add('tvs-hold')</script>
@@ -1593,6 +1590,7 @@ const players = [
     photo:  'jugador1.jpg',
     ini:    'PC',
     num:    '01',
+    dorsal: '05',
     stats: [
       { name: 'Creatividad',  val: 98 },
       { name: 'Farming',    val: 86 },
@@ -1613,6 +1611,7 @@ const players = [
     photo:  'jugador2.jpg',
     ini:    'LG',
     num:    '02',
+    dorsal: '23',
     stats: [
       { name: 'Barbacoa',       val: 100 },
       { name: 'Nevera',    val: 91 },
@@ -1633,6 +1632,7 @@ const players = [
     photo:  'jugador3.jpg',
     ini:    'IP',
     num:    '03',
+    dorsal: '14',
     stats: [
       { name: 'PING',     val: 40 },
       { name: 'Historia',    val: 98 },
@@ -2791,7 +2791,7 @@ document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
     const nick = (p.nick || p.name).replace(/"/g, '');
     cards.insertAdjacentHTML('beforeend',
       `<div class="tvs-card" style="--i:${i}"><div class="tvs-card-img"><img src="${p.photo}" alt=""></div><div class="tvs-card-edge"></div>` +
-      `<div class="tvs-card-info"><div class="tvs-card-num">${p.num}</div><div class="tvs-card-nick">${nick}</div><div class="tvs-card-role">${p.role}</div></div></div>`);
+      `<div class="tvs-card-info"><div class="tvs-card-num">${p.dorsal || p.num}</div><div class="tvs-card-nick">${nick}</div><div class="tvs-card-role">${p.role}</div></div></div>`);
   });
 
   // Fondo: scanlines, haz de luz, cortes de glitch y chispas en el impacto

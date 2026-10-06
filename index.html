@@ -957,6 +957,59 @@ body.rl-is-live .nav-live-dot{display:inline-block}
 .rl-stage:fullscreen #rl-view,.rl-stage.rl-pfs #rl-view{width:100%;max-width:1500px;margin:0 auto}
 .rl-stage:fullscreen .rl-bar,.rl-stage.rl-pfs .rl-bar{position:sticky;top:0;z-index:6}
 .rl-stage:fullscreen .rl-feed,.rl-stage.rl-pfs .rl-feed{max-height:42vh}
+/* móvil en pantalla completa: horizontal y compacto */
+.rl-stage.rl-rot{display:block;overflow:hidden}
+.rl-stage.rl-rot #rl-view{position:absolute;top:0;left:100%;max-width:none;margin:0;transform-origin:top left;transform:rotate(90deg);overflow-y:auto;background:var(--dark)}
+.rl-stage.rl-compact{justify-content:flex-start}
+.rl-stage.rl-compact .rl-bar{padding:6px 14px;gap:10px;flex-wrap:nowrap}
+.rl-stage.rl-compact .rl-meta{font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rl-stage.rl-compact .rl-fs-btn{padding:5px 10px}
+.rl-stage.rl-compact .rl-score{grid-template-columns:1fr auto auto auto 1fr;grid-template-areas:none;padding:8px 14px 6px;gap:16px}
+.rl-stage.rl-compact .rl-team,.rl-stage.rl-compact .rl-goals,.rl-stage.rl-compact .rl-clock-wrap{grid-area:auto}
+.rl-stage.rl-compact .rl-team.us{align-items:flex-end;text-align:right}
+.rl-stage.rl-compact .rl-team.them{align-items:flex-start;text-align:left}
+.rl-stage.rl-compact .rl-team-name{font-size:22px}
+.rl-stage.rl-compact .rl-goals{font-size:64px}
+.rl-stage.rl-compact .rl-clock{font-size:28px;padding:3px 12px}
+.rl-stage.rl-compact .rl-ball{grid-template-columns:auto 1fr;gap:16px;margin:0 14px 8px;padding:6px 14px}
+.rl-stage.rl-compact .rl-ball-speed b{font-size:24px}
+.rl-stage.rl-compact .rl-grid{grid-template-columns:1fr 1fr 0.9fr;gap:8px;padding:0 14px 10px}
+.rl-stage.rl-compact .rl-grid .rl-feed-panel{grid-column:auto}
+.rl-stage.rl-compact .rl-panel-h{padding:6px 10px;font-size:9px}
+.rl-stage.rl-compact .rl-table th{padding:4px 2px}
+.rl-stage.rl-compact .rl-table th:first-child,.rl-stage.rl-compact .rl-pname{padding-left:10px!important}
+.rl-stage.rl-compact .rl-table td{font-size:12px;padding:5px 2px}
+.rl-stage.rl-compact .rl-table td.pts{font-size:15px}
+.rl-stage.rl-compact .rl-pname{max-width:110px}
+.rl-stage.rl-compact .rl-pname img{width:18px;height:18px;margin-right:6px}
+.rl-stage.rl-compact .rl-feed{max-height:150px}
+.rl-stage.rl-compact .rl-ev{grid-template-columns:34px 18px 1fr;padding:5px 10px;font-size:11px}
+.rl-stage.rl-compact .rl-ev-t{font-size:13px}
+.rl-stage.rl-compact .rl-off{padding:24px 20px}
+.rl-stage.rl-compact .rl-radar{width:80px;height:80px;margin-bottom:14px}
+.rl-stage.rl-compact .rl-radar img{inset:15px;width:50px;height:50px}
+.rl-stage.rl-compact .rl-off-title{font-size:30px}
+.rl-stage.rl-compact .rl-end{padding:12px 14px 10px}
+.rl-stage.rl-compact .rl-end-result{font-size:60px}
+.rl-stage.rl-compact .rl-end-score{margin-top:4px}
+.rl-stage.rl-compact .rl-end-score b{font-size:30px}
+.rl-stage.rl-compact .rl-mvp{margin-top:12px}
+.rl-stage.rl-compact .rl-mvp.club{grid-template-columns:0.8fr 1.2fr}
+.rl-stage.rl-compact .rl-mvp-photo{min-height:210px}
+.rl-stage.rl-compact .rl-mvp-photo::after{background:linear-gradient(90deg,transparent 55%,#0c0710 100%),linear-gradient(0deg,rgba(9,9,9,0.85) 0%,transparent 40%)}
+.rl-stage.rl-compact .rl-mvp-stamp{font-size:40px}
+.rl-stage.rl-compact .rl-mvp-body{padding:14px 18px}
+.rl-stage.rl-compact .rl-mvp-nick{font-size:40px}
+.rl-stage.rl-compact .rl-mvp-clase{margin-top:8px;font-size:10px}
+.rl-stage.rl-compact .rl-mvp-lema{margin-top:8px;padding:6px 12px;font-size:12px}
+.rl-stage.rl-compact .rl-mvp-stats{grid-template-columns:repeat(4,1fr);margin-top:10px}
+.rl-stage.rl-compact .rl-mvp-stat{padding:6px 4px}
+.rl-stage.rl-compact .rl-mvp-stat b{font-size:22px}
+.rl-stage.rl-compact .rl-end-teams{grid-template-columns:1fr 1fr;margin-top:10px}
+.rl-stage.rl-compact .rl-end-wait{margin-top:10px}
+.rl-stage.rl-compact .rl-end.mvp-club .rl-end-teams{display:none}
+.rl-stage.rl-compact .rl-hide-sm{display:table-cell}
+.rl-stage.rl-compact .rl-fs-txt{display:inline}
 body.rl-noscroll{overflow:hidden}
 body.rl-noscroll #envivo{z-index:9000}
 
@@ -3155,7 +3208,7 @@ function rlRenderFin(s) {
 
   document.getElementById('rl-view').innerHTML =
     rlBar('<span class="rl-badge fin"><i></i>Final</span>', `<span class="rl-meta">${rlEsc(rlMode2Txt(s))}</span>`) + `
-    <div class="rl-end">
+    <div class="rl-end${mvp && mvp.club && rlClub(mvp.nombre) ? ' mvp-club' : ''}">
       <div class="rl-end-result ${res}" data-t="${word}">${word}</div>
       <div class="rl-end-score"><span class="us">Tolerancia 0'1</span><b>${us.goles}</b><span>–</span><b>${them.goles}</b><span>Rival</span></div>
       ${s.prorroga ? '<div class="rl-end-meta">Decidido en la prórroga</div>' : ''}
@@ -3205,8 +3258,26 @@ function rlPseudoFS(stage) { stage.classList.add('rl-pfs'); document.body.classL
 function rlRefreshFSLabel() {
   const fs = document.fullscreenElement || document.getElementById('rl-stage').classList.contains('rl-pfs');
   document.querySelectorAll('#rl-stage .rl-fs-txt').forEach(el => el.textContent = fs ? 'Salir' : 'Pantalla completa');
+  if (fs && screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(() => {});
+  if (!fs && screen.orientation && screen.orientation.unlock) try { screen.orientation.unlock(); } catch (e) {}
+  rlLayoutFS();
+}
+// En el móvil, la pantalla completa va en horizontal. Android gira la pantalla con
+// screen.orientation.lock; donde no se puede (iPhone), giramos el dashboard 90° por CSS.
+function rlLayoutFS() {
+  const stage = document.getElementById('rl-stage'), view = document.getElementById('rl-view');
+  const fs = !!(document.fullscreenElement || stage.classList.contains('rl-pfs'));
+  const W = window.innerWidth, H = window.innerHeight;
+  const movil = matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < 600;
+  const girar = fs && movil && H > W;
+  stage.classList.toggle('rl-rot', girar);
+  stage.classList.toggle('rl-compact', fs && movil);
+  view.style.width = girar ? H + 'px' : '';
+  view.style.height = girar ? W + 'px' : '';
 }
 document.addEventListener('fullscreenchange', rlRefreshFSLabel);
+window.addEventListener('resize', rlLayoutFS);
+window.addEventListener('orientationchange', () => setTimeout(rlLayoutFS, 150));
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.getElementById('rl-stage').classList.contains('rl-pfs')) rlToggleFS(); });
 
 // ── datos ──

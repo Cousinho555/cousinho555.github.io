@@ -934,6 +934,69 @@
 .rl-snd + .rl-fs-btn{margin-left:0}
 .rl-snd.on{color:var(--pink);border-color:rgba(224,64,160,0.5)}
 
+/* animación de fin de partido: derrota, victoria y presentación del MVP */
+.rl-intro{position:absolute;inset:0;z-index:30;overflow:hidden;background:#070507;animation:rlInFade .25s ease both}
+.rl-intro.out{animation:rlInOut .5s ease forwards}
+.rl-in-stage{position:sticky;top:0;height:min(100%,calc(100svh - 64px));overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.rl-stage:fullscreen .rl-in-stage,.rl-stage.rl-pfs .rl-in-stage{top:0;height:min(100%,100svh)}
+.rl-in-score{display:flex;align-items:baseline;gap:14px;margin-top:22px;font-family:var(--font-ui);font-weight:700;font-size:clamp(13px,1.5vw,19px);letter-spacing:4px;text-transform:uppercase;color:var(--gray-light);opacity:0;animation:rlCelUp .5s ease .9s both}
+.rl-in-score b{font-family:var(--font-display);font-size:clamp(34px,4vw,56px);font-weight:400;letter-spacing:2px;color:#fff;line-height:1}
+.rl-in-score i{font-style:normal;color:var(--gray)}
+/* derrota */
+.rl-intro.l{background:radial-gradient(ellipse 60% 55% at 50% 45%,#2b0b13 0,#0b0607 70%)}
+.rl-intro.l .rl-in-stage{animation:rlLoseOff .45s ease-in 2.95s forwards}
+.rl-lose-word{position:relative;font-family:var(--font-display);font-size:clamp(96px,17vw,250px);letter-spacing:12px;line-height:.85;color:#d6d0d2;text-shadow:0 0 40px rgba(200,30,60,0.5);animation:rlLoseSlam .55s cubic-bezier(.2,.9,.3,1) .1s both}
+.rl-lose-word span{display:block}
+.rl-lose-word .a{clip-path:polygon(0 0,100% 0,100% 47%,84% 55%,66% 45%,49% 59%,31% 46%,15% 56%,0 48%);animation:rlLoseA .5s cubic-bezier(.3,1.4,.5,1) 1.35s forwards}
+.rl-lose-word .b{position:absolute;inset:0;clip-path:polygon(0 48%,15% 56%,31% 46%,49% 59%,66% 45%,84% 55%,100% 47%,100% 100%,0 100%);animation:rlLoseB .6s cubic-bezier(.3,1.4,.5,1) 1.35s forwards}
+.rl-lose-crack{position:absolute;left:-4%;right:-4%;top:50%;height:3px;background:#fff;box-shadow:0 0 18px #ff2050,0 0 4px #fff;transform:scaleX(0);opacity:0;animation:rlLoseCrack .5s ease-out 1.15s}
+.rl-lose-shards i{position:absolute;left:50%;top:48%;width:var(--s);height:var(--s);background:#bdb6b8;clip-path:polygon(50% 0,100% 80%,0 100%);opacity:0;animation:rlShard 1.2s cubic-bezier(.15,.7,.3,1) 1.35s}
+.rl-intro.l::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,0.25) 0 2px,transparent 2px 4px);pointer-events:none}
+/* victoria */
+.rl-intro.w{background:radial-gradient(ellipse 65% 60% at 50% 48%,rgba(224,64,160,0.45),rgba(224,64,160,0) 70%),#0b060a}
+.rl-intro.w::after,.rl-intro.m::after{content:'';position:absolute;inset:0;background:#fff;opacity:0;animation:rlCelFlash .6s ease-out .05s;pointer-events:none}
+.rl-intro.w .rl-in-stage{animation:rlWinAway .4s ease-in 3s forwards}
+.rl-win-rays{position:absolute;left:50%;top:48%;width:240vmax;height:240vmax;margin:-120vmax 0 0 -120vmax;background:repeating-conic-gradient(rgba(245,196,81,0.13) 0 4deg,transparent 4deg 14deg);-webkit-mask-image:radial-gradient(circle,#000 0,transparent 30%);mask-image:radial-gradient(circle,#000 0,transparent 30%);animation:rlCelSpin 14s linear infinite}
+.rl-win-ring{position:absolute;left:50%;top:48%;width:40px;height:40px;transform:translate(-50%,-50%);border:3px solid #F5C451;border-radius:50%;opacity:0;animation:rlCelRing 1.2s ease-out .2s}
+.rl-win-word{position:relative;font-family:var(--font-display);font-size:clamp(96px,16vw,240px);letter-spacing:10px;line-height:.85;filter:drop-shadow(0 0 30px rgba(224,64,160,0.7))}
+.rl-win-word span{display:inline-block;background:linear-gradient(180deg,#fff 0,#fff 38%,#FFE3A0 52%,#F5C451 64%,#fff 100%);-webkit-background-clip:text;background-clip:text;color:transparent;animation:rlWinLetter .6s cubic-bezier(.3,1.6,.5,1) calc(.15s + var(--i) * .06s) both,rlWinShine .5s ease calc(1.5s + var(--i) * .05s)}
+.rl-win-sub{font-family:var(--font-ui);font-weight:700;font-size:clamp(12px,1.3vw,17px);letter-spacing:8px;text-transform:uppercase;color:#F5C451;margin-bottom:10px;opacity:0;animation:rlCelUp .5s ease .7s both}
+.rl-in-conf i{position:absolute;top:-30px;width:8px;height:16px;border-radius:1px;z-index:4;animation:rlCelFall linear forwards}
+/* MVP */
+.rl-intro.m{background:radial-gradient(ellipse 55% 70% at 66% 100%,rgba(245,196,81,0.28),rgba(245,196,81,0) 70%),radial-gradient(ellipse 70% 60% at 30% 40%,rgba(224,64,160,0.25),rgba(224,64,160,0) 70%),#070507}
+.rl-intro.m .rl-in-stage{display:block;text-align:left}
+.rl-mv-beams i{position:absolute;top:-8%;width:34%;height:125%;background:linear-gradient(180deg,rgba(255,226,160,0.26),rgba(255,226,160,0) 80%);clip-path:polygon(44% 0,56% 0,100% 100%,0 100%);transform-origin:50% 0;mix-blend-mode:screen;filter:blur(10px);opacity:0;animation:rlInFade .8s ease .3s forwards,rlMvSwing 3.2s ease-in-out .3s infinite alternate}
+.rl-mv-beams i:nth-child(1){left:36%;--a:-24deg;--b:6deg}
+.rl-mv-beams i:nth-child(2){left:50%;--a:18deg;--b:-10deg;animation-delay:.3s,.9s}
+.rl-mv-beams i:nth-child(3){left:62%;--a:-8deg;--b:22deg;animation-delay:.3s,1.6s}
+.rl-mv-bg{position:absolute;right:3%;top:50%;transform:translateY(-50%);font-family:var(--font-display);font-size:clamp(220px,36vw,560px);line-height:.8;letter-spacing:6px;color:transparent;-webkit-text-stroke:3px rgba(245,196,81,0.28);animation:rlMvBg 9.6s ease-out .1s both}
+.rl-mv-photo{position:absolute;right:8%;bottom:0;height:94%;z-index:2;animation:rlMvRise 2.3s cubic-bezier(.2,.8,.3,1) .35s both}
+.rl-mv-photo img{height:100%;width:auto;display:block;animation:rlMvFloat 2.6s ease-in-out 2.8s infinite alternate}
+.rl-mv-flash{position:absolute;inset:0;background:radial-gradient(circle at 66% 55%,#fff,rgba(255,255,255,0) 60%);opacity:0;z-index:3;animation:rlCelFlash .7s ease-out 2.25s;pointer-events:none}
+.rl-mv-txt{position:absolute;left:6%;top:50%;transform:translateY(-50%);z-index:4;max-width:52%}
+.rl-mv-kicker{font-family:var(--font-ui);font-weight:700;font-size:clamp(13px,1.4vw,19px);letter-spacing:8px;text-transform:uppercase;color:#F5C451;animation:rlCelUp .5s ease 1s both}
+.rl-mv-mvp{font-family:var(--font-display);font-size:clamp(80px,12vw,180px);line-height:.85;letter-spacing:6px;color:#fff;text-shadow:0 0 40px rgba(245,196,81,0.6);animation:rlCelSlam .5s cubic-bezier(.3,1.6,.5,1) 1.25s both}
+.rl-mv-name{font-family:var(--font-display);font-size:clamp(40px,5.6vw,84px);letter-spacing:3px;line-height:1;color:var(--pink);margin-top:6px;animation:rlCelSlam .5s cubic-bezier(.3,1.6,.5,1) 2.35s both}
+.rl-mv-clase{font-family:var(--font-ui);font-weight:700;font-size:clamp(12px,1.3vw,17px);letter-spacing:4px;text-transform:uppercase;color:var(--gray-light);margin-top:8px;animation:rlCelUp .5s ease 2.6s both}
+.rl-mv-stats{display:flex;gap:clamp(8px,1.2vw,16px);margin-top:clamp(14px,2.2vw,28px)}
+.rl-mv-stats div{min-width:clamp(62px,7vw,100px);padding:10px 12px 8px;border:1px solid rgba(245,196,81,0.35);background:rgba(10,6,8,0.7);border-radius:3px;text-align:center;animation:rlCelUp .45s ease calc(2.9s + var(--i) * .15s) both}
+.rl-mv-stats b{display:block;font-family:var(--font-display);font-weight:400;font-size:clamp(30px,3.4vw,50px);line-height:1;color:#fff}
+.rl-mv-stats span{font-family:var(--font-ui);font-weight:700;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gray-light)}
+@keyframes rlInFade{from{opacity:0}to{opacity:1}}
+@keyframes rlInOut{to{opacity:0;visibility:hidden}}
+@keyframes rlLoseSlam{0%{opacity:0;transform:scale(2.4);filter:blur(12px)}70%{opacity:1;transform:scale(.96);filter:blur(0)}85%{transform:scale(1.02) translateX(-6px)}100%{transform:scale(1)}}
+@keyframes rlLoseA{to{transform:translate(-1.5%,-5%) rotate(-2.5deg)}}
+@keyframes rlLoseB{to{transform:translate(2%,7%) rotate(3deg);color:#8d8487}}
+@keyframes rlLoseCrack{0%{opacity:1;transform:scaleX(0)}60%{opacity:1;transform:scaleX(1)}100%{opacity:0;transform:scaleX(1)}}
+@keyframes rlShard{0%{opacity:1;transform:translate(-50%,-50%) rotate(0)}100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(var(--r))}}
+@keyframes rlLoseOff{0%{transform:none;filter:none}55%{transform:scale(1.02,.006);filter:brightness(3)}100%{transform:scale(0,.006);filter:brightness(3)}}
+@keyframes rlWinLetter{0%{opacity:0;transform:translateY(-70%) scale(2.6)}100%{opacity:1;transform:none}}
+@keyframes rlWinShine{50%{filter:brightness(1.8)}}
+@keyframes rlWinAway{to{opacity:0;transform:scale(1.18);filter:blur(6px)}}
+@keyframes rlMvSwing{from{transform:rotate(var(--a))}to{transform:rotate(var(--b))}}
+@keyframes rlMvBg{0%{opacity:0;transform:translateY(-50%) scale(1.5)}15%{opacity:1;transform:translateY(-50%) scale(1)}100%{opacity:1;transform:translateY(-50%) scale(1.08)}}
+@keyframes rlMvRise{0%{opacity:0;transform:translateY(30%);filter:brightness(0)}45%{opacity:1;transform:none;filter:brightness(0) drop-shadow(0 0 26px rgba(245,196,81,0.95))}82%{filter:brightness(0) drop-shadow(0 0 26px rgba(245,196,81,0.95))}100%{opacity:1;transform:none;filter:brightness(1) drop-shadow(0 0 34px rgba(224,64,160,0.55))}}
+@keyframes rlMvFloat{from{transform:translateY(0)}to{transform:translateY(-1.5%)}}
 /* sin partido */
 .rl-off{display:flex;flex-direction:column;align-items:center;text-align:center;padding:clamp(48px,8vw,90px) 24px}
 .rl-radar{position:relative;width:120px;height:120px;margin-bottom:30px}
@@ -1052,14 +1115,36 @@ body.rl-is-live .nav-live-dot{display:inline-block}
 .rl-stage.rl-compact .rl-end.mvp-club .rl-end-teams{display:none}
 .rl-stage.rl-compact .rl-hide-sm{display:table-cell}
 .rl-stage.rl-compact .rl-fs-txt{display:inline}
+.rl-stage.rl-compact .rl-lose-word,.rl-stage.rl-compact .rl-win-word{font-size:120px}
+.rl-stage.rl-compact .rl-mv-mvp{font-size:84px}
+.rl-stage.rl-compact .rl-mv-name{font-size:40px}
+.rl-stage.rl-compact .rl-mv-stats{margin-top:10px}
+.rl-stage.rl-compact .rl-mv-stats b{font-size:28px}
+.rl-stage.rl-compact .rl-mv-bg{font-size:300px}
 @media(max-width:760px){
-  .rl-stage:not(.rl-compact) .rl-cel-in{position:sticky;top:64px;height:max(440px,calc(100svh - 200px));max-height:100%}
+  .rl-stage:not(.rl-compact) .rl-cel-in{position:sticky;top:0;height:max(440px,calc(100svh - 200px));max-height:100%}
   .rl-stage:not(.rl-compact) .rl-cel-photo{right:50%;transform:translateX(50%);height:78%;bottom:16%}
   .rl-stage:not(.rl-compact) .rl-cel-txt{left:0;right:0;top:auto;bottom:4%;transform:none;text-align:center;max-width:none}
   .rl-stage:not(.rl-compact) .rl-cel-word{font-size:64px}
   .rl-stage:not(.rl-compact) .rl-cel-name{font-size:32px;margin-top:4px}
   .rl-stage:not(.rl-compact) .rl-cel-num{right:50%;transform:translate(50%,-50%);font-size:300px;animation:none}
   .rl-stage:not(.rl-compact) .rl-cel-rays,.rl-stage:not(.rl-compact) .rl-cel-ring{left:50%;top:45%}
+  .rl-stage:not(.rl-compact) .rl-in-stage{height:min(100%,max(440px,calc(100svh - 200px)))}
+  .rl-stage:not(.rl-compact) .rl-mv-photo{right:50%;transform:translateX(50%);height:54%;bottom:40%;animation:none}
+  .rl-stage:not(.rl-compact) .rl-mv-photo img{animation:rlMvRise 2.3s cubic-bezier(.2,.8,.3,1) .35s both}
+  .rl-stage:not(.rl-compact) .rl-mv-clase{display:none}
+  .rl-stage:not(.rl-compact) .rl-mv-txt{left:14px;right:14px;top:auto;bottom:4%;transform:none;text-align:center;max-width:none}
+  .rl-stage:not(.rl-compact) .rl-mv-mvp{font-size:54px}
+  .rl-stage:not(.rl-compact) .rl-mv-name{font-size:34px;margin-top:2px}
+  .rl-stage:not(.rl-compact) .rl-mv-kicker{font-size:11px;letter-spacing:5px}
+  .rl-stage:not(.rl-compact) .rl-mv-stats{margin-top:10px}
+  .rl-stage:not(.rl-compact) .rl-mv-stats{justify-content:center}
+  .rl-stage:not(.rl-compact) .rl-mv-stats div{min-width:0;flex:1;padding:8px 4px 6px}
+  .rl-stage:not(.rl-compact) .rl-mv-stats b{font-size:28px}
+  .rl-stage:not(.rl-compact) .rl-mv-stats span{font-size:9px;letter-spacing:1px}
+  .rl-stage:not(.rl-compact) .rl-mv-bg{right:50%;transform:translate(50%,-50%);top:32%;font-size:220px;animation:none}
+  .rl-stage:not(.rl-compact) .rl-in-score{flex-wrap:wrap;justify-content:center;gap:8px 12px;letter-spacing:2px}
+  .rl-stage:not(.rl-compact) .rl-lose-word,.rl-stage:not(.rl-compact) .rl-win-word{font-size:clamp(64px,19vw,110px);letter-spacing:4px}
 }
 body.rl-noscroll{overflow:hidden}
 body.rl-noscroll #envivo{z-index:9000}
@@ -1707,6 +1792,7 @@ const players = [
     intro:  'intro-cousinho.webp',
     gol:    'gol-cousinho.webp',    // foto celebrando (celebración de gol en En vivo)
     golAudio: 'music/gol-cousinho.mp3', // fragmento que suena con su gol
+    mvp:    'mvp-cousinho.webp',     // foto para la presentación de MVP al ganar
     stats: [
       { name: 'Creatividad',  val: 98 },
       { name: 'Farming',    val: 86 },
@@ -1731,6 +1817,7 @@ const players = [
     intro:  'intro-la-oruga.webp',
     gol:    'gol-la-oruga.webp',    // foto celebrando (celebración de gol en En vivo)
     golAudio: 'music/gol-la-oruga.mp3', // fragmento que suena con su gol
+    mvp:    'mvp-la-oruga.webp',     // foto para la presentación de MVP al ganar
     stats: [
       { name: 'Barbacoa',       val: 100 },
       { name: 'Nevera',    val: 91 },
@@ -1755,6 +1842,7 @@ const players = [
     intro:  'intro-gatopija.webp',
     gol:    'gol-gatopija.webp',    // foto celebrando (celebración de gol en En vivo)
     golAudio: 'music/gol-gatopija.mp3', // fragmento que suena con su gol
+    mvp:    'mvp-gatopija.webp',     // foto para la presentación de MVP al ganar
     stats: [
       { name: 'PING',     val: 40 },
       { name: 'Historia',    val: 98 },
@@ -3118,10 +3206,12 @@ function rlRender(nuevoDato) {
     stage.dataset.mode = mode;
     document.body.classList.toggle('rl-is-live', mode === 'live');
     rlPrevGoals = null; rlPrevScore = null;
+    (rlEndIntro.tms || []).forEach(clearTimeout);
     if (mode === 'live') rlSkeletonLive();
     else if (mode === 'fin') rlRenderFin(rlRow.state);
     else rlRenderOff();
   }
+  if (mode === 'live') rlRender.liveGuid = guid;
   if (mode === 'live' && nuevoDato) rlUpdateLive(rlRow.state);
   if (mode === 'fin') rlUpdateWait();
 }
@@ -3178,7 +3268,7 @@ function rlSkeletonLive() {
       <div class="rl-cel-photo"><img class="main" alt=""><i class="g g1"></i><i class="g g2"></i></div>
       <div class="rl-cel-txt"><div class="rl-cel-word" data-t="¡GOOOL!">¡GOOOL!</div><div class="rl-cel-name" id="rl-cel-name"></div><div class="rl-cel-meta" id="rl-cel-meta"></div></div>
       <div class="rl-cel-conf" id="rl-cel-conf"></div></div></div>`;
-  players.forEach(p => { if (p.gol) new Image().src = p.gol; });   // precarga de las fotos de celebración
+  players.forEach(p => { if (p.gol) new Image().src = p.gol; if (p.mvp) new Image().src = p.mvp; });   // precarga de las fotos de celebración
 }
 
 function rlTable(list, us) {
@@ -3362,6 +3452,68 @@ function rlRenderFin(s) {
       <div class="rl-end-wait"><span class="rl-dots">Esperando la siguiente partida</span> · la sala se cierra en <b id="rl-wait"></b></div>
     </div>`;
   rlUpdateWait();
+  // La animación solo sale si el partido acaba de terminar (o lo estábamos viendo en directo),
+  // así quien abre la web más tarde va directo al resumen.
+  const finEn = new Date(s.terminadoEn || rlRow.updated_at).getTime();
+  if (res !== 'd' && rlEndIntro.guid !== s.guid && (rlRender.liveGuid === s.guid || Date.now() - finEn < 60000)) {
+    rlEndIntro.guid = s.guid;
+    rlEndIntro(s, res, mvp);
+  }
+}
+
+// ── animación de fin de partido ──
+// Derrota: "DERROTA" se rompe y la pantalla se apaga. Victoria: "VICTORIA" y, si el MVP es
+// uno de los tres, su presentación con foto y su audio. Después queda la sala de siempre.
+const RL_INTRO_MS = 3400;
+function rlEndIntro(s, res, mvp) {
+  const view = document.getElementById('rl-view');
+  const el = document.createElement('div');
+  el.className = 'rl-intro ' + res;
+  view.appendChild(el);
+  const tms = rlEndIntro.tms = [];
+  const later = (fn, ms) => tms.push(setTimeout(fn, ms));
+  const salir = () => { el.classList.add('out'); later(() => el.remove(), 600); };
+  const { us, them } = rlSides(s);
+  const marcador = `<div class="rl-in-score"><span>Tolerancia 0'1</span><b>${us.goles}</b><i>–</i><b>${them.goles}</b><span>${rlEsc(rlRival(s))}</span></div>`;
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  const confeti = (n, colores, desde) => `<div class="rl-in-conf">${Array.from({ length: n }, () =>
+    `<i style="left:${rnd(0, 100)}%;background:${colores[Math.floor(Math.random() * colores.length)]};--y:${view.clientHeight + 60}px;--r:${rnd(360, 1080)}deg;animation-duration:${rnd(1.8, 3.6)}s;animation-delay:${desde + rnd(0, 1.2)}s"></i>`).join('')}</div>`;
+
+  if (res === 'l') {
+    el.innerHTML = `<div class="rl-in-stage">
+      <div class="rl-lose-word"><span class="a">DERROTA</span><span class="b">DERROTA</span><div class="rl-lose-crack"></div></div>${marcador}
+      <div class="rl-lose-shards">${Array.from({ length: 16 }, () =>
+        `<i style="--s:${rnd(8, 26)}px;--x:${rnd(-45, 45)}vw;--y:${rnd(-30, 40)}vh;--r:${rnd(-400, 400)}deg"></i>`).join('')}</div></div>`;
+    later(salir, RL_INTRO_MS);
+    return;
+  }
+  el.innerHTML = `<div class="rl-in-stage"><div class="rl-win-rays"></div><div class="rl-win-ring"></div>
+    <div class="rl-win-sub">Tolerancia 0'1 gana</div>
+    <div class="rl-win-word">${[...'VICTORIA'].map((ch, i) => `<span style="--i:${i}">${ch}</span>`).join('')}</div>${marcador}
+    ${confeti(60, ['#F5C451', '#FFE3A0', '#E040A0', '#ffffff'], 0.2)}</div>`;
+  const c = mvp && mvp.club && rlClub(mvp.nombre);
+  if (!c) { later(salir, RL_INTRO_MS); return; }
+  later(() => {
+    el.className = 'rl-intro m';
+    const stats = [['pts', 'Puntos'], ['goles', 'Goles'], ['asist', 'Asist.'], ['paradas', 'Paradas']];
+    el.innerHTML = `<div class="rl-in-stage">
+      <div class="rl-mv-beams"><i></i><i></i><i></i></div>
+      <div class="rl-mv-bg">MVP</div>
+      <div class="rl-mv-photo"><img src="${c.mvp || c.gol || c.photo}" alt="${rlEsc(mvp.nombre)}"></div>
+      <div class="rl-mv-flash"></div>
+      <div class="rl-mv-txt"><div class="rl-mv-kicker">Jugador del partido</div><div class="rl-mv-mvp">MVP</div>
+        <div class="rl-mv-name">${rlEsc(mvp.nombre)}</div><div class="rl-mv-clase">${rlEsc(c.clase)} · Nv. ${c.nivel}</div>
+        <div class="rl-mv-stats">${stats.map(([k, t], i) => `<div style="--i:${i}"><b data-n="${+mvp[k] || 0}">0</b><span>${t}</span></div>`).join('')}</div></div>
+      ${confeti(50, ['#F5C451', '#FFE3A0', '#ffffff'], 2.3)}</div>`;
+    rlPlayGoalSound(c);
+    // los números de las estadísticas suben de 0 a su valor
+    el.querySelectorAll('.rl-mv-stats b').forEach((b, i) => later(() => {
+      const n = +b.dataset.n, t0 = performance.now();
+      const paso = t => { const k = Math.min(1, (t - t0) / 900); b.textContent = Math.round(n * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(paso); };
+      requestAnimationFrame(paso);
+    }, 3000 + i * 150));
+    later(salir, RL_CEL_MS);
+  }, RL_INTRO_MS);
 }
 
 function rlMvpCard(p, s) {

@@ -894,6 +894,46 @@
 @keyframes rlGlitchA{0%{clip-path:inset(0 0 60% 0)}50%{clip-path:inset(40% 0 10% 0)}100%{clip-path:inset(70% 0 0 0)}}
 @keyframes rlGlitchB{0%{clip-path:inset(55% 0 0 0)}50%{clip-path:inset(0 0 70% 0)}100%{clip-path:inset(20% 0 45% 0)}}
 
+
+/* celebración de gol de uno de los nuestros */
+.rl-cel{position:absolute;inset:0;z-index:21;display:none;overflow:hidden;pointer-events:none;background:radial-gradient(ellipse 70% 80% at 68% 62%,rgba(224,64,160,0.42),rgba(224,64,160,0) 72%),#0b060a}
+.rl-cel.show{display:block;animation:rlCelLife 10s ease forwards}
+.rl-cel::after{content:'';position:absolute;inset:0;background:#fff;opacity:0;animation:rlCelFlash .55s ease-out .05s;z-index:6}
+.rl-cel-in{position:absolute;inset:0;animation:rlCelShake .5s linear .15s}
+.rl-cel-rays{position:absolute;left:68%;top:62%;width:240vmax;height:240vmax;margin:-120vmax 0 0 -120vmax;background:repeating-conic-gradient(rgba(224,64,160,0.15) 0 5deg,transparent 5deg 16deg);-webkit-mask-image:radial-gradient(circle,#000 0,transparent 30%);mask-image:radial-gradient(circle,#000 0,transparent 30%);animation:rlCelSpin 16s linear infinite}
+.rl-cel-ring{position:absolute;left:68%;top:62%;width:40px;height:40px;transform:translate(-50%,-50%);border:3px solid var(--pink);border-radius:50%;opacity:0;animation:rlCelRing 1.1s ease-out .12s}
+.rl-cel-ring.r2{border-color:rgba(255,255,255,0.55);border-width:2px;animation-delay:.38s}
+.rl-cel-num{position:absolute;right:3%;top:50%;font-family:var(--font-display);font-size:clamp(220px,40vw,560px);line-height:.8;color:transparent;-webkit-text-stroke:3px rgba(224,64,160,0.5);animation:rlCelNum 9.6s ease .2s both}
+.rl-cel-photo{position:absolute;right:7%;bottom:0;height:94%;z-index:2}
+.rl-cel-photo img{height:100%;width:auto;display:block}
+.rl-cel-photo .main{filter:drop-shadow(0 0 34px rgba(224,64,160,0.55));animation:rlCelIn .75s cubic-bezier(.2,.9,.25,1.15) .15s both,rlCelFloat 2.4s ease-in-out .95s infinite alternate}
+.rl-cel-photo .g{position:absolute;inset:0;mix-blend-mode:screen;opacity:0;-webkit-mask:var(--m) center/100% 100% no-repeat;mask:var(--m) center/100% 100% no-repeat}
+.rl-cel-photo .g1{background:var(--pink);animation:rlCelGlitch .7s steps(1) .2s,rlCelGlitch .5s steps(1) 5s}
+.rl-cel-photo .g2{background:#3ff0ff;animation:rlCelGlitch .6s steps(1) .28s reverse,rlCelGlitch .45s steps(1) 5.08s reverse}
+.rl-cel-txt{position:absolute;left:6%;top:50%;transform:translateY(-50%);z-index:3;max-width:56%}
+.rl-cel-word{position:relative;font-family:var(--font-display);font-size:clamp(70px,11vw,170px);line-height:.85;letter-spacing:4px;color:#fff;text-shadow:0 0 40px rgba(224,64,160,0.8);animation:rlCelSlam .5s cubic-bezier(.3,1.6,.5,1) .35s both}
+.rl-cel-word::before,.rl-cel-word::after{content:attr(data-t);position:absolute;inset:0;mix-blend-mode:screen}
+.rl-cel-word::before{color:var(--pink);transform:translate(-4px,2px);animation:rlGlitchA .35s steps(2) infinite}
+.rl-cel-word::after{color:#3ff0ff;opacity:.7;transform:translate(4px,-2px);animation:rlGlitchB .4s steps(2) infinite}
+.rl-cel-name{font-family:var(--font-display);font-size:clamp(34px,5vw,74px);letter-spacing:3px;line-height:1;color:var(--pink);margin-top:12px;animation:rlCelUp .5s ease .7s both}
+.rl-cel-meta{font-family:var(--font-ui);font-size:clamp(12px,1.4vw,18px);font-weight:700;letter-spacing:5px;text-transform:uppercase;color:var(--gray-light);margin-top:10px;animation:rlCelUp .5s ease .9s both}
+.rl-cel-conf i{position:absolute;top:-30px;width:8px;height:16px;border-radius:1px;z-index:4;animation:rlCelFall linear forwards}
+@keyframes rlCelLife{0%{opacity:0}2%{opacity:1}93%{clip-path:inset(0 0 0 0)}100%{clip-path:inset(0 0 0 100%)}}
+@keyframes rlCelFlash{0%{opacity:.85}100%{opacity:0}}
+@keyframes rlCelShake{0%,100%{transform:none}20%{transform:translate(-10px,6px)}40%{transform:translate(9px,-7px)}60%{transform:translate(-6px,4px)}80%{transform:translate(4px,-3px)}}
+@keyframes rlCelSpin{to{transform:rotate(360deg)}}
+@keyframes rlCelRing{0%{opacity:1;width:40px;height:40px}100%{opacity:0;width:150vmax;height:150vmax}}
+@keyframes rlCelNum{0%{opacity:0;transform:translateY(-50%) scale(1.6)}12%{opacity:1;transform:translateY(-50%) scale(1)}100%{opacity:1;transform:translateY(-50%) scale(1.08)}}
+@keyframes rlCelIn{0%{transform:translateX(130%) skewX(-18deg);opacity:0}60%{opacity:1}75%{transform:translateX(-5%) skewX(4deg)}100%{transform:none;opacity:1}}
+@keyframes rlCelFloat{from{transform:none}to{transform:translateY(-10px) scale(1.015)}}
+@keyframes rlCelGlitch{0%{opacity:.55;transform:translateX(-12px);clip-path:inset(14% 0 80% 0)}20%{transform:translateX(10px);clip-path:inset(48% 0 45% 0)}40%{transform:translateX(-7px);clip-path:inset(30% 0 63% 0)}60%{opacity:.4;transform:translateX(5px);clip-path:inset(80% 0 14% 0)}100%{opacity:0}}
+@keyframes rlCelSlam{0%{opacity:0;transform:scale(2.6) rotate(-6deg)}100%{opacity:1;transform:none}}
+@keyframes rlCelUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes rlCelFall{to{transform:translateY(var(--y,900px)) rotate(var(--r,540deg))}}
+.rl-snd{margin-left:auto;font-size:15px;padding:5px 12px}
+.rl-snd + .rl-fs-btn{margin-left:0}
+.rl-snd.on{color:var(--pink);border-color:rgba(224,64,160,0.5)}
+
 /* sin partido */
 .rl-off{display:flex;flex-direction:column;align-items:center;text-align:center;padding:clamp(48px,8vw,90px) 24px}
 .rl-radar{position:relative;width:120px;height:120px;margin-bottom:30px}
@@ -956,12 +996,12 @@ body.rl-is-live .nav-live-dot{display:inline-block}
 /* pantalla completa (nativa o simulada en iPhone) */
 .rl-stage:fullscreen,.rl-stage.rl-pfs{border:none;border-radius:0;background:var(--dark);overflow-y:auto;display:flex;flex-direction:column;justify-content:center}
 .rl-stage.rl-pfs{position:fixed;inset:0;z-index:9000}
-.rl-stage:fullscreen #rl-view,.rl-stage.rl-pfs #rl-view{width:100%;max-width:1500px;margin:0 auto}
+.rl-stage:fullscreen #rl-view,.rl-stage.rl-pfs #rl-view{width:100%;max-width:1500px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;justify-content:center}
 .rl-stage:fullscreen .rl-bar,.rl-stage.rl-pfs .rl-bar{position:sticky;top:0;z-index:6}
 .rl-stage:fullscreen .rl-feed,.rl-stage.rl-pfs .rl-feed{max-height:42vh}
 /* móvil en pantalla completa: horizontal y compacto */
 .rl-stage.rl-rot{display:block;overflow:hidden}
-.rl-stage.rl-rot #rl-view{position:absolute;top:0;left:100%;max-width:none;margin:0;transform-origin:top left;transform:rotate(90deg);overflow-y:auto;background:var(--dark)}
+.rl-stage.rl-rot #rl-view{position:absolute;top:0;left:100%;max-width:none;margin:0;transform-origin:top left;transform:rotate(90deg);overflow-y:auto;min-height:0;background:var(--dark)}
 .rl-stage.rl-compact{justify-content:flex-start}
 .rl-stage.rl-compact .rl-bar{padding:6px 14px;gap:10px;flex-wrap:nowrap}
 .rl-stage.rl-compact .rl-meta{font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -1012,6 +1052,15 @@ body.rl-is-live .nav-live-dot{display:inline-block}
 .rl-stage.rl-compact .rl-end.mvp-club .rl-end-teams{display:none}
 .rl-stage.rl-compact .rl-hide-sm{display:table-cell}
 .rl-stage.rl-compact .rl-fs-txt{display:inline}
+@media(max-width:760px){
+  .rl-stage:not(.rl-compact) .rl-cel-in{position:sticky;top:64px;height:max(440px,calc(100svh - 200px));max-height:100%}
+  .rl-stage:not(.rl-compact) .rl-cel-photo{right:50%;transform:translateX(50%);height:78%;bottom:16%}
+  .rl-stage:not(.rl-compact) .rl-cel-txt{left:0;right:0;top:auto;bottom:4%;transform:none;text-align:center;max-width:none}
+  .rl-stage:not(.rl-compact) .rl-cel-word{font-size:64px}
+  .rl-stage:not(.rl-compact) .rl-cel-name{font-size:32px;margin-top:4px}
+  .rl-stage:not(.rl-compact) .rl-cel-num{right:50%;transform:translate(50%,-50%);font-size:300px;animation:none}
+  .rl-stage:not(.rl-compact) .rl-cel-rays,.rl-stage:not(.rl-compact) .rl-cel-ring{left:50%;top:45%}
+}
 body.rl-noscroll{overflow:hidden}
 body.rl-noscroll #envivo{z-index:9000}
 
@@ -1656,6 +1705,8 @@ const players = [
     num:    '01',
     dorsal: '05',
     intro:  'intro-cousinho.webp',
+    gol:    'gol-cousinho.webp',    // foto celebrando (celebración de gol en En vivo)
+    golAudio: 'music/gol-cousinho.mp3', // fragmento que suena con su gol
     stats: [
       { name: 'Creatividad',  val: 98 },
       { name: 'Farming',    val: 86 },
@@ -1678,6 +1729,8 @@ const players = [
     num:    '02',
     dorsal: '23',
     intro:  'intro-la-oruga.webp',
+    gol:    'gol-la-oruga.webp',    // foto celebrando (celebración de gol en En vivo)
+    golAudio: 'music/gol-la-oruga.mp3', // fragmento que suena con su gol
     stats: [
       { name: 'Barbacoa',       val: 100 },
       { name: 'Nevera',    val: 91 },
@@ -1700,6 +1753,8 @@ const players = [
     num:    '03',
     dorsal: '14',
     intro:  'intro-gatopija.webp',
+    gol:    'gol-gatopija.webp',    // foto celebrando (celebración de gol en En vivo)
+    golAudio: 'music/gol-gatopija.mp3', // fragmento que suena con su gol
     stats: [
       { name: 'PING',     val: 40 },
       { name: 'Historia',    val: 98 },
@@ -2471,6 +2526,8 @@ const TRACKS = [
   let cur = 0, isPlaying = false;
   const aud = new Audio();
   aud.volume = 0.8;
+  // La celebración de gol de En vivo baja la música mientras suena su audio.
+  window.t01MusicDuck = on => { aud.volume = on ? 0.15 : 0.8; };
 
   const disc = document.getElementById('disc');
   const btnPlay = document.getElementById('btn-play');
@@ -3022,6 +3079,7 @@ const RL_FS_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" s
 function rlBar(badge, meta) {
   const fs = document.fullscreenElement || document.getElementById('rl-stage').classList.contains('rl-pfs');
   return `<div class="rl-bar">${badge}${meta}
+    <button class="rl-fs-btn rl-snd${rlSoundOn ? ' on' : ''}" onclick="rlToggleSound()" title="Sonido de los goles">${rlSoundOn ? '🔊' : '🔇'}</button>
     <button class="rl-fs-btn" onclick="rlToggleFS()">${RL_FS_ICON}<span class="rl-fs-txt">${fs ? 'Salir' : 'Pantalla completa'}</span></button></div>`;
 }
 
@@ -3113,7 +3171,14 @@ function rlSkeletonLive() {
       <div class="rl-panel them"><div class="rl-panel-h" id="rl-h-them">Rival</div><div id="rl-tbl-them"></div></div>
       <div class="rl-panel rl-feed-panel"><div class="rl-panel-h">Crónica</div><ul class="rl-feed" id="rl-feed"></ul></div>
     </div>
-    <div class="rl-flash" id="rl-flash"><div class="rl-flash-word" id="rl-flash-word"></div><div class="rl-flash-who" id="rl-flash-who"></div></div>`;
+    <div class="rl-flash" id="rl-flash"><div class="rl-flash-word" id="rl-flash-word"></div><div class="rl-flash-who" id="rl-flash-who"></div></div>
+    <div class="rl-cel" id="rl-cel"><div class="rl-cel-in">
+      <div class="rl-cel-rays"></div><div class="rl-cel-ring"></div><div class="rl-cel-ring r2"></div>
+      <div class="rl-cel-num" id="rl-cel-num"></div>
+      <div class="rl-cel-photo"><img class="main" alt=""><i class="g g1"></i><i class="g g2"></i></div>
+      <div class="rl-cel-txt"><div class="rl-cel-word" data-t="¡GOOOL!">¡GOOOL!</div><div class="rl-cel-name" id="rl-cel-name"></div><div class="rl-cel-meta" id="rl-cel-meta"></div></div>
+      <div class="rl-cel-conf" id="rl-cel-conf"></div></div></div>`;
+  players.forEach(p => { if (p.gol) new Image().src = p.gol; });   // precarga de las fotos de celebración
 }
 
 function rlTable(list, us) {
@@ -3180,7 +3245,11 @@ function rlUpdateLive(s) {
   // repetido no cuenta como gol nuevo (ni al abrir la página a mitad de partido)
   if (rlPrevScore && rlPrevScore.guid === s.guid) {
     const nuestro = us.goles > rlPrevScore.us, suyo = them.goles > rlPrevScore.them;
-    if (nuestro || suyo) rlGoalFlash(feed.find(e => e.tipo === 'gol' && (e.equipo === s.nuestroEquipo) === nuestro), nuestro);
+    if (nuestro || suyo) {
+      const gol = feed.find(e => e.tipo === 'gol' && (e.equipo === s.nuestroEquipo) === nuestro);
+      const crack = nuestro && gol && rlClub(gol.quien);   // gol de Cousinho, La Oruga o GatoPija
+      if (crack && crack.gol) rlCelebrate(crack, gol); else rlGoalFlash(gol, nuestro);
+    }
   }
   rlPrevScore = { guid: s.guid, us: us.goles, them: them.goles };
   rlTickClock();
@@ -3195,6 +3264,68 @@ function rlGoalFlash(gol, ours) {
   f.className = 'rl-flash ' + (ours ? 'us' : 'them');
   void f.offsetWidth; f.classList.add('show');
   clearTimeout(rlGoalFlash.tm); rlGoalFlash.tm = setTimeout(() => f.classList.remove('show'), 3000);
+}
+
+// Celebración de gol de uno de los tres: foto, dorsal, confeti y su audio.
+const RL_CEL_MS = 10000;   // lo mismo que duran los audios
+function rlCelebrate(p, gol) {
+  const c = document.getElementById('rl-cel');
+  if (!c) return;
+  const dorsal = p.dorsal || p.num;
+  document.getElementById('rl-cel-num').textContent = dorsal;
+  c.querySelector('.rl-cel-photo .main').src = p.gol;
+  c.querySelector('.rl-cel-photo').style.setProperty('--m', `url('${p.gol}')`);
+  document.getElementById('rl-cel-name').textContent = p.nick.replace(/"/g, '');
+  document.getElementById('rl-cel-meta').textContent = [ 'Dorsal ' + dorsal, gol.kmh ? gol.kmh + ' km/h' : '', gol.asist ? 'Asist. ' + gol.asist : '' ].filter(Boolean).join(' · ');
+  const conf = document.getElementById('rl-cel-conf'), alto = c.parentElement.clientHeight + 60;
+  const colores = ['#E040A0', '#F472C0', '#ffffff', '#9A1868'];
+  // Dos tandas de confeti: al marcar y a mitad de la celebración.
+  conf.innerHTML = Array.from({ length: 76 }, (_, i) =>
+    `<i style="left:${Math.random() * 100}%;background:${colores[Math.floor(Math.random() * 4)]};--y:${alto}px;--r:${360 + Math.random() * 720}deg;animation-duration:${1.8 + Math.random() * 1.8}s;animation-delay:${(i < 46 ? 0.25 : 5) + Math.random() * 1.2}s"></i>`).join('');
+  c.classList.remove('show'); void c.offsetWidth; c.classList.add('show');
+  rlPlayGoalSound(p);
+  clearTimeout(rlCelebrate.tm); rlCelebrate.tm = setTimeout(() => c.classList.remove('show'), RL_CEL_MS);
+}
+
+// ── sonido de los goles ──
+// Los navegadores solo dejan sonar audio después de que la persona toque algo en la página,
+// por eso el botón 🔊 (y el de pantalla completa) "desbloquean" los audios.
+let rlSoundOn = (() => { try { return localStorage.getItem('rlSound') === '1'; } catch (e) { return false; } })();
+const rlAudios = {};
+function rlAudioFor(p) {
+  if (!p.golAudio) return null;
+  if (!rlAudios[p.golAudio]) { const a = new Audio(p.golAudio); a.preload = 'auto'; rlAudios[p.golAudio] = a; }
+  return rlAudios[p.golAudio];
+}
+function rlUnlockSound() {
+  players.forEach(p => {
+    const a = rlAudioFor(p);
+    if (!a) return;
+    a.muted = true;
+    a.play().then(() => { a.pause(); a.currentTime = 0; a.muted = false; }).catch(() => { a.muted = false; });
+  });
+}
+function rlToggleSound(force) {
+  rlSoundOn = typeof force === 'boolean' ? force : !rlSoundOn;
+  try { localStorage.setItem('rlSound', rlSoundOn ? '1' : '0'); } catch (e) {}
+  if (rlSoundOn) rlUnlockSound();
+  document.querySelectorAll('#rl-stage .rl-snd').forEach(b => { b.textContent = rlSoundOn ? '🔊' : '🔇'; b.classList.toggle('on', rlSoundOn); });
+}
+// Si el sonido quedó activado en otra visita, se desbloquea con el primer toque en la página.
+['pointerdown', 'keydown'].forEach(ev => document.addEventListener(ev, function unlock() {
+  if (rlSoundOn) rlUnlockSound();
+  document.removeEventListener(ev, unlock);
+}, { once: true }));
+function rlPlayGoalSound(p) {
+  const a = rlSoundOn && rlAudioFor(p);
+  if (!a) return;
+  const fin = () => { a.pause(); if (window.t01MusicDuck) t01MusicDuck(false); };
+  if (window.t01MusicDuck) t01MusicDuck(true);
+  Object.values(rlAudios).forEach(o => { if (o !== a) o.pause(); });   // si marca otro a mitad, corta el anterior
+  a.currentTime = 0; a.muted = false;
+  a.play().catch(fin);
+  a.onended = fin;
+  clearTimeout(rlPlayGoalSound.tm); rlPlayGoalSound.tm = setTimeout(fin, RL_CEL_MS + 500);   // como mucho lo que dura la celebración
 }
 
 function rlTickClock() {
@@ -3262,6 +3393,7 @@ function rlToggleFS() {
   const stage = document.getElementById('rl-stage');
   if (document.fullscreenElement) { document.exitFullscreen(); return; }
   if (stage.classList.contains('rl-pfs')) { stage.classList.remove('rl-pfs'); document.body.classList.remove('rl-noscroll'); rlRefreshFSLabel(); return; }
+  if (!rlSoundOn) rlToggleSound(true);   // en pantalla completa, con sonido
   if (stage.requestFullscreen) stage.requestFullscreen().catch(() => rlPseudoFS(stage));
   else rlPseudoFS(stage);   // iPhone no deja poner un elemento en pantalla completa
 }
@@ -3329,6 +3461,20 @@ function rlDemo(kind) {
     Object.assign(s, { terminado: true, terminadoEn: now(), tiempo: 0, ganadorEquipo: kind === 'mvp' ? 0 : 1 });
     if (kind === 'fin') { s.equipos = [{ num: 0, nombre: 'Azul', goles: 2, color: '#1873FF' }, { num: 1, nombre: 'Los Gamberros FC', goles: 3, color: '#262626' }]; s.jugadores[3].pts = 520; s.jugadores[3].goles = 2; }
     rlApply({ id: 1, active: false, state: s, updated_at: now() }); return;
+  }
+  if (kind === 'gol') {
+    // vista previa de la celebración: marcan Cousinho, La Oruga y GatoPija por turnos
+    s.jugadores[2] = J('La Oruga', true, 0, 140, 0, 0, 1, 1, 0);
+    rlApply({ id: 1, active: true, state: JSON.parse(JSON.stringify(s)), updated_at: now() });
+    const turnos = ['Cousinho', 'La Oruga', 'GatoPija'];
+    let k = 0;
+    setInterval(() => {
+      const who = turnos[k++ % 3], p = s.jugadores.find(j => j.nombre === who);
+      p.goles++; p.pts += 100; s.equipos[0].goles++;
+      s.feed = [{ tipo: 'gol', t: s.tiempo, quien: who, equipo: 0, asist: who === 'Cousinho' ? 'GatoPija' : 'Cousinho', kmh: 80 + Math.floor(Math.random() * 60) }, ...s.feed].slice(0, 10);
+      rlApply({ id: 1, active: true, state: JSON.parse(JSON.stringify(s)), updated_at: now() });
+    }, 13000);
+    return;
   }
   // en directo: el reloj corre y de vez en cuando pasa algo
   rlApply({ id: 1, active: true, state: JSON.parse(JSON.stringify(s)), updated_at: now() });

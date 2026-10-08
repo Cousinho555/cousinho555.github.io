@@ -1216,6 +1216,100 @@ body.rl-noscroll #envivo{z-index:9000}
   .rl-mvp-stats{grid-template-columns:repeat(2,1fr)}
   .rl-end-teams{grid-template-columns:1fr}
 }
+
+/* ══ ESTADÍSTICAS ROCKET LEAGUE (perfil RPG + vista del equipo) ══ */
+.rls{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:56px 40px 80px}
+.rls-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid rgba(224,64,160,.25)}
+.rls-kicker{font-family:var(--font-ui);font-size:12px;font-weight:700;letter-spacing:5px;text-transform:uppercase;color:var(--pink)}
+.rls-title{font-family:var(--font-display);font-size:clamp(40px,6vw,72px);line-height:.9;letter-spacing:2px;color:var(--white);margin-top:6px}
+.rls-title span{color:var(--pink);text-shadow:0 0 24px rgba(224,64,160,.55)}
+.rls-note{font-family:var(--font-body);font-size:12px;color:var(--gray);max-width:340px;line-height:1.5}
+.rls-kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:14px}
+.rls-kpi{position:relative;padding:18px 18px 16px;background:linear-gradient(160deg,rgba(224,64,160,.09),rgba(224,64,160,0) 55%),#0e0a10;border:1px solid rgba(224,64,160,.22);border-radius:4px;overflow:hidden}
+.rls-kpi::after{content:"";position:absolute;left:0;top:0;width:3px;height:100%;background:var(--pink);box-shadow:0 0 12px var(--pink);opacity:.7}
+.rls-kpi-lbl{font-family:var(--font-ui);font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gray-mid)}
+.rls-kpi-val{font-family:var(--font-display);font-size:46px;line-height:1;color:var(--white);margin-top:6px;letter-spacing:1px}
+.rls-kpi-val small{font-size:22px;color:var(--gray-mid);margin-left:2px}
+.rls-kpi-sub{font-family:var(--font-ui);font-size:12px;font-weight:600;letter-spacing:1px;color:var(--gray);margin-top:2px}
+.rls-kpi-sub b{color:var(--gray-light);font-weight:700}
+.rls-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-bottom:14px}
+.rls-card{grid-column:span 4;background:#0e0b10;border:1px solid rgba(255,255,255,.07);border-radius:4px;padding:20px 20px 18px;min-width:0}
+.rls-card.w6{grid-column:span 6}.rls-card.w8{grid-column:span 8}.rls-card.w12{grid-column:span 12}
+.rls-card h4{font-family:var(--font-ui);font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gray-light);margin-bottom:14px;display:flex;justify-content:space-between;gap:10px}
+.rls-card h4 em{font-style:normal;color:var(--gray);font-weight:600;letter-spacing:1.5px}
+.rls-donut-wrap{display:flex;align-items:center;gap:20px}
+.rls-donut{width:150px;height:150px;flex-shrink:0}
+.rls-donut circle.seg{fill:none;stroke-width:14;transition:stroke-width .2s}
+.rls-donut circle.seg:hover{stroke-width:18}
+.rls-donut-c1{font-family:var(--font-display);font-size:34px;fill:var(--white)}
+.rls-donut-c2{font-family:var(--font-ui);font-size:10px;font-weight:700;letter-spacing:2px;fill:var(--gray-mid);text-transform:uppercase}
+.rls-legend{display:flex;flex-direction:column;gap:9px;font-family:var(--font-ui);font-size:13px;font-weight:600;color:var(--gray-light)}
+.rls-legend.row{flex-direction:row;flex-wrap:wrap;gap:8px 18px;margin-bottom:14px}
+.rls-legend span{display:flex;align-items:center;gap:8px}
+.rls-legend i{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.rls-legend b{font-family:var(--font-display);font-size:20px;font-weight:400;color:var(--white);margin-left:auto;padding-left:10px}
+.rls-legend.row b{font-size:16px;margin-left:2px;padding-left:0}
+.rls-radar{width:100%;max-width:300px;display:block;margin:0 auto}
+.rls-radar text{font-family:var(--font-ui);font-size:11px;font-weight:700;letter-spacing:1px;fill:var(--gray-mid);text-transform:uppercase}
+.rls-radar text.v{font-family:var(--font-display);font-size:13px;fill:var(--white);letter-spacing:.5px}
+.rls-form{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:16px}
+.rls-form i{width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-style:normal;font-size:15px;border-radius:2px;color:#0b0b0b}
+.rls-form i.w{background:#00d250;box-shadow:0 0 8px rgba(0,210,80,.45)}
+.rls-form i.l{background:var(--pink);box-shadow:0 0 8px rgba(224,64,160,.5)}
+.rls-form i.d{background:#555;color:#ddd}
+.rls-bars{width:100%;height:150px;display:block;overflow:visible}
+.rls-bars text{font-family:var(--font-ui);font-size:10px;font-weight:600;fill:var(--gray)}
+.rls-bars rect.b{transform-box:fill-box;transform-origin:bottom;animation:rlsGrow .7s cubic-bezier(.3,1.2,.5,1) both}
+.rls-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.rls-tile{padding:12px 12px 10px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);border-radius:3px}
+.rls-tile b{display:block;font-family:var(--font-display);font-size:32px;font-weight:400;line-height:1;color:var(--white)}
+.rls-tile span{font-family:var(--font-ui);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gray-mid)}
+.rls-tile em{display:block;font-style:normal;font-family:var(--font-ui);font-size:11px;font-weight:600;color:var(--gray);margin-top:2px}
+.rls-recs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.rls-rec{position:relative;padding:20px;background:linear-gradient(135deg,rgba(224,64,160,.12),rgba(224,64,160,0) 60%),#0e0b10;border:1px solid rgba(224,64,160,.3);border-radius:4px;overflow:hidden}
+.rls-rec-ico{position:absolute;right:14px;top:10px;font-size:34px;opacity:.18}
+.rls-rec-lbl{font-family:var(--font-ui);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--pink-light)}
+.rls-rec-val{font-family:var(--font-display);font-size:44px;line-height:1;color:var(--white);margin:8px 0 4px;text-shadow:0 0 20px rgba(224,64,160,.4)}
+.rls-rec-meta{font-family:var(--font-ui);font-size:13px;font-weight:600;color:var(--gray-light)}
+.rls-rec-meta em{display:block;font-style:normal;color:var(--gray);font-size:12px;margin-top:2px}
+.rls-stack{margin-bottom:14px}
+.rls-stack-h{display:flex;justify-content:space-between;font-family:var(--font-ui);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gray-light);margin-bottom:6px}
+.rls-stack-h b{font-family:var(--font-display);font-size:18px;font-weight:400;letter-spacing:1px;color:var(--white)}
+.rls-stack-bar{display:flex;gap:2px;height:26px}
+.rls-stack-bar div{height:100%;min-width:3px;display:flex;align-items:center;justify-content:center;font-family:var(--font-ui);font-size:12px;font-weight:700;color:#0b0b0b;overflow:hidden;white-space:nowrap;transform-origin:left;animation:rlsGrowX .8s cubic-bezier(.3,1,.5,1) both}
+.rls-stack-bar div:first-child{border-radius:4px 0 0 4px}.rls-stack-bar div:last-child{border-radius:0 4px 4px 0}
+.rls-line{width:100%;height:190px;display:block;overflow:visible}
+.rls-line text{font-family:var(--font-ui);font-size:10px;font-weight:600;fill:var(--gray)}
+.rls-line path.ln{stroke-dasharray:2000;animation:rlsDraw 1.6s ease both}
+.rls-players{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px}
+.rls-pc{display:flex;align-items:center;gap:14px;padding:14px;background:#0e0b10;border:1px solid rgba(255,255,255,.07);border-top:3px solid var(--pc);border-radius:4px;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.rls-pc:hover{transform:translateY(-3px);box-shadow:0 8px 30px color-mix(in srgb,var(--pc) 22%,transparent)}
+.rls-pc img{width:58px;height:58px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid var(--pc);flex-shrink:0}
+.rls-pc-n{font-family:var(--font-display);font-size:26px;line-height:1;color:var(--white);letter-spacing:1px}
+.rls-pc-s{font-family:var(--font-ui);font-size:12px;font-weight:600;color:var(--gray-mid);margin-top:3px;line-height:1.4}
+.rls-pc-s b{color:var(--white)}
+.rls-empty{font-family:var(--font-body);font-size:14px;color:var(--gray);padding:40px 0;text-align:center;line-height:1.7}
+.rls-cta{display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-family:var(--font-ui);font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#fff;background:var(--pink);border:none;padding:11px 20px;cursor:pointer;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%);box-shadow:0 0 22px rgba(224,64,160,.45);transition:filter .2s}
+.rls-cta:hover{filter:brightness(1.15)}
+.rls-team-btn-wrap{text-align:center;margin-top:34px}
+.rls-team-btn{font-size:14px;padding:15px 34px}
+#rls-overlay{display:none;position:fixed;inset:0;z-index:400;overflow-y:auto;background:#04010a}
+#rls-overlay.open{display:block;animation:fpIn .4s ease both}
+#rls-tip{position:fixed;z-index:9500;pointer-events:none;padding:7px 11px;background:rgba(10,6,12,.96);border:1px solid rgba(224,64,160,.5);border-radius:3px;font-family:var(--font-ui);font-size:13px;font-weight:600;color:var(--white);white-space:nowrap;opacity:0;transition:opacity .12s;box-shadow:0 6px 24px rgba(0,0,0,.5)}
+#rls-tip.on{opacity:1}
+@keyframes rlsGrow{from{transform:scaleY(0)}}
+@keyframes rlsGrowX{from{transform:scaleX(0)}}
+@keyframes rlsDraw{from{stroke-dashoffset:2000}to{stroke-dashoffset:0}}
+@keyframes rlsSpin{from{stroke-dasharray:0 999}}
+@media(max-width:900px){
+  .rls{padding:40px 18px 64px}
+  .rls-kpis{grid-template-columns:repeat(2,1fr)}
+  .rls-kpis .rls-kpi:first-child{grid-column:span 2}
+  .rls-card,.rls-card.w6,.rls-card.w8{grid-column:span 12}
+  .rls-recs,.rls-players{grid-template-columns:1fr}
+  .rls-kpi-val{font-size:40px}
+}
+@media(prefers-reduced-motion:reduce){.rls *{animation:none!important}}
 </style>
 </head>
 <body>
@@ -1322,6 +1416,7 @@ body.rl-noscroll #envivo{z-index:9000}
     <span class="s-tag">Los jugadores</span>
     <h2 class="s-title reveal">PLANTILLA</h2>
     <div class="team-grid" id="teamGrid"></div>
+    <div class="rls-team-btn-wrap"><button class="rls-cta rls-team-btn" onclick="openTeamStats()">📊 Estadísticas del equipo · Rocket League</button></div>
   </div>
 </section>
 
@@ -1494,7 +1589,15 @@ body.rl-noscroll #envivo{z-index:9000}
     <span class="rpg-back-arrow">←</span> Volver
   </button>
   <div class="rpg-wrap" id="rpg-wrap"></div>
+  <div id="rpg-rl"></div>
 </div>
+
+<!-- ESTADÍSTICAS DEL EQUIPO (Rocket League) -->
+<div id="rls-overlay">
+  <button class="rpg-back" onclick="closeTeamStats()"><span class="rpg-back-arrow">←</span> Volver</button>
+  <div id="rls-team"></div>
+</div>
+<div id="rls-tip"></div>
 
 <!-- FULL PAGE: TODOS LOS RESULTADOS -->
 <div id="fullpage">
@@ -2494,9 +2597,12 @@ function openRPG(idx) {
       ${statsHTML}
       <div class="rpg-abilities-title">— Habilidades desbloqueadas —</div>
       <div class="rpg-abilities">${abilitiesHTML}</div>
+      <div><button class="rls-cta" onclick="document.getElementById('rpg-rl').scrollIntoView({behavior:'smooth'})">📊 Ver estadísticas de Rocket League</button></div>
     </div>`;
+  rlsRenderPlayer(p);
 
   overlay.classList.add('open');
+  overlay.scrollTop = 0;
   document.body.style.overflow = 'hidden';
 
   // Animate bars after paint
@@ -2515,7 +2621,7 @@ function closeRPG() {
 }
 
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeRPG(); closeFP(); }
+  if (e.key === 'Escape') { closeRPG(); closeFP(); closeTeamStats(); }
 });
 
 // ══════════════════════════════════════════════════
@@ -3710,5 +3816,308 @@ function rlDemo(kind) {
   setInterval(() => { rlRender(false); rlTickClock(); }, 250);
 })();
 </script>
+
+<script>
+// ══════════════════════════════════════════════════
+// ESTADÍSTICAS ROCKET LEAGUE
+// Salen de rl_partidas (las guarda rl-puente.js desde el PC de Cousinho),
+// así que solo cuentan las partidas que juega él.
+// ══════════════════════════════════════════════════
+const RLS_COLORS = { 'Cousinho': '#E040A0', 'La Oruga': '#C77A1E', 'GatoPija': '#4C8DF6', 'Invitados': '#6b6b6b' };
+const RLS_WIN = '#00d250', RLS_LOSS = '#E040A0', RLS_DRAW = '#6b6b6b';
+const rlsNick = p => p.nick.replace(/"/g, '');
+const rlsNum = (n, d = 0) => Number(n || 0).toLocaleString('es-ES', { maximumFractionDigits: d, minimumFractionDigits: d });
+const rlsPct = (a, b) => b ? Math.round(a * 100 / b) : 0;
+const rlsGoles = n => (n || 0) + ((n || 0) === 1 ? ' gol' : ' goles');
+const rlsDate = f => new Date(f).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+let rlsCache = null;
+
+async function rlsLoad() {
+  if (!rlsCache) {
+    rlsCache = sbFetch('rl_partidas?order=fecha.asc&select=fecha,playlist,arena,nuestro_equipo,goles_nuestros,goles_rival,resultado,prorroga,jugadores')
+      .then(rows => rows.map(rlsPrep))
+      .catch(e => { rlsCache = null; throw e; });
+  }
+  return rlsCache;
+}
+
+// Prepara una partida: ganador y MVP (más puntos del equipo ganador, como en el juego).
+function rlsPrep(m) {
+  const js = Array.isArray(m.jugadores) ? m.jugadores : [];
+  const ganador = m.resultado === 'w' ? m.nuestro_equipo : m.resultado === 'l' ? 1 - m.nuestro_equipo : null;
+  const pool = js.filter(j => ganador === null || j.equipo === ganador);
+  const mvp = pool.slice().sort((a, b) => (b.pts || 0) - (a.pts || 0))[0] || null;
+  return { ...m, js, ganador, mvp };
+}
+
+// Vista de una partida desde el equipo de un jugador (o del club si no se pasa jugador).
+function rlsView(m, j) {
+  const team = j ? j.equipo : m.nuestro_equipo;
+  const ours = team === m.nuestro_equipo;
+  const gf = ours ? m.goles_nuestros : m.goles_rival, gc = ours ? m.goles_rival : m.goles_nuestros;
+  const res = gf > gc ? 'w' : gf < gc ? 'l' : (m.ganador === null ? 'd' : m.ganador === team ? 'w' : 'l');
+  return { m, j, team, gf, gc, res };
+}
+
+// Agrega un conjunto de partidas. `pick(m)` devuelve los jugadores cuyas stats se suman.
+function rlsAgg(views, pick) {
+  const a = { n: views.length, w: 0, l: 0, d: 0, gf: 0, gc: 0, goles: 0, asist: 0, paradas: 0, demos: 0, tiros: 0, pts: 0, mvp: 0 };
+  views.forEach(v => {
+    a[v.res]++; a.gf += v.gf; a.gc += v.gc;
+    pick(v).forEach(j => {
+      a.goles += j.goles || 0; a.asist += j.asist || 0; a.paradas += j.paradas || 0;
+      a.demos += j.demos || 0; a.tiros += j.tiros || 0; a.pts += j.pts || 0;
+      if (v.m.mvp === j) a.mvp++;
+    });
+  });
+  // Racha actual: resultados iguales seguidos desde el último partido
+  let k = views.length ? views[views.length - 1].res : null, len = 0;
+  for (let i = views.length - 1; i >= 0 && views[i].res === k; i--) len++;
+  a.streak = { k, len };
+  a.pct = rlsPct(a.w, a.n);
+  // Récords
+  const wins = views.filter(v => v.res === 'w');
+  a.paliza = wins.slice().sort((x, y) => (y.gf - y.gc) - (x.gf - x.gc) || y.gf - x.gf)[0] || null;
+  a.masGoles = views.slice().sort((x, y) => (y.gf + y.gc) - (x.gf + x.gc))[0] || null;
+  return a;
+}
+
+function rlsPlayerViews(all, nick) {
+  const out = [];
+  all.forEach(m => { const j = m.js.find(x => x.club && x.nombre === nick); if (j) out.push(rlsView(m, j)); });
+  return out;
+}
+
+// ── Piezas gráficas (SVG) ──
+function rlsDonut(segs, c1, c2) {
+  const r = 60, C = 2 * Math.PI * r, tot = segs.reduce((s, x) => s + x.v, 0) || 1, gap = segs.filter(x => x.v).length > 1 ? 3 : 0;
+  let off = 0;
+  const arcs = segs.filter(x => x.v).map((x, i) => {
+    const len = Math.max(0, x.v / tot * C - gap);
+    const el = `<circle class="seg" cx="75" cy="75" r="${r}" stroke="${x.c}" stroke-dasharray="${len} ${C}" stroke-dashoffset="${-off}"
+      transform="rotate(-90 75 75)" data-tip="${rlsEsc2(x.tip || x.label)}" style="animation:rlsSpin .9s ${i * .12}s ease both"/>`;
+    off += x.v / tot * C; return el;
+  }).join('');
+  return `<svg class="rls-donut" viewBox="0 0 150 150"><circle cx="75" cy="75" r="${r}" fill="none" stroke="rgba(255,255,255,.05)" stroke-width="14"/>${arcs}
+    <text class="rls-donut-c1" x="75" y="78" text-anchor="middle">${c1}</text><text class="rls-donut-c2" x="75" y="96" text-anchor="middle">${c2}</text></svg>`;
+}
+
+function rlsLegend(items, row) {
+  return `<div class="rls-legend${row ? ' row' : ''}">${items.map(x => `<span><i style="background:${x.c}"></i>${x.label}<b>${x.val}</b></span>`).join('')}</div>`;
+}
+
+// Radar del perfil de juego: medias por partido, escaladas contra el mejor de los tres.
+function rlsRadar(vals, ref, color) {
+  const keys = [['goles', 'Goles'], ['asist', 'Asist.'], ['paradas', 'Paradas'], ['tiros', 'Tiros'], ['demos', 'Demos'], ['pts', 'Puntos']];
+  const cx = 150, cy = 140, R = 92, N = keys.length;
+  const pt = (i, f) => { const a = -Math.PI / 2 + i * 2 * Math.PI / N; return [cx + Math.cos(a) * R * f, cy + Math.sin(a) * R * f]; };
+  const rings = [1 / 3, 2 / 3, 1].map(f => `<polygon points="${keys.map((_, i) => pt(i, f).join(',')).join(' ')}" fill="none" stroke="rgba(255,255,255,${f === 1 ? .14 : .07})"/>`).join('');
+  const spokes = keys.map((_, i) => { const [x, y] = pt(i, 1); return `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="rgba(255,255,255,.07)"/>`; }).join('');
+  const poly = keys.map(([k], i) => pt(i, ref[k] ? Math.min(1, vals[k] / ref[k]) : 0).join(',')).join(' ');
+  const dots = keys.map(([k, l], i) => { const [x, y] = pt(i, ref[k] ? Math.min(1, vals[k] / ref[k]) : 0);
+    return `<circle cx="${x}" cy="${y}" r="5" fill="${color}" stroke="#0e0b10" stroke-width="2" data-tip="${l}: ${rlsNum(vals[k], k === 'pts' ? 0 : 2)} por partido"/>`; }).join('');
+  const labels = keys.map(([k, l], i) => { const [x, y] = pt(i, 1.24);
+    return `<text x="${x}" y="${y - 2}" text-anchor="middle">${l}</text><text class="v" x="${x}" y="${y + 12}" text-anchor="middle">${rlsNum(vals[k], k === 'pts' ? 0 : 1)}</text>`; }).join('');
+  return `<svg class="rls-radar" viewBox="0 0 300 290">${rings}${spokes}
+    <polygon points="${poly}" fill="${color}" fill-opacity=".22" stroke="${color}" stroke-width="2" stroke-linejoin="round" style="filter:drop-shadow(0 0 8px ${color})"/>${dots}${labels}</svg>`;
+}
+
+// Barras de puntos por partido (últimos N), color por resultado.
+function rlsPtsBars(views) {
+  const W = 600, H = 150, pad = 22, n = views.length, max = Math.max(1, ...views.map(v => v.j.pts || 0));
+  const bw = (W - pad) / n;
+  const bars = views.map((v, i) => {
+    const h = Math.max(2, (v.j.pts || 0) / max * (H - 26)), x = pad + i * bw + 1, c = v.res === 'w' ? RLS_WIN : v.res === 'l' ? RLS_LOSS : RLS_DRAW;
+    return `<rect x="${pad + i * bw}" y="0" width="${bw}" height="${H}" fill="transparent" data-tip="${rlsDate(v.m.fecha)} · ${v.gf}-${v.gc} · ${v.j.pts || 0} pts · ${v.j.goles || 0} goles"/>
+      <rect class="b" x="${x}" y="${H - h}" width="${Math.max(2, bw - 2)}" height="${h}" rx="3" fill="${c}" style="animation-delay:${i * .03}s;pointer-events:none"/>`;
+  }).join('');
+  const grid = [0, .5, 1].map(f => `<line x1="${pad}" x2="${W}" y1="${H - f * (H - 26)}" y2="${H - f * (H - 26)}" stroke="rgba(255,255,255,${f ? .06 : .14})"/>
+    <text x="${pad - 6}" y="${H - f * (H - 26) + 3}" text-anchor="end">${Math.round(max * f)}</text>`).join('');
+  return `<svg class="rls-bars" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${grid}${bars}</svg>`;
+}
+
+// Línea del % de victorias acumulado del equipo.
+function rlsWinLine(views) {
+  const W = 600, H = 190, pl = 30, pt = 10, pb = 18, n = views.length;
+  let w = 0;
+  const pts = views.map((v, i) => { if (v.res === 'w') w++; return { x: pl + (n > 1 ? i / (n - 1) : .5) * (W - pl - 6), y: pt + (1 - w / (i + 1)) * (H - pt - pb), p: rlsPct(w, i + 1), v }; });
+  const d = pts.map((p, i) => (i ? 'L' : 'M') + p.x.toFixed(1) + ' ' + p.y.toFixed(1)).join(' ');
+  const area = d + ` L${pts[pts.length - 1].x} ${H - pb} L${pts[0].x} ${H - pb} Z`;
+  const grid = [0, 50, 100].map(g => { const y = pt + (1 - g / 100) * (H - pt - pb);
+    return `<line x1="${pl}" x2="${W}" y1="${y}" y2="${y}" stroke="rgba(255,255,255,${g === 50 ? .16 : .06})" ${g === 50 ? 'stroke-dasharray="4 4"' : ''}/><text x="${pl - 6}" y="${y + 3}" text-anchor="end">${g}%</text>`; }).join('');
+  const hits = pts.map((p, i) => { const x0 = i ? (pts[i - 1].x + p.x) / 2 : pl, x1 = i < n - 1 ? (p.x + pts[i + 1].x) / 2 : W;
+    return `<rect x="${x0}" y="0" width="${x1 - x0}" height="${H}" fill="transparent" data-tip="Partido ${i + 1} · ${rlsDate(p.v.m.fecha)} · ${p.v.gf}-${p.v.gc} · ${p.p}% victorias" data-hx="${p.x}" data-hy="${p.y}"/>`; }).join('');
+  const last = pts[pts.length - 1];
+  return `<svg class="rls-line" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
+    <defs><linearGradient id="rlsArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E040A0" stop-opacity=".35"/><stop offset="1" stop-color="#E040A0" stop-opacity="0"/></linearGradient></defs>
+    ${grid}<path d="${area}" fill="url(#rlsArea)"/><path class="ln" d="${d}" fill="none" stroke="#E040A0" stroke-width="2" vector-effect="non-scaling-stroke" style="filter:drop-shadow(0 0 6px #E040A0)"/>
+    <circle cx="${last.x}" cy="${last.y}" r="5" fill="#E040A0" stroke="#0e0b10" stroke-width="2"/>
+    <line class="rls-cross" x1="0" x2="0" y1="${pt}" y2="${H - pb}" stroke="rgba(255,255,255,.35)" vector-effect="non-scaling-stroke" style="opacity:0"/>
+    ${hits}</svg>`;
+}
+
+function rlsStack(label, parts, unit) {
+  const tot = parts.reduce((s, p) => s + p.v, 0);
+  if (!tot) return `<div class="rls-stack"><div class="rls-stack-h">${label}<b>0</b></div><div class="rls-stack-bar"><div style="flex:1;background:rgba(255,255,255,.05)"></div></div></div>`;
+  return `<div class="rls-stack"><div class="rls-stack-h">${label}<b>${rlsNum(tot)}${unit || ''}</b></div><div class="rls-stack-bar">${parts.filter(p => p.v).map((p, i) => {
+    const pc = p.v * 100 / tot;
+    return `<div style="flex:${p.v};background:${p.c};animation-delay:${i * .1}s" data-tip="${p.label}: ${rlsNum(p.v)} (${Math.round(pc)}%)">${pc >= 9 ? Math.round(pc) + '%' : ''}</div>`;
+  }).join('')}</div></div>`;
+}
+
+function rlsKpis(a, extra) {
+  const st = a.streak.len ? `${a.streak.len} ${{ w: 'victoria', l: 'derrota', d: 'empate' }[a.streak.k]}${a.streak.len > 1 ? 's' : ''}` : '—';
+  return `<div class="rls-kpis">
+    <div class="rls-kpi"><div class="rls-kpi-lbl">Partidos</div><div class="rls-kpi-val">${a.n}</div><div class="rls-kpi-sub"><b>${a.w}</b> V · <b>${a.l}</b> D${a.d ? ` · <b>${a.d}</b> E` : ''}</div></div>
+    <div class="rls-kpi"><div class="rls-kpi-lbl">Victorias</div><div class="rls-kpi-val">${a.pct}<small>%</small></div><div class="rls-kpi-sub">de ${a.n} partidos</div></div>
+    <div class="rls-kpi"><div class="rls-kpi-lbl">Racha actual</div><div class="rls-kpi-val" style="color:${a.streak.k === 'w' ? RLS_WIN : a.streak.k === 'l' ? 'var(--pink-light)' : 'var(--white)'}">${a.streak.len || 0}</div><div class="rls-kpi-sub">${st}</div></div>
+    <div class="rls-kpi"><div class="rls-kpi-lbl">Veces MVP</div><div class="rls-kpi-val">${a.mvp}</div><div class="rls-kpi-sub">${rlsPct(a.mvp, a.n)}% de los partidos</div></div>
+    <div class="rls-kpi"><div class="rls-kpi-lbl">${extra.lbl}</div><div class="rls-kpi-val">${extra.val}</div><div class="rls-kpi-sub">${extra.sub}</div></div>
+  </div>`;
+}
+
+function rlsRec(ico, lbl, val, meta, sub) {
+  return `<div class="rls-rec"><span class="rls-rec-ico">${ico}</span><div class="rls-rec-lbl">${lbl}</div><div class="rls-rec-val">${val}</div><div class="rls-rec-meta">${meta}<em>${sub}</em></div></div>`;
+}
+const rlsMatchSub = v => `${rlsDate(v.m.fecha)} · ${rlsEsc2(RL_PLAYLISTS[v.m.playlist] || 'Online')}${v.m.prorroga ? ' · prórroga' : ''}`;
+const rlsEsc2 = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+function rlsResDonut(a) {
+  return `<div class="rls-donut-wrap">${rlsDonut([
+      { v: a.w, c: RLS_WIN, label: 'Victorias', tip: `Victorias: ${a.w}` },
+      { v: a.d, c: RLS_DRAW, label: 'Empates', tip: `Empates: ${a.d}` },
+      { v: a.l, c: RLS_LOSS, label: 'Derrotas', tip: `Derrotas: ${a.l}` }], a.pct + '%', 'victorias')}
+    ${rlsLegend([{ c: RLS_WIN, label: 'Victorias', val: a.w }, ...(a.d ? [{ c: RLS_DRAW, label: 'Empates', val: a.d }] : []), { c: RLS_LOSS, label: 'Derrotas', val: a.l },
+      { c: 'transparent', label: 'Goles a favor', val: a.gf }, { c: 'transparent', label: 'Goles en contra', val: a.gc }])}</div>`;
+}
+
+function rlsForm(views) {
+  return `<div class="rls-form">${views.slice(-10).map(v => `<i class="${v.res}" data-tip="${rlsDate(v.m.fecha)} · ${v.gf}-${v.gc}">${{ w: 'V', l: 'D', d: 'E' }[v.res]}</i>`).join('')}</div>`;
+}
+
+const RLS_NOTE = 'Se cuentan las partidas que juega Cousinho: las registra su PC, también las que juega con desconocidos.';
+
+// ── Perfil de un jugador ──
+async function rlsRenderPlayer(p) {
+  const host = document.getElementById('rpg-rl'), nick = rlsNick(p), color = RLS_COLORS[nick] || '#E040A0';
+  host.dataset.nick = nick;
+  host.innerHTML = `<div class="rls"><div class="rls-empty">Cargando estadísticas…</div></div>`;
+  let all;
+  try { all = await rlsLoad(); } catch (e) { host.innerHTML = `<div class="rls"><div class="rls-empty">No se han podido cargar las estadísticas.</div></div>`; return; }
+  if (host.dataset.nick !== nick) return; // se abrió otro perfil mientras cargaba
+  const views = rlsPlayerViews(all, nick);
+  const head = `<div class="rls-head"><div><div class="rls-kicker">Rocket League · ${nick}</div><div class="rls-title">ESTADÍSTICAS <span>EN PISTA</span></div></div><div class="rls-note">${RLS_NOTE}</div></div>`;
+  if (!views.length) { host.innerHTML = `<div class="rls">${head}<div class="rls-empty">Todavía no hay partidas de ${nick} registradas.<br>Se apuntan solas cuando juega con Cousinho.</div></div>`; return; }
+  const a = rlsAgg(views, v => [v.j]);
+  // Referencia del radar: la mejor media de los tres jugadores del club
+  const avg = (ag) => ({ goles: ag.goles / ag.n, asist: ag.asist / ag.n, paradas: ag.paradas / ag.n, tiros: ag.tiros / ag.n, demos: ag.demos / ag.n, pts: ag.pts / ag.n });
+  const ref = { goles: 0, asist: 0, paradas: 0, tiros: 0, demos: 0, pts: 0 };
+  players.forEach(q => { const vv = rlsPlayerViews(all, rlsNick(q)); if (!vv.length) return; const m = avg(rlsAgg(vv, v => [v.j])); Object.keys(ref).forEach(k => ref[k] = Math.max(ref[k], m[k])); });
+  const mine = avg(a);
+  const best = views.slice().sort((x, y) => (y.j.pts || 0) - (x.j.pts || 0))[0];
+  const last = views.slice(-15);
+  host.innerHTML = `<div class="rls">${head}
+    ${rlsKpis(a, { lbl: 'Media de puntos', val: rlsNum(a.pts / a.n), sub: `${rlsNum(a.pts)} en total` })}
+    <div class="rls-grid">
+      <div class="rls-card"><h4>Resultados <em>${a.n} partidos</em></h4>${rlsResDonut(a)}<h4 style="margin-top:18px">Racha <em>últimos 10</em></h4>${rlsForm(views)}</div>
+      <div class="rls-card"><h4>Perfil de juego <em>media por partido</em></h4>${rlsRadar(mine, ref, color)}</div>
+      <div class="rls-card"><h4>Totales</h4><div class="rls-tiles">
+        ${[['goles', 'Goles'], ['asist', 'Asist.'], ['paradas', 'Paradas'], ['demos', 'Demos'], ['tiros', 'Tiros']].map(([k, l]) => `<div class="rls-tile"><b>${rlsNum(a[k])}</b><span>${l}</span><em>${rlsNum(a[k] / a.n, 1)} / partido</em></div>`).join('')}
+        <div class="rls-tile"><b>${a.tiros ? rlsPct(a.goles, a.tiros) : 0}%</b><span>Acierto</span><em>goles / tiros</em></div>
+      </div></div>
+      <div class="rls-card w12"><h4>Últimos partidos <em>puntos por partido · verde victoria, rosa derrota</em></h4>${rlsPtsBars(last)}</div>
+    </div>
+    <div class="rls-recs">
+      ${a.paliza ? rlsRec('💥', 'Mayor paliza', `${a.paliza.gf}-${a.paliza.gc}`, `Ganó por ${a.paliza.gf - a.paliza.gc} goles`, rlsMatchSub(a.paliza)) : rlsRec('💥', 'Mayor paliza', '—', 'Aún sin victorias', '')}
+      ${rlsRec('⚽', 'Partido con más goles', `${a.masGoles.gf}-${a.masGoles.gc}`, `${a.masGoles.gf + a.masGoles.gc} goles en total`, rlsMatchSub(a.masGoles))}
+      ${rlsRec('⭐', 'Mejor actuación', `${best.j.pts || 0} pts`, `${rlsGoles(best.j.goles)} · ${best.j.asist || 0} asist. · ${best.j.paradas || 0} paradas`, rlsMatchSub(best))}
+    </div></div>`;
+}
+
+// ── Vista global del equipo ──
+function openTeamStats() {
+  const ov = document.getElementById('rls-overlay');
+  ov.classList.add('open'); ov.scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+  rlsRenderTeam();
+}
+function closeTeamStats() {
+  const ov = document.getElementById('rls-overlay');
+  if (!ov || !ov.classList.contains('open')) return;
+  ov.classList.remove('open');
+  document.body.style.overflow = '';
+}
+function rlsOpenPlayer(i) { closeTeamStats(); openRPG(i); }
+
+async function rlsRenderTeam() {
+  const host = document.getElementById('rls-team');
+  host.innerHTML = `<div class="rls"><div class="rls-empty">Cargando estadísticas…</div></div>`;
+  let all;
+  try { all = await rlsLoad(); } catch (e) { host.innerHTML = `<div class="rls"><div class="rls-empty">No se han podido cargar las estadísticas.</div></div>`; return; }
+  const head = `<div class="rls-head"><div><div class="rls-kicker">Rocket League · Tolerancia 0'1</div><div class="rls-title">ESTADÍSTICAS <span>DEL EQUIPO</span></div></div><div class="rls-note">${RLS_NOTE}</div></div>`;
+  if (!all.length) { host.innerHTML = `<div class="rls">${head}<div class="rls-empty">Todavía no hay partidas registradas.</div></div>`; return; }
+  const views = all.map(m => rlsView(m));
+  const ourPlayers = v => v.m.js.filter(j => j.equipo === v.team);
+  const a = rlsAgg(views, ourPlayers);
+  // Aportación de cada uno (y de los invitados) a los números del equipo
+  const who = j => j.club && RLS_COLORS[j.nombre] ? j.nombre : 'Invitados';
+  const names = [...players.map(rlsNick), 'Invitados'];
+  const contrib = {}; names.forEach(n => contrib[n] = { goles: 0, asist: 0, paradas: 0, demos: 0, pts: 0, mvp: 0, n: 0 });
+  views.forEach(v => {
+    const seen = new Set();
+    ourPlayers(v).forEach(j => { const c = contrib[who(j)]; ['goles', 'asist', 'paradas', 'demos', 'pts'].forEach(k => c[k] += j[k] || 0); if (v.m.mvp === j) c.mvp++; if (who(j) !== 'Invitados') seen.add(who(j)); });
+    seen.forEach(n => contrib[n].n++);
+  });
+  const parts = k => names.map(n => ({ label: n, v: contrib[n][k], c: RLS_COLORS[n] }));
+  const best = views.flatMap(v => ourPlayers(v).filter(j => j.club).map(j => ({ ...v, j }))).sort((x, y) => (y.j.pts || 0) - (x.j.pts || 0))[0];
+  const cards = players.map((q, i) => { const n = rlsNick(q), c = contrib[n], pv = rlsPlayerViews(all, n), pa = pv.length ? rlsAgg(pv, v => [v.j]) : null;
+    return `<div class="rls-pc" style="--pc:${RLS_COLORS[n]}" onclick="rlsOpenPlayer(${i})"><img src="${q.photo}" alt="${n}"><div><div class="rls-pc-n">${n}</div>
+      <div class="rls-pc-s"><b>${c.n}</b> partidos · <b>${pa ? pa.pct : 0}%</b> victorias<br><b>${c.goles}</b> goles · <b>${c.mvp}</b> MVP</div></div></div>`; }).join('');
+  host.innerHTML = `<div class="rls">${head}
+    ${rlsKpis(a, { lbl: 'Goles a favor', val: a.gf, sub: `${a.gc} en contra · ${a.gf - a.gc >= 0 ? '+' : ''}${a.gf - a.gc}` })}
+    <div class="rls-players">${cards}</div>
+    <div class="rls-grid">
+      <div class="rls-card"><h4>Resultados <em>${a.n} partidos</em></h4>${rlsResDonut(a)}<h4 style="margin-top:18px">Racha <em>últimos 10</em></h4>${rlsForm(views)}</div>
+      <div class="rls-card w8"><h4>Evolución <em>% de victorias acumulado</em></h4>${rlsWinLine(views)}</div>
+      <div class="rls-card"><h4>Goles del equipo <em>quién los mete</em></h4><div class="rls-donut-wrap">
+        ${rlsDonut(parts('goles').map(p => ({ ...p, tip: `${p.label}: ${p.v} goles (${rlsPct(p.v, a.goles)}%)` })), a.goles, 'goles')}
+        ${rlsLegend(parts('goles').map(p => ({ c: p.c, label: p.label, val: `${rlsPct(p.v, a.goles)}%` })))}</div>
+        <h4 style="margin-top:22px">Goles por partido</h4><div class="rls-tiles">${players.map(q => { const n = rlsNick(q), c = contrib[n];
+          return `<div class="rls-tile" style="border-top:2px solid ${RLS_COLORS[n]}"><b>${c.n ? rlsNum(c.goles / c.n, 2) : '0'}</b><span>${n}</span></div>`; }).join('')}</div></div>
+      <div class="rls-card w8"><h4>Aportación <em>reparto de cada estadística</em></h4>
+        ${rlsLegend(names.map(n => ({ c: RLS_COLORS[n], label: n, val: '' })), true)}
+        ${rlsStack('Asistencias', parts('asist'))}${rlsStack('Paradas', parts('paradas'))}${rlsStack('Demoliciones', parts('demos'))}${rlsStack('MVP', parts('mvp'))}${rlsStack('Puntos', parts('pts'))}
+      </div>
+    </div>
+    <div class="rls-recs">
+      ${a.paliza ? rlsRec('💥', 'Mayor paliza', `${a.paliza.gf}-${a.paliza.gc}`, `Ganamos por ${a.paliza.gf - a.paliza.gc} goles`, rlsMatchSub(a.paliza)) : rlsRec('💥', 'Mayor paliza', '—', 'Aún sin victorias', '')}
+      ${rlsRec('⚽', 'Partido con más goles', `${a.masGoles.gf}-${a.masGoles.gc}`, `${a.masGoles.gf + a.masGoles.gc} goles en total`, rlsMatchSub(a.masGoles))}
+      ${best ? rlsRec('⭐', 'Mejor actuación', `${best.j.pts || 0} pts`, `${best.j.nombre} · ${rlsGoles(best.j.goles)} · ${best.j.asist || 0} asist.`, rlsMatchSub(best)) : ''}
+    </div></div>`;
+}
+
+// ── Tooltip compartido para todos los gráficos ──
+(function rlsTips() {
+  const tip = document.getElementById('rls-tip');
+  const move = e => {
+    const t = e.target.closest && e.target.closest('[data-tip]');
+    if (!t || !t.closest('.rls')) { tip.classList.remove('on'); rlsCross(null); return; }
+    tip.textContent = t.dataset.tip; tip.classList.add('on');
+    const x = Math.min(e.clientX + 14, window.innerWidth - tip.offsetWidth - 8), y = e.clientY - tip.offsetHeight - 12;
+    tip.style.left = x + 'px'; tip.style.top = (y < 6 ? e.clientY + 18 : y) + 'px';
+    rlsCross(t);
+  };
+  document.addEventListener('mousemove', move);
+  document.addEventListener('touchstart', e => move(e.touches[0] ? Object.assign({}, e.touches[0], { target: e.target }) : e), { passive: true });
+  document.addEventListener('scroll', () => tip.classList.remove('on'), true);
+})();
+function rlsCross(t) {
+  document.querySelectorAll('.rls-cross').forEach(l => l.style.opacity = 0);
+  if (!t || t.dataset.hx === undefined) return;
+  const l = t.closest('svg').querySelector('.rls-cross');
+  l.setAttribute('x1', t.dataset.hx); l.setAttribute('x2', t.dataset.hx); l.style.opacity = 1;
+}
+</script>
+
 </body>
 </html>

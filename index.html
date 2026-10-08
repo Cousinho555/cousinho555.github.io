@@ -1098,9 +1098,12 @@
 body.rl-is-live .nav-live-dot{display:inline-block}
 
 /* pantalla completa (nativa o simulada en iPhone) */
-.rl-stage:fullscreen,.rl-stage.rl-pfs{border:none;border-radius:0;background:var(--dark);overflow-y:auto;display:flex;flex-direction:column;justify-content:center}
+.rl-stage:fullscreen,.rl-stage.rl-pfs{border:none;border-radius:0;background:var(--dark);overflow-y:auto;display:flex;flex-direction:column}
+/* en pantalla completa se puede seguir desplazando, pero sin barra visible */
+.rl-stage:fullscreen,.rl-stage.rl-pfs,.rl-stage.rl-rot #rl-view{scrollbar-width:none;-ms-overflow-style:none}
+.rl-stage:fullscreen::-webkit-scrollbar,.rl-stage.rl-pfs::-webkit-scrollbar,.rl-stage.rl-rot #rl-view::-webkit-scrollbar{display:none}
 .rl-stage.rl-pfs{position:fixed;inset:0;z-index:9000}
-.rl-stage:fullscreen #rl-view,.rl-stage.rl-pfs #rl-view{width:100%;max-width:1500px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;justify-content:center}
+.rl-stage:fullscreen #rl-view,.rl-stage.rl-pfs #rl-view{width:100%;max-width:1500px;margin:0 auto;min-height:100%;flex-shrink:0;display:flex;flex-direction:column;justify-content:center}
 .rl-stage:fullscreen .rl-bar,.rl-stage.rl-pfs .rl-bar{position:sticky;top:0;z-index:6}
 .rl-stage:fullscreen .rl-feed,.rl-stage.rl-pfs .rl-feed{max-height:42vh}
 /* móvil en pantalla completa: horizontal y compacto */

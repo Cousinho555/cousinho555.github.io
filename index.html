@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="T01">
-<link rel="apple-touch-icon" href="icon-512.png">
+<link rel="apple-touch-icon" href="icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <!-- OneSignal Push Notifications -->
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
@@ -1184,7 +1184,7 @@ body.rl-noscroll #envivo{z-index:9000}
   <div class="tvs-stage">
     <div class="tvs-cards" id="tvs-cards"></div>
     <div class="tvs-center">
-      <div class="tvs-shield-wrap"><div class="tvs-ring"></div><img src="logo.png" class="tvs-shield" id="tvs-shield" alt=""></div>
+      <div class="tvs-shield-wrap"><div class="tvs-ring"></div><img src="logo.webp" class="tvs-shield" id="tvs-shield" alt=""></div>
       <div class="tvs-title" id="splash-title" data-t="TOLERANCIA 0'1">TOLERANCIA <span>0'1</span></div>
       <div class="tvs-lema"><em>Maricón</em> el último</div>
     </div>
@@ -1198,7 +1198,7 @@ body.rl-noscroll #envivo{z-index:9000}
 <!-- NAV -->
 <nav>
   <a href="#inicio" class="nav-logo">
-    <img src="logo.png" alt="Tolerancia 0'1" style="width:36px;height:36px;object-fit:contain">
+    <img src="logo.webp" alt="Tolerancia 0'1" style="width:36px;height:36px;object-fit:contain">
     <span class="nav-logo-text">TOLERANCIA <span>0'1</span></span>
   </a>
   <ul class="nav-links" id="navLinks">
@@ -1223,7 +1223,7 @@ body.rl-noscroll #envivo{z-index:9000}
   <div class="hero-glow"></div>
   <div class="hero-content">
     <span class="hero-badge">🏅 Deportes &nbsp;·&nbsp; 🎮 Esports &nbsp;·&nbsp; El Pto</span>
-    <img src="logo.png" alt="Tolerancia 0'1" class="hero-shield" style="object-fit:contain">
+    <img src="logo.webp" alt="Tolerancia 0'1" class="hero-shield" style="object-fit:contain">
     <h1 class="hero-title">TOLERANCIA<span class="accent">0'1</span></h1>
     <p class="hero-sub">Maricón el último · Jugar para ganar</p>
     <div class="hero-rule"></div>
@@ -1255,7 +1255,7 @@ body.rl-noscroll #envivo{z-index:9000}
   <div class="wrap">
     <div class="about-grid">
       <div class="about-photo reveal">
-        <img src="equipo.jpg" alt="Tolerancia 0'1 con la equipación rosa">
+        <img src="equipo.webp" alt="Tolerancia 0'1 con la equipación rosa">
         <div class="photo-frame"></div>
         <div class="photo-corner tl"></div><div class="photo-corner tr"></div>
         <div class="photo-corner bl"></div><div class="photo-corner br"></div>
@@ -1376,14 +1376,14 @@ body.rl-noscroll #envivo{z-index:9000}
       <!-- Patrocinadores fijos -->
       <div class="sponsor-card reveal">
         <div class="sponsor-logo-wrap">
-            <img src="logo-julian.png" alt="Julian Calor">
+            <img src="logo-julian.webp" alt="Julian Calor">
             <span class="sponsor-name">JULIAN CALOR</span>
         </div>
         <span class="sponsor-tier">Patrocinador Oficial</span>
       </div>
       <div class="sponsor-card reveal">
         <div class="sponsor-logo-wrap">
-            <img src="logo-cla.png" alt="Central Lechera Asturiana">
+            <img src="logo-cla.webp" alt="Central Lechera Asturiana">
             <span class="sponsor-name">CENTRAL LECHERA ASTURIANA</span>
         </div>
         <span class="sponsor-tier">Patrocinador Oficial</span>
@@ -1773,7 +1773,7 @@ async function loadSubCount() {
 // ║  Para añadir/quitar deportes: edita el array    ║
 // ║  sports:['Deporte1','Deporte2',...]             ║
 // ║  Para cambiar foto: pon el nombre del archivo   ║
-// ║  en photo:'jugadorX.jpg' (sube la foto a        ║
+// ║  en photo:'jugadorX.webp' (sube la foto a       ║
 // ║  GitHub en la misma carpeta que index.html)     ║
 // ╚══════════════════════════════════════════════════╝
 const players = [
@@ -1785,7 +1785,7 @@ const players = [
     nivel:  27,
     lema:   'Ahora vengo, voy a hacerme cereales.',
     sports: ['Fútbol', 'Rocket League', 'CS:GO', 'Crimson Desert'],
-    photo:  'jugador1.jpg',
+    photo:  'jugador1.webp',
     ini:    'PC',
     num:    '01',
     dorsal: '05',
@@ -1810,7 +1810,7 @@ const players = [
     nivel:  28,
     lema:   'No puedo, tengo padel.',
     sports: ['Pádel', 'Rocket League', 'Crimson Desert'],
-    photo:  'jugador2.jpg',
+    photo:  'jugador2.webp',
     ini:    'LG',
     num:    '02',
     dorsal: '23',
@@ -1835,7 +1835,7 @@ const players = [
     nivel:  28,
     lema:   'Si va Diego, voy.',
     sports: ['Fútbol', 'Rocket League', 'CS:GO', 'Crimson Desert'],
-    photo:  'jugador3.jpg',
+    photo:  'jugador3.webp',
     ini:    'IP',
     num:    '03',
     dorsal: '14',
@@ -3220,7 +3220,7 @@ function rlRender(nuevoDato) {
 function rlRenderOff() {
   document.getElementById('rl-view').innerHTML = rlBar('<span class="rl-badge off"><i></i>Sin señal</span>', '') + `
     <div class="rl-off">
-      <div class="rl-radar"><span></span><span></span><span></span><img src="logo.png" alt=""></div>
+      <div class="rl-radar"><span></span><span></span><span></span><img src="logo.webp" alt=""></div>
       <div class="rl-off-title">Ahora mismo Tolerancia <span>0'1</span> no está compitiendo</div>
       <p class="rl-off-sub">Cuando empiece una partida online de Rocket League, el marcador aparecerá aquí en directo. No hace falta recargar la página.</p>
       <div id="rl-off-last"></div>

@@ -1,15 +1,15 @@
 importScripts("https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js");
 
-const VERSION = 'tol01-v7';
+const VERSION = 'tol01-v8';
 
 const STATIC_CACHE = [
   '/',
   '/index.html',
-  '/logo.png',
-  '/equipo.jpg',
-  '/jugador1.jpg',
-  '/jugador2.jpg',
-  '/jugador3.jpg',
+  '/logo.webp',
+  '/equipo.webp',
+  '/jugador1.webp',
+  '/jugador2.webp',
+  '/jugador3.webp',
 ];
 
 self.addEventListener('install', event => {

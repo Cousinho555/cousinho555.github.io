@@ -1297,6 +1297,16 @@ body.rl-noscroll #envivo{z-index:9000}
 .rls-cta:hover{filter:brightness(1.15)}
 .rls-team-btn-wrap{text-align:center;margin-top:34px}
 .rls-team-btn{font-size:14px;padding:15px 34px}
+.rls-modes{display:flex;gap:8px;flex-wrap:wrap;margin:-8px 0 22px}
+.rls-mode{font-family:var(--font-ui);font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray-light);background:#0e0b10;border:1px solid rgba(255,255,255,.1);padding:8px 14px;border-radius:2px;cursor:pointer;transition:color .2s,border-color .2s,background .2s,box-shadow .2s}
+.rls-mode em{font-style:normal;color:var(--gray);margin-left:6px}
+.rls-mode:hover{border-color:rgba(224,64,160,.5);color:var(--white)}
+.rls-mode.on{background:var(--pink);border-color:var(--pink);color:#fff;box-shadow:0 0 18px rgba(224,64,160,.4)}
+.rls-mode.on em{color:rgba(255,255,255,.8)}
+.rls-radar-key{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;font-family:var(--font-ui);font-size:12px;font-weight:600;color:var(--gray-mid);margin-top:4px}
+.rls-radar-key span{display:flex;align-items:center;gap:6px}
+.rls-radar-key i{width:16px;height:0;border-top:2px solid var(--c)}
+.rls-radar-key i.dash{border-top-style:dashed}
 #rls-overlay{display:none;position:fixed;inset:0;z-index:400;overflow-y:auto;background:#04010a}
 #rls-overlay.open{display:block;animation:fpIn .4s ease both}
 #rls-tip{position:fixed;z-index:9500;pointer-events:none;padding:7px 11px;background:rgba(10,6,12,.96);border:1px solid rgba(224,64,160,.5);border-radius:3px;font-family:var(--font-ui);font-size:13px;font-weight:600;color:var(--white);white-space:nowrap;opacity:0;transition:opacity .12s;box-shadow:0 6px 24px rgba(0,0,0,.5)}
@@ -3910,7 +3920,8 @@ function rlsLegend(items, row) {
   return `<div class="rls-legend${row ? ' row' : ''}">${items.map(x => `<span><i style="background:${x.c}"></i>${x.label}<b>${x.val}</b></span>`).join('')}</div>`;
 }
 
-// Radar del perfil de juego: medias por partido, escaladas contra el mejor de los tres.
+// Radar del perfil de juego: medias por partido. La línea discontinua es la media de todos los
+// jugadores de esas partidas (aliados y rivales); el borde exterior es el doble de esa media.
 function rlsRadar(vals, ref, color) {
   const keys = [['goles', 'Goles'], ['asist', 'Asist.'], ['paradas', 'Paradas'], ['tiros', 'Tiros'], ['demos', 'Demos'], ['pts', 'Puntos']];
   const cx = 150, cy = 140, R = 92, N = keys.length;
@@ -3918,12 +3929,14 @@ function rlsRadar(vals, ref, color) {
   const rings = [1 / 3, 2 / 3, 1].map(f => `<polygon points="${keys.map((_, i) => pt(i, f).join(',')).join(' ')}" fill="none" stroke="rgba(255,255,255,${f === 1 ? .14 : .07})"/>`).join('');
   const spokes = keys.map((_, i) => { const [x, y] = pt(i, 1); return `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="rgba(255,255,255,.07)"/>`; }).join('');
   const poly = keys.map(([k], i) => pt(i, ref[k] ? Math.min(1, vals[k] / ref[k]) : 0).join(',')).join(' ');
+  const media = `<polygon points="${keys.map((_, i) => pt(i, .5).join(',')).join(' ')}" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.5" stroke-dasharray="4 4"/>`;
   const dots = keys.map(([k, l], i) => { const [x, y] = pt(i, ref[k] ? Math.min(1, vals[k] / ref[k]) : 0);
-    return `<circle cx="${x}" cy="${y}" r="5" fill="${color}" stroke="#0e0b10" stroke-width="2" data-tip="${l}: ${rlsNum(vals[k], k === 'pts' ? 0 : 2)} por partido"/>`; }).join('');
+    return `<circle cx="${x}" cy="${y}" r="5" fill="${color}" stroke="#0e0b10" stroke-width="2" data-tip="${l}: ${rlsNum(vals[k], k === 'pts' ? 0 : 2)} por partido (media de la partida ${rlsNum(ref[k] / 2, k === 'pts' ? 0 : 2)})"/>`; }).join('');
   const labels = keys.map(([k, l], i) => { const [x, y] = pt(i, 1.24);
     return `<text x="${x}" y="${y - 2}" text-anchor="middle">${l}</text><text class="v" x="${x}" y="${y + 12}" text-anchor="middle">${rlsNum(vals[k], k === 'pts' ? 0 : 1)}</text>`; }).join('');
   return `<svg class="rls-radar" viewBox="0 0 300 290">${rings}${spokes}
-    <polygon points="${poly}" fill="${color}" fill-opacity=".22" stroke="${color}" stroke-width="2" stroke-linejoin="round" style="filter:drop-shadow(0 0 8px ${color})"/>${dots}${labels}</svg>`;
+    ${media}<polygon points="${poly}" fill="${color}" fill-opacity=".22" stroke="${color}" stroke-width="2" stroke-linejoin="round" style="filter:drop-shadow(0 0 8px ${color})"/>${dots}${labels}</svg>
+    <div class="rls-radar-key"><span><i style="--c:${color}"></i>Su media</span><span><i class="dash" style="--c:rgba(255,255,255,.6)"></i>Media de la partida</span></div>`;
 }
 
 // Barras de puntos por partido (últimos N), color por resultado.
@@ -3999,24 +4012,46 @@ function rlsForm(views) {
   return `<div class="rls-form">${views.slice(-10).map(v => `<i class="${v.res}" data-tip="${rlsDate(v.m.fecha)} · ${v.gf}-${v.gc}">${{ w: 'V', l: 'D', d: 'E' }[v.res]}</i>`).join('')}</div>`;
 }
 
+// Filtro por tipo de partida (por defecto, todas)
+let rlsModo = 'todas', rlsCurrent = null;
+const rlsModoNombre = pl => RL_PLAYLISTS[pl] || 'Otras';
+function rlsModes(matches, onPick) {
+  const cnt = {};
+  matches.forEach(m => { const k = rlsModoNombre(m.playlist); cnt[k] = (cnt[k] || 0) + 1; });
+  const keys = Object.keys(cnt).sort((a, b) => cnt[b] - cnt[a]);
+  if (!cnt[rlsModo]) rlsModo = 'todas';
+  const chip = (k, label, n) => `<button class="rls-mode${rlsModo === k ? ' on' : ''}" onclick="rlsModo=${rlsEsc2(JSON.stringify(k))};${onPick}">${rlsEsc2(label)}<em>${n}</em></button>`;
+  return `<div class="rls-modes">${chip('todas', 'Todas', matches.length)}${keys.map(k => chip(k, k, cnt[k])).join('')}</div>`;
+}
+const rlsFiltrar = ms => rlsModo === 'todas' ? ms : ms.filter(m => rlsModoNombre(m.playlist) === rlsModo);
+// Media por partido de todos los jugadores de la partida (aliados y rivales)
+function rlsLobbyRef(ms) {
+  const ref = { goles: 0, asist: 0, paradas: 0, tiros: 0, demos: 0, pts: 0 }, n = ms.length || 1;
+  ms.forEach(m => { const js = m.js.length ? m.js : [{}]; Object.keys(ref).forEach(k => ref[k] += js.reduce((s, j) => s + (j[k] || 0), 0) / js.length); });
+  Object.keys(ref).forEach(k => ref[k] = Math.max(2 * ref[k] / n, k === 'pts' ? 1 : .1));
+  return ref;
+}
+
 const RLS_NOTE = 'Se cuentan las partidas que juega Cousinho: las registra su PC, también las que juega con desconocidos.';
 
 // ── Perfil de un jugador ──
-async function rlsRenderPlayer(p) {
+async function rlsRenderPlayer(p, keepMode) {
   const host = document.getElementById('rpg-rl'), nick = rlsNick(p), color = RLS_COLORS[nick] || '#E040A0';
+  if (!keepMode) rlsModo = 'todas';
+  rlsCurrent = p;
   host.dataset.nick = nick;
-  host.innerHTML = `<div class="rls"><div class="rls-empty">Cargando estadísticas…</div></div>`;
+  if (!host.querySelector('.rls-modes')) host.innerHTML = `<div class="rls"><div class="rls-empty">Cargando estadísticas…</div></div>`;
   let all;
   try { all = await rlsLoad(); } catch (e) { host.innerHTML = `<div class="rls"><div class="rls-empty">No se han podido cargar las estadísticas.</div></div>`; return; }
   if (host.dataset.nick !== nick) return; // se abrió otro perfil mientras cargaba
-  const views = rlsPlayerViews(all, nick);
-  const head = `<div class="rls-head"><div><div class="rls-kicker">Rocket League · ${nick}</div><div class="rls-title">ESTADÍSTICAS <span>EN PISTA</span></div></div><div class="rls-note">${RLS_NOTE}</div></div>`;
+  const suyas = all.filter(m => m.js.some(x => x.club && x.nombre === nick));
+  const head = `<div class="rls-head"><div><div class="rls-kicker">Rocket League · ${nick}</div><div class="rls-title">ESTADÍSTICAS <span>EN PISTA</span></div></div><div class="rls-note">${RLS_NOTE}</div></div>`
+    + (suyas.length ? rlsModes(suyas, 'rlsRenderPlayer(rlsCurrent,true)') : '');
+  const views = rlsPlayerViews(rlsFiltrar(suyas), nick);
   if (!views.length) { host.innerHTML = `<div class="rls">${head}<div class="rls-empty">Todavía no hay partidas de ${nick} registradas.<br>Se apuntan solas cuando juega con Cousinho.</div></div>`; return; }
   const a = rlsAgg(views, v => [v.j]);
-  // Referencia del radar: la mejor media de los tres jugadores del club
   const avg = (ag) => ({ goles: ag.goles / ag.n, asist: ag.asist / ag.n, paradas: ag.paradas / ag.n, tiros: ag.tiros / ag.n, demos: ag.demos / ag.n, pts: ag.pts / ag.n });
-  const ref = { goles: 0, asist: 0, paradas: 0, tiros: 0, demos: 0, pts: 0 };
-  players.forEach(q => { const vv = rlsPlayerViews(all, rlsNick(q)); if (!vv.length) return; const m = avg(rlsAgg(vv, v => [v.j])); Object.keys(ref).forEach(k => ref[k] = Math.max(ref[k], m[k])); });
+  const ref = rlsLobbyRef(views.map(v => v.m));
   const mine = avg(a);
   const best = views.slice().sort((x, y) => (y.j.pts || 0) - (x.j.pts || 0))[0];
   const last = views.slice(-15);
@@ -4040,6 +4075,7 @@ async function rlsRenderPlayer(p) {
 
 // ── Vista global del equipo ──
 function openTeamStats() {
+  rlsModo = 'todas';
   const ov = document.getElementById('rls-overlay');
   ov.classList.add('open'); ov.scrollTop = 0;
   document.body.style.overflow = 'hidden';
@@ -4051,15 +4087,20 @@ function closeTeamStats() {
   ov.classList.remove('open');
   document.body.style.overflow = '';
 }
-function rlsOpenPlayer(i) { closeTeamStats(); openRPG(i); }
+function rlsOpenPlayer(i) {
+  const modo = rlsModo; closeTeamStats(); openRPG(i);
+  rlsModo = modo; rlsRenderPlayer(players[i], true); // el perfil se abre con el mismo modo elegido
+}
 
 async function rlsRenderTeam() {
   const host = document.getElementById('rls-team');
-  host.innerHTML = `<div class="rls"><div class="rls-empty">Cargando estadísticas…</div></div>`;
+  if (!host.querySelector('.rls-modes')) host.innerHTML = `<div class="rls"><div class="rls-empty">Cargando estadísticas…</div></div>`;
   let all;
   try { all = await rlsLoad(); } catch (e) { host.innerHTML = `<div class="rls"><div class="rls-empty">No se han podido cargar las estadísticas.</div></div>`; return; }
-  const head = `<div class="rls-head"><div><div class="rls-kicker">Rocket League · Tolerancia 0'1</div><div class="rls-title">ESTADÍSTICAS <span>DEL EQUIPO</span></div></div><div class="rls-note">${RLS_NOTE}</div></div>`;
-  if (!all.length) { host.innerHTML = `<div class="rls">${head}<div class="rls-empty">Todavía no hay partidas registradas.</div></div>`; return; }
+  if (!all.length) { host.innerHTML = `<div class="rls"><div class="rls-empty">Todavía no hay partidas registradas.</div></div>`; return; }
+  const head = `<div class="rls-head"><div><div class="rls-kicker">Rocket League · Tolerancia 0'1</div><div class="rls-title">ESTADÍSTICAS <span>DEL EQUIPO</span></div></div><div class="rls-note">${RLS_NOTE}</div></div>`
+    + rlsModes(all, 'rlsRenderTeam()');
+  all = rlsFiltrar(all);
   const views = all.map(m => rlsView(m));
   const ourPlayers = v => v.m.js.filter(j => j.equipo === v.team);
   const a = rlsAgg(views, ourPlayers);

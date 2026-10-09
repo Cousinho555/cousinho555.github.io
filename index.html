@@ -3455,11 +3455,11 @@ function rlSkeletonLive() {
   document.getElementById('rl-view').innerHTML =
     rlBar('<span class="rl-badge live"><i></i>En directo</span>', '<span class="rl-meta" id="rl-meta"></span><span class="rl-meta" id="rl-jugando"></span>') + `
     <div class="rl-score">
-      <div class="rl-team us"><div class="rl-team-name">Tolerancia <span>0'1</span></div><div class="rl-chip" id="rl-chip-us"></div></div>
+      <div class="rl-team us"><div class="rl-team-name">Tolerancia <span>0'1</span></div></div>
       <div class="rl-goals us" id="rl-g-us">0</div>
       <div class="rl-clock-wrap"><div class="rl-clock" id="rl-clock">5:00</div><span class="rl-tag ot" id="rl-ot">Prórroga</span><span class="rl-tag rep" id="rl-rep">Repetición</span></div>
       <div class="rl-goals them" id="rl-g-them">0</div>
-      <div class="rl-team them"><div class="rl-team-name" id="rl-name-them">Rival</div><div class="rl-chip" id="rl-chip-them"></div></div>
+      <div class="rl-team them"><div class="rl-team-name" id="rl-name-them">Rival</div></div>
     </div>
     <div class="rl-ball">
       <div class="rl-ball-speed"><b id="rl-kmh">0</b>km/h · balón</div>
@@ -3506,12 +3506,8 @@ function rlUpdateLive(s) {
   const club = s.jugadores.filter(p => p.club).map(p => `<b>${rlEsc(p.nombre)}</b>`);
   document.getElementById('rl-meta').textContent = rlMode2Txt(s);
   document.getElementById('rl-jugando').innerHTML = club.length ? 'Jugando: ' + club.join(' + ') : '';
-  const chipUs = document.getElementById('rl-chip-us'), chipThem = document.getElementById('rl-chip-them');
-  chipUs.textContent = rlColorName(us.num); chipUs.style.setProperty('--c', us.color);
-  chipThem.textContent = rlColorName(them.num); chipThem.style.setProperty('--c', them.color);
   const rival = rlRival(s), nameThem = document.getElementById('rl-name-them');
   nameThem.textContent = rival; nameThem.classList.toggle('largo', rival.length > 12);
-  chipThem.style.display = rival.toLowerCase() === rlColorName(them.num).toLowerCase() ? 'none' : '';   // sin repetir "Naranja Naranja"
   document.getElementById('rl-h-them').textContent = rival;
   document.getElementById('rl-poss-them').textContent = rival;
 

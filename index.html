@@ -648,7 +648,7 @@
   /* ════════════════════════════
    MINI PLAYER FLOTANTE — VINILO
 ════════════════════════════ */
-#music-player{position:fixed;bottom:28px;right:28px;z-index:500;width:340px;display:flex;flex-direction:column;align-items:stretch;font-family:var(--font-ui);color:var(--white)}
+#music-player{position:fixed;bottom:28px;right:28px;z-index:500;width:340px;display:none;flex-direction:column;align-items:stretch;font-family:var(--font-ui);color:var(--white)}
 /* Lista de canciones (encima de la tarjeta; el vinilo la pisa por abajo) */
 #music-playlist{background:#090909;border:1px solid rgba(224,64,160,.4);border-radius:14px;margin-bottom:-50px;padding:10px 0 60px;max-height:min(420px,52vh);overflow-y:auto;scrollbar-width:none;box-shadow:0 0 40px rgba(224,64,160,.15);transform-origin:bottom center;transform:scale(.94) translateY(12px);opacity:0;pointer-events:none;transition:transform .28s cubic-bezier(.34,1.56,.64,1),opacity .2s ease}
 #music-playlist::-webkit-scrollbar{display:none}
@@ -678,11 +678,11 @@
 .mp-arm.on{transform:rotate(-28deg)}
 .mp-arm::before{content:'';position:absolute;right:-8px;top:-6px;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle,var(--pink) 0 3px,#333 4px);border:2px solid #555}
 .mp-arm::after{content:'';position:absolute;left:-6px;top:-3px;width:14px;height:12px;background:var(--pink);border-radius:2px;box-shadow:0 0 8px var(--pink)}
-.mp-onair{position:absolute;right:18px;top:16px;font-size:11px;font-weight:700;letter-spacing:3px;color:var(--gray);display:flex;align-items:center;gap:7px}
+.mp-onair{position:absolute;right:54px;top:16px;font-size:11px;font-weight:700;letter-spacing:3px;color:var(--gray);display:flex;align-items:center;gap:7px}
 .mp-onair b{width:8px;height:8px;border-radius:50%;background:#555}
 .mp-onair.on{color:var(--pink)}
 .mp-onair.on b{background:var(--pink);box-shadow:0 0 10px var(--pink);animation:mpvBlink 1.2s ease-in-out infinite}
-.mp-kick{position:absolute;right:18px;top:36px;font-size:10px;letter-spacing:2px;color:#888}
+.mp-kick{position:absolute;right:54px;top:36px;font-size:10px;letter-spacing:2px;color:#888}
 .player-song{position:relative;font-family:var(--font-display);font-size:42px;line-height:.95;letter-spacing:1.5px;text-transform:uppercase;text-shadow:0 0 18px rgba(224,64,160,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .player-artist{position:relative;font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--pink-light);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mp-viz{position:relative;display:flex;align-items:flex-end;gap:3px;height:38px;margin:14px 0 8px}
@@ -707,12 +707,15 @@
 .ctrl-btn.play-pause{width:58px;height:58px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff7cc8,var(--pink) 45%,#a01f6a);color:#fff;box-shadow:0 0 0 4px rgba(224,64,160,.2),0 0 26px rgba(224,64,160,.8)}
 .ctrl-btn.play-pause svg{width:22px;height:22px}
 .ctrl-btn.play-pause:hover{color:#fff;transform:scale(1.06)}
-.mp-close{display:none}
+.mp-close{display:flex;position:absolute;right:12px;top:12px;width:30px;height:30px;border-radius:50%;align-items:center;justify-content:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:var(--gray-light);font-size:13px;cursor:pointer;z-index:2;transition:color .15s,border-color .15s}
+.mp-close:hover{color:var(--pink);border-color:var(--pink)}
+#music-player.mob-open{display:flex}
+#disc-wrap{cursor:pointer}
 @keyframes mpvSpin{to{transform:rotate(360deg)}}
 @keyframes mpvBlink{50%{opacity:.25}}
 @keyframes mpvBar{from{transform:scaleY(.35)}to{transform:scaleY(1)}}
-/* ── Botón flotante del móvil: mini vinilo (oculto en PC) ── */
-#mob-fab{display:none;position:fixed;right:16px;bottom:16px;z-index:501;align-items:center;background:none;border:none;padding:0;cursor:pointer;font-family:var(--font-ui);-webkit-tap-highlight-color:transparent}
+/* ── Reproductor recogido: mini vinilo (PC y móvil) ── */
+#mob-fab{display:flex;position:fixed;right:28px;bottom:28px;z-index:501;align-items:center;background:none;border:none;padding:0;cursor:pointer;font-family:var(--font-ui);-webkit-tap-highlight-color:transparent}
 .fab-pill{display:none;height:48px;margin-right:-30px;padding:0 42px 0 16px;flex-direction:column;justify-content:center;align-items:flex-start;max-width:58vw;background:rgba(9,9,9,.95);border:1px solid rgba(224,64,160,.5);border-radius:24px 0 0 24px;box-shadow:0 0 22px rgba(224,64,160,.3)}
 #mob-fab.playing .fab-pill{display:flex}
 .fab-pill small{font-size:9px;letter-spacing:2.5px;color:var(--pink);font-weight:700;display:flex;align-items:center;gap:5px}
@@ -723,15 +726,11 @@
 .fab-disc i{position:absolute;inset:21px;border-radius:50%;background:radial-gradient(circle,#090909 0 2px,var(--pink) 3px);box-shadow:0 0 10px var(--pink)}
 .fab-disc.playing{animation-play-state:running}
 
-/* ── MÓVIL: mini vinilo visible, reproductor oculto por defecto ── */
+/* ── MÓVIL ── */
 @media(max-width:760px){
-  #mob-fab{display:flex}
-  #music-player{display:none;left:12px;right:12px;bottom:12px;width:auto}
-  #music-player.mob-open{display:flex}
+  #mob-fab{right:16px;bottom:16px}
+  #music-player{left:12px;right:12px;bottom:12px;width:auto}
   .vol-wrap{display:none!important}
-  .mp-close{display:flex;position:absolute;right:12px;top:12px;width:30px;height:30px;border-radius:50%;align-items:center;justify-content:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:var(--gray-light);font-size:13px;cursor:pointer}
-  .mp-onair,.mp-kick{right:54px}
-  #disc-wrap{cursor:pointer}
 }
 @media(prefers-reduced-motion:reduce){
   .disc,.fab-disc,.mp-onair.on b,.mp-viz.fake.on i{animation:none}
@@ -1520,7 +1519,7 @@ body.rl-noscroll #envivo{z-index:9000}
 </footer>
 
   <!-- MINI PLAYER FLOTANTE — VINILO -->
-<!-- Botón del móvil (mini vinilo); en PC está oculto -->
+<!-- Reproductor recogido (mini vinilo): al tocarlo se abre la tarjeta -->
 <button id="mob-fab" aria-label="Abrir reproductor" onclick="toggleMobPlayer()">
   <span class="fab-pill"><small><b></b>SONANDO</small><span class="fab-song" id="fab-song"></span></span>
   <span class="fab-disc" id="fab-disc"><i></i></span>
@@ -2722,7 +2721,7 @@ function closeFP() {
   document.body.style.overflow = '';
 }
 
-// ── MOBILE FAB TOGGLE ──
+// ── ABRIR / RECOGER EL REPRODUCTOR (mini vinilo) ──
 function toggleMobPlayer() {
   const player = document.getElementById('music-player');
   const fab    = document.getElementById('mob-fab');
@@ -2905,10 +2904,8 @@ const TRACKS = [
   });
   volSlider.addEventListener('input', () => { aud.volume = volSlider.value / 100; });
 
-  // Tap disc in player → close on mobile
-  $('disc-wrap').addEventListener('click', () => {
-    if (window.innerWidth <= 760) toggleMobPlayer();
-  });
+  // Tocar el vinilo de la tarjeta también la recoge
+  $('disc-wrap').addEventListener('click', toggleMobPlayer);
 
   durEl.textContent = TRACKS[0].dur;
   buildPL();
